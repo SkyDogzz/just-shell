@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/17 18:41:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:07:28 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main_process(char *argp[])
 		}
 		input = readline("Minishell : ");
 		if (!input)
-			break;
+			break ;
 		tokens = parse_tokens(input);
 		token_free(tokens);
 		free(input);
