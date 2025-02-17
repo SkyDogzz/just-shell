@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/17 16:21:49 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:41:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	g_sig = 0;
 
 int	main_process(char *argp[])
 {
-	char	*line;
+	t_token	*tokens;
+	char	*input;
 
 	while (TRUE)
 	{
@@ -25,9 +26,12 @@ int	main_process(char *argp[])
 			g_sig = 0;
 			continue ;
 		}
-		line = readline("Minishell : ");
-		if (!line)
+		input = readline("Minishell : ");
+		if (!input)
 			break;
+		tokens = parse_tokens(input);
+		token_free(tokens);
+		free(input);
 	}
 	return (0);
 	(void) argp;
