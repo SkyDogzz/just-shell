@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/02/17 16:17:37 by tstephan         ###   ########.fr        #
+#    Updated: 2025/02/17 17:31:07 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,9 @@ LIBFT_PATH = libft/
 
 SIGNAL_SRC = signal/signal.c
 
-SRC = main.c $(SIGNAL_SRC)
+PARSING_SRC = parsing/parse.c parsing/token.c parsing/string.c
+
+SRC = main.c $(SIGNAL_SRC) $(PARSING_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -56,6 +58,7 @@ $(OBJ_PATH):
 	@echo -n "$(Blue)"
 	mkdir -p $(OBJ_PATH)
 	mkdir -p $(OBJ_PATH)/signal
+	mkdir -p $(OBJ_PATH)/parsing
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"
