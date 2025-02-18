@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/17 20:18:10 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:17:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum e_quote
 {
 	UNQUOTED,
 	SINGLE_QUOTED,
-	DOUBLE_QUOTTED
+	DOUBLE_QUOTED
 }	t_quote;
 
 typedef enum e_bool
