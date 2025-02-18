@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/17 20:11:21 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:33:53 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 t_string	*ft_doom_split(const char *input)
 {
-	t_string	*top;
-	char		*dup;
-	t_quote		quote;
-	int			len;
+	t_string			*top;
+	char				*dup;
+	int					len;
+	static t_quote		quote = UNQUOTED;
 
-	quote = UNQUOTED;
 	top = NULL;
-	while (*input)
+	while (input && *input)
 	{
+		if (!quote && is_in_charset(*input, QUOTE))
+		{
+			quote = SINGLE_QUOTED;
+			if (*input == '"')
+				quote = DOUBLE_QUOTED;
+			continue ;
+		}
 		if (!quote)
 		{
 			len = is_in_stringset(input, OPERATOR_M, ',');
@@ -34,6 +40,21 @@ t_string	*ft_doom_split(const char *input)
 				len = is_in_charset(*input, OPERATOR_S);
 			if (!len)
 				len = 1;
+		}
+		else if(quote)
+		{
+			len = 1;
+			int pos = 1;
+			while (input[pos] && ((quote == SINGLE_QUOTED && input[pos] != '\'') || (quote == DOUBLE_QUOTED && input[pos] != '"')))
+			{
+				len++;
+				pos++;
+			}
+			if (input[pos] == '"' || input[pos] == '\'')
+			{
+				len++;
+				quote = UNQUOTED;
+			}
 		}
 		dup = ft_strndup(input, len);
 		if (!dup)
