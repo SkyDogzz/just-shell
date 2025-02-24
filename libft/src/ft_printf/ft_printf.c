@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:22:20 by yandry            #+#    #+#             */
-/*   Updated: 2024/12/11 13:46:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 static char	*ft_convert(unsigned int n, char *set)
 {

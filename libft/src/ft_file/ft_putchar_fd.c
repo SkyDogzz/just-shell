@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 00:41:43 by yandry            #+#    #+#             */
-/*   Updated: 2024/12/11 13:46:24 by yandry           ###   ########.fr       */
+/*   Created: 2024/11/13 00:34:17 by yandry            #+#    #+#             */
+/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_putchar_fd(char c, int fd)
 {
 	if (fd < 1)
 		return ;
-	write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
+	write(fd, &c, 1);
 }

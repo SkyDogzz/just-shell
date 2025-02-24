@@ -19,7 +19,7 @@ int	main_process(char *argp[])
 	t_token	*tokens;
 	char	*input;
 
-	while (TRUE)
+	while (true)
 	{
 		if (g_sig == SIGINT)
 		{
@@ -50,7 +50,7 @@ int	main(int argc, char *argv[], char *argp[])
 	set_signal_action();
 	exit_code = main_process(argp);
 	printf("exit\n");
-	return (EXIT_SUCCESS);
+	return (exit_code);
 	(void) argc;
 	(void) argv;
 }
