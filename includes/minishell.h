@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/24 13:49:30 by yandry           ###   ########.fr       */
+/*   Updated: 2025/02/24 17:18:39 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,9 @@ typedef struct s_tree
 }	t_tree;
 
 void	ft_set_sigaction(void);
+
+t_list	*ft_lex(const char *cmd_line);
+t_tree	*ft_parse(t_list *tokens);
+int		ft_exec(t_tree *root);
 
 #endif
