@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 23:06:06 by yandry            #+#    #+#             */
-/*   Updated: 2024/12/11 13:46:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {

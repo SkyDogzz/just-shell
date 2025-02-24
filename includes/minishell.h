@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/18 12:51:13 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:49:30 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <sys/ioctl.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # include "../libft/includes/libft.h"
 
@@ -31,57 +32,61 @@
 
 typedef enum e_quote
 {
-	UNQUOTED,
-	SINGLE_QUOTED,
-	DOUBLE_QUOTED
+	UQUOTE,
+	SQUOTE,
+	DQUOTE
 }	t_quote;
-
-typedef enum e_bool
-{
-	FALSE,
-	TRUE
-}	t_bool;
-
-typedef struct s_string	t_string;
-typedef struct s_string
-{
-	char		*content;
-	t_string	*next;
-}	t_string;
 
 typedef enum e_token_type
 {
-	REDIRECTION,
-	WORDS,
+	T_OPERATOR,
+	T_WORD,
+	T_QUOTE,
+	T_EXPANSION,
+	T_COMMENT,
+	T_HEREDOC,
+	T_BLANK
 }	t_token_type;
 
-typedef struct s_token	t_token;
+typedef enum e_node_type
+{
+	NODE_WORD,
+	NODE_REDIR,
+	NODE_PIPE,
+	NODE_LOGICAL
+}	t_node_type;
+
+typedef enum e_redirect_type
+{
+	REDIR_INPUT,
+	REDIR_TRUNC,
+	REDIR_APPEND,
+	REDIR_HEREDOC
+}	t_redirect_type;
+
 typedef struct s_token
 {
 	char			*content;
-	t_token_type	type;
-	t_token			*next;
+	t_token_type	token_type;
 }	t_token;
 
-// Utils
-int			is_in_stringset(const char *input, const char *stringset,
-				char delim);
-t_bool		is_in_charset(char c, const char *charset);
+typedef struct s_cmd
+{
+	char			**args;
+	t_redirect_type	redirect_type;
+	int				infile;
+	int				outfile;
+}	t_cmd;
 
-// Signal
-void		set_signal_action(void);
+typedef struct s_tree	t_tree;
+typedef struct s_tree
+{
+	t_node_type		type;
+	t_cmd			cmd;
+	t_tree			*left;
+	t_tree			*right;
+}	t_tree;
 
-// Parse tokens
-t_token		*parse_tokens(char *input);
-
-// Tokens utils
-t_token		*token_create(char *content, t_token_type type);
-t_token		*token_add_bottom(t_token *top, t_token *new_bottom);
-void		token_print(t_token *top);
-void		token_free(t_token *top);
-
-t_string	*string_create(const char *input);
-t_string	*string_add_bottom(t_string *top, t_string *new_bottom);
-void		string_free(t_string *top);
+void	ft_set_sigaction(void);
 
 #endif

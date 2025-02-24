@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 21:12:49 by yandry            #+#    #+#              #
-#    Updated: 2025/01/16 15:13:16 by tstephan         ###   ########.fr        #
+#    Updated: 2025/02/01 14:29:12 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,67 +19,74 @@ Green=$(shell tput setaf 2)
 Color_Off=$(shell tput sgr0)
 
 NAME = libft.a
-COMPILER = cc
-FLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
+
+ifdef DEBUG
+CFLAGS += -g3
+endif
+ifdef FSAN
+CFLAGS += -fsanitize=address
+endif
 
 SRC_PATH = src/
 OBJ_PATH = obj/
 
-FT_FILE=ft_get_next_line.c
+FT_FILE=ft_get_next_line.c \
+		ft_putchar_fd.c \
+		ft_putendl_fd.c \
+		ft_putnbr_fd.c \
+		ft_putstr_fd.c
 
 FT_LIST=ft_lstadd_back.c \
-        ft_lstadd_front.c \
-        ft_lstclear.c \
-        ft_lstcpyline.c \
-        ft_lstdelone.c \
-        ft_lstfoundchr.c \
-        ft_lstiter.c \
-        ft_lstlast.c \
-        ft_lstlentochr.c \
-        ft_lstmap.c \
-        ft_lstnew.c \
-        ft_lstsize.c
+		ft_lstadd_front.c \
+		ft_lstclear.c \
+		ft_lstcpyline.c \
+		ft_lstdelone.c \
+		ft_lstfoundchr.c \
+		ft_lstiter.c \
+		ft_lstlast.c \
+		ft_lstlentochr.c \
+		ft_lstmap.c \
+		ft_lstnew.c \
+		ft_lstsize.c \
+		ft_lsttoarray.c
 
 FT_MEMORY=ft_bzero.c \
-        ft_calloc.c \
-        ft_memchr.c \
-        ft_memcmp.c \
-        ft_memcpy.c \
-        ft_memmove.c \
-        ft_memset.c
+		  ft_calloc.c \
+		  ft_memchr.c \
+		  ft_memcmp.c \
+		  ft_memcpy.c \
+		  ft_memmove.c \
+		  ft_memset.c
 
 FT_PRINTF=ft_printf.c \
-        ft_printf_utils.c \
-        ft_putchar_fd.c \
-        ft_putendl_fd.c \
-        ft_putnbr_fd.c \
-        ft_putstr_fd.c
+		  ft_printf_utils.c
 
 FT_STRING=ft_atoi.c \
-        ft_isalnum.c \
-        ft_isalpha.c \
-        ft_isascii.c \
-        ft_isdigit.c \
-        ft_isprint.c \
-        ft_itoa.c \
-        ft_split.c \
-        ft_strchr.c \
-        ft_strdup.c \
-        ft_strndup.c \
-        ft_striteri.c \
-        ft_strjoin.c \
-        ft_strlcat.c \
-        ft_strlcpy.c \
-        ft_strlen.c \
-        ft_strmapi.c \
-        ft_strncmp.c \
-        ft_strnstr.c \
-        ft_strrchr.c \
-        ft_strtrim.c \
-        ft_substr.c \
-        ft_tolower.c \
-        ft_toupper.c \
-        ft_strappend.c
+		  ft_isalnum.c \
+		  ft_isalpha.c \
+		  ft_isascii.c \
+		  ft_isdigit.c \
+		  ft_isprint.c \
+		  ft_itoa.c \
+		  ft_split.c \
+		  ft_strchr.c \
+		  ft_strdup.c \
+		  ft_striteri.c \
+		  ft_strjoin.c \
+		  ft_strlcat.c \
+		  ft_strlcpy.c \
+		  ft_strlen.c \
+		  ft_strmapi.c \
+		  ft_strncmp.c \
+		  ft_strnstr.c \
+		  ft_strrchr.c \
+		  ft_strtrim.c \
+		  ft_substr.c \
+		  ft_tolower.c \
+		  ft_toupper.c \
+		  ft_strappend.c
 
 # prepend the respective path to the files of each variable
 # so FT_FILE will be ft_file/<source>.c and so on
@@ -98,7 +105,7 @@ all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo -n "$(Cyan)"
-	$(COMPILER) $(FLAGS) $(INCLUDES) -c $< -o $@ 
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ 
 	@echo -n "$(Color_Off)"
 
 $(OBJ_PATH):
@@ -114,7 +121,11 @@ $(OBJ_PATH):
 $(NAME): $(OBJ_PATH) $(OBJS)
 	@echo -n "$(Green)"
 	ar -rsc ${NAME} ${OBJS}
+ifeq ($(DEBUG), 1)
+	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled in $(Red)DEBUG$(Purple) mode!$(Color_Off)"
+else
 	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled :D! Happy sufferi- I mean coding... hahaha... yeah...$(Color_Off)"
+endif
 
 clean:
 	@echo -n "$(Blue)"

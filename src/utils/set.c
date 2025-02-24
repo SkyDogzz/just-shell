@@ -47,13 +47,13 @@ int	is_in_stringset(const char *input, const char *stringset, char delim)
 	return (0);
 }
 
-t_bool	is_in_charset(char c, const char *charset)
+bool	is_in_charset(char c, const char *charset)
 {
 	while (*charset)
 	{
 		if (c == *charset)
-			return (TRUE);
+			return (true);
 		charset++;
 	}
-	return (FALSE);
+	return (false);
 }

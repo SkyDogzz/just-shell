@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 18:30:05 by yandry            #+#    #+#             */
-/*   Updated: 2024/12/11 13:45:49 by yandry           ###   ########.fr       */
+/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 static int	is_whitespace(const char chr)
 {
