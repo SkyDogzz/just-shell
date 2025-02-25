@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 18:59:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:23:43 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ bool	ft_isin_charset(char c, const char *charset);
 void	ft_lstclear_string(void *content);
 void	ft_lstprint_string(t_list *lst, const char *s);
 void	ft_lstclear_t_token(void *content);
+void	ft_lstprint_tokens(t_list *lst, const char *s);
 
 t_list	*ft_lex(const char *cmd_line);
 t_tree	*ft_parse(t_list *tokens);

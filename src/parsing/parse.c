@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 19:45:12 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:36:19 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_list	*ft_lex(const char *input)
 	t_list	*tokens;
 	t_list	*pre_tokens;
 	t_list	*act;
+	t_token	*dup;
 
 	pre_tokens = ft_doom_split(input);
 	if (!pre_tokens)
@@ -87,7 +88,13 @@ t_list	*ft_lex(const char *input)
 	act = pre_tokens;
 	while (act)
 	{
-		ft_lstadd_back(&tokens, ft_lstnew(ft_strdup(act->content)));
+		dup = NULL;
+		dup = malloc(sizeof(t_token));
+		if (!dup)
+			return (tokens);
+		dup->content = ft_strdup(act->content);
+		dup->token_type = 1;
+		ft_lstadd_back(&tokens, ft_lstnew(dup));
 		act = act->next;
 	}
 	ft_lstprint_string(pre_tokens, "Print strings :");
