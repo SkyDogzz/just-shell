@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 19:50:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:24:10 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main_process(char *argp[])
 		}
 		add_history(input);
 		tokens = ft_lex(input);
-		ft_lstclear(&tokens, ft_lstclear_string);
+		ft_lstprint_tokens(tokens, "Print strings :");
+		ft_lstclear(&tokens, ft_lstclear_t_token);
 		free(input);
 	}
 	return (0);

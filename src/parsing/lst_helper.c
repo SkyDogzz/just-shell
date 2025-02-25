@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:38:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 18:59:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:24:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,20 @@ void	ft_lstclear_t_token(void *content)
 		return ;
 	ccontent = (t_token *)content;
 	free(ccontent->content);
+	free(ccontent);
 }
+
+void	ft_lstprint_tokens(t_list *lst, const char *s)
+{
+	t_token	*act;
+
+	printf("%s\n", s);
+	while (lst)
+	{
+		act = (t_token *)lst->content;
+		printf("string = '%s' type = '%d'\n", act->content, act->token_type);
+		lst = lst->next;
+	}
+}
+
+
