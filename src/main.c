@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 18:46:05 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:50:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	main_process(char *argp[])
 		{
 			free(input);
 			continue ;
+		}
+		if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
+		{
+			free(input);
+			return (0);
 		}
 		add_history(input);
 		tokens = ft_lex(input);
