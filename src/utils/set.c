@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:44:35 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 16:30:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:51:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,9 @@ bool	ft_isin_charset(char c, const char *charset)
 		charset++;
 	}
 	return (false);
+}
+
+bool	ft_isspace(char c)
+{
+	return (c == ' ' || (c >= 8 && c <= 13));
 }
