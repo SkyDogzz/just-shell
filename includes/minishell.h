@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 16:44:01 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:59:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,15 @@ typedef struct s_tree
 
 void	ft_set_sigaction(void);
 
-char *ft_strndup(const char *s, size_t n);
+char	*ft_strndup(const char *s, size_t n);
+
+bool	ft_isspace(char c);
 
 int		ft_isin_stringset(const char *input, const char *stringset, char delim);
 bool	ft_isin_charset(char c, const char *charset);
 
 void	ft_lstclear_string(void *content);
+void	ft_lstprint_string(t_list *lst, const char *s);
 void	ft_lstclear_t_token(void *content);
 
 t_list	*ft_lex(const char *cmd_line);

@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:43:42 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 16:43:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:00:50 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *ft_strndup(const char *s, size_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
 	char	*dup;
 	size_t	pos;

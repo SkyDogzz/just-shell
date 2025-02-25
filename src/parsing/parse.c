@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 16:54:18 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:45:12 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 t_list	*ft_doom_split(const char *input)
 {
-	t_list				*top;
-	char				*dup;
-	int					len;
-	static t_quote		quote = UQUOTE;
+	t_list	*top;
+	char	*dup;
+	int		len;
+	t_quote	quote;
+	int		pos;
 
 	top = NULL;
+	quote = UQUOTE;
 	while (input && *input)
 	{
 		if (!quote && ft_isin_charset(*input, QUOTE))
@@ -39,22 +41,27 @@ t_list	*ft_doom_split(const char *input)
 			if (!len)
 				len = ft_isin_charset(*input, OPERATOR_S);
 			if (!len)
+			{
+				while (input[len] && !ft_isspace(input[len])
+					&& !ft_isin_charset(input[len], QUOTE))
+					len++;
+			}
+			if (!len)
 				len = 1;
 		}
-		else if(quote)
+		else if (quote)
 		{
 			len = 1;
-			int pos = 1;
-			while (input[pos] && ((quote == SQUOTE && input[pos] != '\'') || (quote == DQUOTE && input[pos] != '"')))
+			pos = 1;
+			while (input[pos] && ((quote == SQUOTE && input[pos] != '\'')
+					|| (quote == DQUOTE && input[pos] != '"'))) 
 			{
 				len++;
 				pos++;
 			}
 			if (input[pos] == '"' || input[pos] == '\'')
-			{
 				len++;
-				quote = SQUOTE;
-			}
+			quote = UQUOTE;
 		}
 		dup = ft_strndup(input, len);
 		if (!dup)
@@ -83,6 +90,7 @@ t_list	*ft_lex(const char *input)
 		ft_lstadd_back(&tokens, ft_lstnew(ft_strdup(act->content)));
 		act = act->next;
 	}
+	ft_lstprint_string(pre_tokens, "Print strings :");
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	return (tokens);
 }
