@@ -6,38 +6,38 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/18 12:33:53 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:54:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_string	*ft_doom_split(const char *input)
+t_list	*ft_doom_split(const char *input)
 {
-	t_string			*top;
+	t_list				*top;
 	char				*dup;
 	int					len;
-	static t_quote		quote = UNQUOTED;
+	static t_quote		quote = UQUOTE;
 
 	top = NULL;
 	while (input && *input)
 	{
-		if (!quote && is_in_charset(*input, QUOTE))
+		if (!quote && ft_isin_charset(*input, QUOTE))
 		{
-			quote = SINGLE_QUOTED;
+			quote = SQUOTE;
 			if (*input == '"')
-				quote = DOUBLE_QUOTED;
+				quote = DQUOTE;
 			continue ;
 		}
 		if (!quote)
 		{
-			len = is_in_stringset(input, OPERATOR_M, ',');
+			len = ft_isin_stringset(input, OPERATOR_M, ',');
 			if (!len)
-				len = is_in_stringset(input, RESERVED, ',');
+				len = ft_isin_stringset(input, RESERVED, ',');
 			if (!len)
-				len = is_in_stringset(input, SUBSTITUTE, ',');
+				len = ft_isin_stringset(input, SUBSTITUTE, ',');
 			if (!len)
-				len = is_in_charset(*input, OPERATOR_S);
+				len = ft_isin_charset(*input, OPERATOR_S);
 			if (!len)
 				len = 1;
 		}
@@ -45,7 +45,7 @@ t_string	*ft_doom_split(const char *input)
 		{
 			len = 1;
 			int pos = 1;
-			while (input[pos] && ((quote == SINGLE_QUOTED && input[pos] != '\'') || (quote == DOUBLE_QUOTED && input[pos] != '"')))
+			while (input[pos] && ((quote == SQUOTE && input[pos] != '\'') || (quote == DQUOTE && input[pos] != '"')))
 			{
 				len++;
 				pos++;
@@ -53,14 +53,13 @@ t_string	*ft_doom_split(const char *input)
 			if (input[pos] == '"' || input[pos] == '\'')
 			{
 				len++;
-				quote = UNQUOTED;
+				quote = SQUOTE;
 			}
 		}
 		dup = ft_strndup(input, len);
 		if (!dup)
 			continue ;
-		top = string_add_bottom(top, string_create(dup));
-		free(dup);
+		ft_lstadd_back(&top, ft_lstnew(dup));
 		input += len;
 	}
 	if (!top)
@@ -68,11 +67,11 @@ t_string	*ft_doom_split(const char *input)
 	return (top);
 }
 
-t_token	*parse_tokens(char *input)
+t_list	*ft_lex(const char *input)
 {
-	t_token		*tokens;
-	t_string	*pre_tokens;
-	t_string	*act;
+	t_list	*tokens;
+	t_list	*pre_tokens;
+	t_list	*act;
 
 	pre_tokens = ft_doom_split(input);
 	if (!pre_tokens)
@@ -81,11 +80,9 @@ t_token	*parse_tokens(char *input)
 	act = pre_tokens;
 	while (act)
 	{
-		tokens = token_add_bottom(tokens, token_create(act->content, 0));
+		ft_lstadd_back(&tokens, ft_lstnew(ft_strdup(act->content)));
 		act = act->next;
 	}
-	string_free(pre_tokens);
-	token_print(tokens);
+	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	return (tokens);
-	(void) input;
 }

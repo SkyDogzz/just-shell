@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/18 12:56:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:54:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_sig = 0;
 
 int	main_process(char *argp[])
 {
-	t_token	*tokens;
+	t_list	*tokens;
 	char	*input;
 
 	while (true)
@@ -35,8 +35,8 @@ int	main_process(char *argp[])
 			continue ;
 		}
 		add_history(input);
-		tokens = parse_tokens(input);
-		token_free(tokens);
+		tokens = ft_lex(input);
+		ft_lstclear(&tokens, ft_lstclear_string);
 		free(input);
 	}
 	return (0);
@@ -47,7 +47,7 @@ int	main(int argc, char *argv[], char *argp[])
 {
 	int	exit_code;
 
-	set_signal_action();
+	ft_set_sigaction();
 	exit_code = main_process(argp);
 	printf("exit\n");
 	return (exit_code);
