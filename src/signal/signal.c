@@ -26,7 +26,7 @@ static void	ft_signal_handler(int signal)
 	}
 }
 
-void	set_signal_action(void)
+void	ft_set_sigaction(void)
 {
 	g_sig = 0;
 	signal(SIGINT, ft_signal_handler);
