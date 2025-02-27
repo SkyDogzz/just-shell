@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/02/17 19:35:26 by tstephan         ###   ########.fr        #
+#    Updated: 2025/02/27 17:50:16 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,9 @@ LIBFT_PATH = libft/
 
 UTILS_SRC = utils/set.c
 SIGNAL_SRC = signal/signal.c
-PARSING_SRC = parsing/parse.c parsing/token.c parsing/string.c
+EXEC_SRC = exec/ft_exec.c
 
-SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(PARSING_SRC)
+SRC = main.c asdf_parser.c $(UTILS_SRC) $(SIGNAL_SRC) $(EXEC_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -60,6 +60,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)/utils
 	mkdir -p $(OBJ_PATH)/signal
 	mkdir -p $(OBJ_PATH)/parsing
+	mkdir -p $(OBJ_PATH)/exec
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"
