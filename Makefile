@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/02/27 17:50:16 by yandry           ###   ########.fr        #
+#    Updated: 2025/02/28 19:35:11 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,9 @@ LIBFT_PATH = libft/
 UTILS_SRC = utils/set.c
 SIGNAL_SRC = signal/signal.c
 EXEC_SRC = exec/ft_exec.c
+TOKEN_SRC = token/tokenizer.c
 
-SRC = main.c asdf_parser.c $(UTILS_SRC) $(SIGNAL_SRC) $(EXEC_SRC)
+SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(EXEC_SRC) $(TOKEN_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

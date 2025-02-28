@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:44:35 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/17 20:02:38 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:47:58 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	is_in_stringset(const char *input, const char *stringset, char delim)
+bool	is_in_stringset(const char *input, const char *stringset, char delim)
 {
 	char	**set;
 	int		pos;
