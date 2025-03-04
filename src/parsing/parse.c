@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 17:38:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:30:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,16 @@ static t_token_type	ft_gettype(char *s)
 	return (T_WORD);
 }
 
+static char	*ft_getenv(char *name)
+{
+	char	*value;
+
+	value = getenv(name);
+	if (!value)
+		return (ft_strdup(""));
+	return (value);
+}
+
 static t_token	*ft_expand(t_token *token)
 {
 	char	*find;
@@ -100,20 +110,34 @@ static t_token	*ft_expand(t_token *token)
 	int		size;
 	char	*envname;
 	char	*envvar;
+	char	*envvarr;
+	int		offset;
 
 	if (token->token_type != T_EXPANSION && token->token_type != T_WORD)
 		return (token);
-	find = ft_strchr(token->content, '$');
-	if (!find)
-		return (token);
-	size = 1;
-	while (ft_isalnum(find[size]) || find[size] == '_')
-		size++;
+	offset = 0;
+	while (true)
+	{
+		find = ft_strchr(token->content + offset, '$');
+		if (!find)
+			return (token);
+		size = 1;
+		while (ft_isalnum(find[size]) || find[size] == '_' || find[size] == '$')
+			size++;
+		if (size == 1)
+		{
+			offset = find - token->content + 1;
+			continue ;
+		}
+		break ;
+	}
 	mem = token->content;
 	envname = ft_strndup(find, size);
 	envvar = ft_strndup(find + 1, size - 1);
-	token->content = ft_strreplace(mem, envname, getenv(envvar));
+	envvarr = ft_getenv(envvar);
+	token->content = ft_strreplace(mem, envname, envvarr);
 	free(mem);
+	free(envvarr);
 	free(envname);
 	free(envvar);
 	ft_expand(token);
