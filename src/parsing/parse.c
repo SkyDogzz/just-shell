@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 20:36:19 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:23:14 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_list	*ft_doom_split(const char *input)
 			len = 1;
 			pos = 1;
 			while (input[pos] && ((quote == SQUOTE && input[pos] != '\'')
-					|| (quote == DQUOTE && input[pos] != '"'))) 
+					|| (quote == DQUOTE && input[pos] != '"')))
 			{
 				len++;
 				pos++;
@@ -84,6 +84,7 @@ t_list	*ft_lex(const char *input)
 	pre_tokens = ft_doom_split(input);
 	if (!pre_tokens)
 		return (NULL);
+	pre_tokens = ft_remove_whitespace(pre_tokens);
 	tokens = NULL;
 	act = pre_tokens;
 	while (act)
@@ -93,7 +94,7 @@ t_list	*ft_lex(const char *input)
 		if (!dup)
 			return (tokens);
 		dup->content = ft_strdup(act->content);
-		dup->token_type = 1;
+		dup->token_type = T_WORD;
 		ft_lstadd_back(&tokens, ft_lstnew(dup));
 		act = act->next;
 	}
