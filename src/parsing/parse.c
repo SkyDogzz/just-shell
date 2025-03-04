@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 17:21:29 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:38:46 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,33 @@ static t_token_type	ft_gettype(char *s)
 	return (T_WORD);
 }
 
+static t_token	*ft_expand(t_token *token)
+{
+	char	*find;
+	char	*mem;
+	int		size;
+	char	*envname;
+	char	*envvar;
+
+	if (token->token_type != T_EXPANSION && token->token_type != T_WORD)
+		return (token);
+	find = ft_strchr(token->content, '$');
+	if (!find)
+		return (token);
+	size = 1;
+	while (ft_isalnum(find[size]) || find[size] == '_')
+		size++;
+	mem = token->content;
+	envname = ft_strndup(find, size);
+	envvar = ft_strndup(find + 1, size - 1);
+	token->content = ft_strreplace(mem, envname, getenv(envvar));
+	free(mem);
+	free(envname);
+	free(envvar);
+	ft_expand(token);
+	return (token);
+}
+
 t_list	*ft_lex(const char *input)
 {
 	t_list	*tokens;
@@ -114,6 +141,7 @@ t_list	*ft_lex(const char *input)
 			return (tokens);
 		dup->content = ft_strdup(act->content);
 		dup->token_type = ft_gettype(dup->content);
+		dup = ft_expand(dup);
 		ft_lstadd_back(&tokens, ft_lstnew(dup));
 		act = act->next;
 	}
