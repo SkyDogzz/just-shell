@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 16:08:13 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:08:16 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -46,7 +46,9 @@ typedef enum e_token_type
 	T_EXPANSION,
 	T_COMMENT,
 	T_HEREDOC,
-	T_BLANK
+	T_BLANK,
+	T_RESERVED,
+	T_SUBSTITUTE
 }	t_token_type;
 
 typedef enum e_node_type
