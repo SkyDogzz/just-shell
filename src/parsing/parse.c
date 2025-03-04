@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 16:23:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:21:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,25 @@ t_list	*ft_doom_split(const char *input)
 	return (top);
 }
 
+static t_token_type	ft_gettype(char *s)
+{
+	if (ft_strlen(s) == 1 && ft_isspace(s[0]))
+		return (T_BLANK);
+	else if (ft_strlen(s) == 1 && ft_isin_charset(s[0], OPERATOR_S))
+		return (T_OPERATOR);
+	else if (ft_isin_stringset(s, OPERATOR_M, ','))
+		return (T_OPERATOR);
+	else if (ft_isin_stringset(s, RESERVED, ','))
+		return (T_RESERVED);
+	else if (ft_isin_stringset(s, SUBSTITUTE, ','))
+		return (T_SUBSTITUTE);
+	else if (s[0] == '\'')
+		return (T_QUOTE);
+	else if (s[0] == '"')
+		return (T_EXPANSION);
+	return (T_WORD);
+}
+
 t_list	*ft_lex(const char *input)
 {
 	t_list	*tokens;
@@ -94,7 +113,7 @@ t_list	*ft_lex(const char *input)
 		if (!dup)
 			return (tokens);
 		dup->content = ft_strdup(act->content);
-		dup->token_type = T_WORD;
+		dup->token_type = ft_gettype(dup->content);
 		ft_lstadd_back(&tokens, ft_lstnew(dup));
 		act = act->next;
 	}

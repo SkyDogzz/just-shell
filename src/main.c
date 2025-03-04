@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 20:24:10 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:22:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_sig = 0;
 
-int	main_process(char *argp[])
+int	main_process(void)
 {
 	t_list	*tokens;
 	char	*input;
@@ -46,7 +46,6 @@ int	main_process(char *argp[])
 		free(input);
 	}
 	return (0);
-	(void) argp;
 }
 
 int	main(int argc, char *argv[], char *argp[])
@@ -54,9 +53,10 @@ int	main(int argc, char *argv[], char *argp[])
 	int	exit_code;
 
 	ft_set_sigaction();
-	exit_code = main_process(argp);
+	exit_code = main_process();
 	printf("exit\n");
 	return (exit_code);
 	(void) argc;
 	(void) argv;
+	(void) argp;
 }
