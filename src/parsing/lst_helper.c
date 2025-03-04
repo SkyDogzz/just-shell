@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:38:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 20:24:42 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:23:22 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,3 @@ void	ft_lstprint_tokens(t_list *lst, const char *s)
 		lst = lst->next;
 	}
 }
-
-

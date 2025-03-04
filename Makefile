@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/02/25 16:44:15 by tstephan         ###   ########.fr        #
+#    Updated: 2025/03/04 16:08:58 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ LIBFT_PATH = libft/
 
 UTILS_SRC = utils/set.c utils/ft_strndup.c
 SIGNAL_SRC = signal/signal.c
-PARSING_SRC = parsing/parse.c parsing/lst_helper.c
+PARSING_SRC = parsing/parse.c parsing/lst_helper.c parsing/space.c
 
 SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(PARSING_SRC)
 
