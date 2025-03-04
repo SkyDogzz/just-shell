@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
 /*   Updated: 2025/03/04 16:08:13 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +91,7 @@ typedef struct s_tree
 void	ft_set_sigaction(void);
 
 char	*ft_strndup(const char *s, size_t n);
+char	*ft_strreplace(const char *full, const char *old, const char *ne);
 
 bool	ft_isspace(char c);
 
@@ -103,6 +105,7 @@ void	ft_lstprint_tokens(t_list *lst, const char *s);
 
 t_list	*ft_lex(const char *cmd_line);
 t_list	*ft_remove_whitespace(t_list *tokens);
+t_list	*ft_remove_whitespace(t_list *lst);
 t_tree	*ft_parse(t_list *tokens);
 int		ft_exec(t_tree *root);
 
