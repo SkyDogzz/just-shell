@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 17:22:18 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:02:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,18 @@
 
 int	g_sig = 0;
 
-int	main_process(void)
+static int	main_process(void)
 {
 	t_list	*tokens;
 	char	*input;
 
 	while (true)
 	{
-		if (g_sig == SIGINT)
-		{
-			g_sig = 0;
+		if (handle_sigint())
 			continue ;
-		}
 		input = readline("Minishell : ");
 		if (!input)
 			break ;
-		if (ft_strlen(input) == 0)
-		{
-			free(input);
-			continue ;
-		}
 		if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
@@ -50,7 +42,7 @@ int	main_process(void)
 
 int	main(int argc, char *argv[], char *argp[])
 {
-	int	exit_code;
+	int		exit_code;
 
 	ft_set_sigaction();
 	exit_code = main_process();

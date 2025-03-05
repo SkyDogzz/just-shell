@@ -6,7 +6,7 @@
 /*   By: tstephan <thomas.stephan@live.fr>     | |__| | (_) | (_| |/ / / /    */
 /*                                             |_____/ \___/ \__, /___/___|   */
 /*   Created: 2025/01/10 17:00:01 by tstephan                 __/ |           */
-/*   Updated: 2025/02/25 15:56:12 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:02:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ void	ft_set_sigaction(void)
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+bool	handle_sigint(void)
+{
+	if (g_sig == SIGINT)
+	{
+		g_sig = 0;
+		return (true);
+	}
+	return (false);
 }
