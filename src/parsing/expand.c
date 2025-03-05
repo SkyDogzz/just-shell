@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 17:14:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:29:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ t_token	*ft_expand(t_token *token)
 {
 	t_expand	expand;
 
-	if (token->token_type != T_EXPANSION && token->token_type != T_WORD)
+	if (token->token_type != T_EXPANSION && token->token_type != T_WORD
+		&& token->token_type != T_HEREDOC)
 		return (token);
 	if (ft_find_expand(&expand, token))
 		return (token);

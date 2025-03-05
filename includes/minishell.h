@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 17:32:08 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:31:19 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -30,6 +30,9 @@
 # define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
 # define RESERVED "if,then,else,elif,fi,done,do,case,esac,while,until,for,in,!!"
 # define SUBSTITUTE "$((,$(,)),)"
+
+# define HEREDOC_PARSE_ERROR 1
+# define HEREDOC_SIGINT 2
 
 typedef enum e_quote
 {
@@ -98,6 +101,8 @@ char	*ft_strreplace(const char *full, const char *old, const char *ne);
 
 bool	ft_isspace(char c);
 
+int		ft_getmax(int a, int b);
+
 int		ft_isin_stringset(const char *input, const char *stringset, char delim);
 bool	ft_isin_charset(char c, const char *charset);
 
@@ -105,6 +110,8 @@ void	ft_lstclear_string(void *content);
 void	ft_lstprint_string(t_list *lst, const char *s);
 void	ft_lstclear_t_token(void *content);
 void	ft_lstprint_tokens(t_list *lst, const char *s);
+
+int		ft_handle_heredocs(t_list **lst);
 
 t_list	*ft_lex(const char *cmd_line);
 t_list	*ft_doom_split(const char *input);
