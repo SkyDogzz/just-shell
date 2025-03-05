@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 19:30:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:23:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static char	*ft_getenv(char *name)
 
 	value = getenv(name);
 	if (!value)
-		return (ft_strdup(""));
+		return ("");
 	return (value);
 }
 
@@ -122,7 +122,12 @@ static t_token	*ft_expand(t_token *token)
 		if (!find)
 			return (token);
 		size = 1;
-		while (ft_isalnum(find[size]) || find[size] == '_' || find[size] == '$')
+		if (find[size] == '$')
+		{
+			size++;
+			break ;
+		}
+		while (ft_isalnum(find[size]) || find[size] == '_')
 			size++;
 		if (size == 1)
 		{
@@ -137,7 +142,6 @@ static t_token	*ft_expand(t_token *token)
 	envvarr = ft_getenv(envvar);
 	token->content = ft_strreplace(mem, envname, envvarr);
 	free(mem);
-	free(envvarr);
 	free(envname);
 	free(envvar);
 	ft_expand(token);
@@ -166,7 +170,13 @@ t_list	*ft_lex(const char *input)
 		dup->content = ft_strdup(act->content);
 		dup->token_type = ft_gettype(dup->content);
 		dup = ft_expand(dup);
-		ft_lstadd_back(&tokens, ft_lstnew(dup));
+		if (ft_strncmp(dup->content, "", ft_strlen(dup->content) != 0))
+			ft_lstadd_back(&tokens, ft_lstnew(dup));
+		else
+		{
+			free(dup->content);
+			free(dup);
+		}
 		act = act->next;
 	}
 	ft_lstprint_string(pre_tokens, "Print strings :");
