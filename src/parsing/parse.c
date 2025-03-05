@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 17:32:12 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:45:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,28 @@ static t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
 	return (tokens);
 }
 
+static bool	handle_heredoc_error(t_list **tokens)
+{
+	int	error;
+
+	error = ft_handle_heredocs(tokens);
+	if (error)
+	{
+		if (error == HEREDOC_PARSE_ERROR)
+		{
+			printf("Syntax error near unexpected token\n");
+			ft_lstclear(tokens, ft_lstclear_t_token);
+			return (true);
+		}
+		if (error == HEREDOC_SIGINT)
+		{
+			ft_lstclear(tokens, ft_lstclear_t_token);
+			return (true);
+		}
+	}
+	return (false);
+}
+
 t_list	*ft_lex(const char *input)
 {
 	t_list	*tokens;
@@ -70,8 +92,9 @@ t_list	*ft_lex(const char *input)
 	pre_tokens = ft_remove_whitespace(pre_tokens);
 	tokens = NULL;
 	tokens = ft_string_to_token(tokens, pre_tokens);
-	ft_lstprint_string(pre_tokens, "Print strings :");
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	tokens = ft_fuse_word(tokens);
+	if (handle_heredoc_error(&tokens))
+		return (NULL);
 	return (tokens);
 }
