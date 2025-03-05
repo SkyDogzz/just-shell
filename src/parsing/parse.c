@@ -5,96 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 19:45:29 by tstephan         ###   ########.fr       */
+/*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
+/*   Updated: 2025/03/05 20:30:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static t_token_type	ft_gettype(char *s)
+static char*g_node_type[] = {
+	"NODE_WORD",
+	"NODE_REDIR",
+	"NODE_PIPE",
+	"NODE_LOGICAL"
+};
+
+static void level_tabs(int level)
 {
-	if (ft_strlen(s) == 1 && ft_isspace(s[0]))
-		return (T_BLANK);
-	else if (ft_strlen(s) == 1 && ft_isin_charset(s[0], OPERATOR_S))
-		return (T_OPERATOR);
-	else if (ft_isin_stringset(s, OPERATOR_M, ','))
-		return (T_OPERATOR);
-	else if (ft_isin_stringset(s, RESERVED, ','))
-		return (T_RESERVED);
-	else if (ft_isin_stringset(s, SUBSTITUTE, ','))
-		return (T_SUBSTITUTE);
-	else if (s[0] == '\'')
-		return (T_QUOTE);
-	else if (s[0] == '"')
-		return (T_EXPANSION);
-	return (T_WORD);
+	int i;
+
+	i = 0;
+	while (i++ < level)
+		ft_printf("\t");
 }
 
-static t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
-{	
-	t_list	*act;
-	t_token	*dup;
+static void print_cmd_args(t_tree *node, int level)
+{
+	int i;
 
-	act = pre_tokens;
-	while (act)
+	i = 0;
+	while (node->cmd->args[i])
 	{
-		dup = NULL;
-		dup = malloc(sizeof(t_token));
-		if (!dup)
-			return (tokens);
-		dup->content = ft_strdup(act->content);
-		dup->token_type = ft_gettype(dup->content);
-		dup = ft_expand(dup);
-		dup = ft_remove_quote(dup);
-		if (ft_strncmp(dup->content, "", ft_strlen(dup->content) != 0))
-			ft_lstadd_back(&tokens, ft_lstnew(dup));
-		else
-		{
-			free(dup->content);
-			free(dup);
-		}
-		act = act->next;
+		level_tabs(level);
+		ft_printf("arg: %s\n", node->cmd->args[i++]);
 	}
-	return (tokens);
 }
 
-static bool	handle_heredoc_error(t_list **tokens)
+void ft_print_tree(t_tree *root, int level)
 {
-	int	error;
-
-	error = ft_handle_heredocs(tokens);
-	if (error)
+	if (!root)
+		return ;
+	level_tabs(level);
+	ft_printf("type: %s\n", g_node_type[root->type]);
+	if (root->cmd)
+		print_cmd_args(root, level);
+	if (root->left)
 	{
-		if (error == HEREDOC_PARSE_ERROR)
-		{
-			printf("Syntax error near unexpected token\n");
-			ft_lstclear(tokens, ft_lstclear_t_token);
-			return (true);
-		}
-		if (error == HEREDOC_SIGINT)
-		{
-			ft_lstclear(tokens, ft_lstclear_t_token);
-			return (true);
-		}
+		level_tabs(level);
+		ft_printf("left:\n");
+		ft_print_tree(root->left, level + 1);
 	}
-	return (false);
+	if (root->right)
+	{
+		level_tabs(level);
+		ft_printf("right:\n");
+		ft_print_tree(root->right, level + 1);
+	}
 }
 
-t_list	*ft_lex(const char *input)
+t_tree	*ft_parse(t_list *tokens)
 {
-	t_list	*tokens;
-	t_list	*pre_tokens;
+	t_tree	*root;
 
-	pre_tokens = ft_doom_split(input);
-	if (!pre_tokens)
-		return (NULL);
-	pre_tokens = ft_remove_whitespace(pre_tokens);
-	tokens = NULL;
-	tokens = ft_string_to_token(tokens, pre_tokens);
-	ft_lstclear(&pre_tokens, ft_lstclear_string);
-	tokens = ft_fuse_word(tokens);
-	if (handle_heredoc_error(&tokens))
-		return (NULL);
-	return (tokens);
+	root = (t_tree *)malloc(sizeof(t_tree));
+	root->type = 1;
+	root->cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	root->cmd->args = ft_split("here we are", ' ');
+	root->left = NULL;
+	root->right = NULL;	
+	t_tree *right = (t_tree *)malloc(sizeof(t_tree));
+	right->type = 1;
+	right->cmd = NULL;
+	right->left = NULL;
+	right->right = NULL;
+	root->right = right;
+	ft_print_tree(root, 0);
+	return (root);
+	(void) tokens;
 }

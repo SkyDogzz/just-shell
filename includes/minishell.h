@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 19:31:19 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:22:58 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -88,7 +88,7 @@ typedef struct s_tree	t_tree;
 typedef struct s_tree
 {
 	t_node_type		type;
-	t_cmd			cmd;
+	t_cmd			*cmd;
 	t_tree			*left;
 	t_tree			*right;
 }	t_tree;
