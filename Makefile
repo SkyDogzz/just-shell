@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/05 19:32:36 by tstephan         ###   ########.fr        #
+#    Updated: 2025/03/05 20:14:09 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,12 @@ LIBFT_PATH = libft/
 UTILS_SRC = utils/ft_set.c utils/ft_strndup.c utils/ft_strreplace.c \
 			utils/ft_get_max.c
 SIGNAL_SRC = signal/signal.c
-PARSING_SRC = parsing/parse.c parsing/lst_helper.c parsing/space.c \
-			  parsing/clear.c parsing/expand.c parsing/split.c
+LEXING_SRC = lexing/lex.c lexing/lst_helper.c lexing/space.c \
+			  lexing/clear.c lexing/expand.c lexing/split.c
+PARSING_SRC = parsing/parse.c
 HEREDOC_SRC = heredoc/read.c
 
-SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(PARSING_SRC) $(HEREDOC_SRC)
+SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(LEXING_SRC) $(PARSING_SRC) $(HEREDOC_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -62,6 +63,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)
 	mkdir -p $(OBJ_PATH)/utils
 	mkdir -p $(OBJ_PATH)/signal
+	mkdir -p $(OBJ_PATH)/lexing
 	mkdir -p $(OBJ_PATH)/parsing
 	mkdir -p $(OBJ_PATH)/heredoc
 
