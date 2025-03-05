@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 17:08:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:49:14 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -106,8 +106,10 @@ void	ft_lstclear_t_token(void *content);
 void	ft_lstprint_tokens(t_list *lst, const char *s);
 
 t_list	*ft_lex(const char *cmd_line);
-t_list	*ft_remove_whitespace(t_list *tokens);
 t_list	*ft_remove_whitespace(t_list *lst);
+t_token	*ft_remove_quote(t_token *token);
+t_token	*ft_expand(t_token *token);
+t_list	*ft_fuse_word(t_list *lst);
 t_tree	*ft_parse(t_list *tokens);
 int		ft_exec(t_tree *root);
 
