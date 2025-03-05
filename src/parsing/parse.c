@@ -6,73 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 17:30:56 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:32:12 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_list	*ft_doom_split(const char *input)
-{
-	t_list	*top;
-	char	*dup;
-	int		len;
-	t_quote	quote;
-	int		pos;
-
-	top = NULL;
-	quote = UQUOTE;
-	while (input && *input)
-	{
-		if (!quote && ft_isin_charset(*input, QUOTE))
-		{
-			quote = SQUOTE;
-			if (*input == '"')
-				quote = DQUOTE;
-			continue ;
-		}
-		if (!quote)
-		{
-			len = ft_isin_stringset(input, OPERATOR_M, ',');
-			if (!len)
-				len = ft_isin_stringset(input, RESERVED, ',');
-			if (!len)
-				len = ft_isin_stringset(input, SUBSTITUTE, ',');
-			if (!len)
-				len = ft_isin_charset(*input, OPERATOR_S);
-			if (!len)
-			{
-				while (input[len] && !ft_isspace(input[len])
-					&& !ft_isin_charset(input[len], QUOTE))
-					len++;
-			}
-			if (!len)
-				len = 1;
-		}
-		else if (quote)
-		{
-			len = 1;
-			pos = 1;
-			while (input[pos] && ((quote == SQUOTE && input[pos] != '\'')
-					|| (quote == DQUOTE && input[pos] != '"')))
-			{
-				len++;
-				pos++;
-			}
-			if (input[pos] == '"' || input[pos] == '\'')
-				len++;
-			quote = UQUOTE;
-		}
-		dup = ft_strndup(input, len);
-		if (!dup)
-			continue ;
-		ft_lstadd_back(&top, ft_lstnew(dup));
-		input += len;
-	}
-	if (!top)
-		return (NULL);
-	return (top);
-}
 
 static t_token_type	ft_gettype(char *s)
 {
