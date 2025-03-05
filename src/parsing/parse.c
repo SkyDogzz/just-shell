@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 16:49:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:30:56 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,11 @@ static t_token_type	ft_gettype(char *s)
 	return (T_WORD);
 }
 
-t_list	*ft_lex(const char *input)
-{
-	t_list	*tokens;
-	t_list	*pre_tokens;
+static t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
+{	
 	t_list	*act;
 	t_token	*dup;
 
-	pre_tokens = ft_doom_split(input);
-	if (!pre_tokens)
-		return (NULL);
-	pre_tokens = ft_remove_whitespace(pre_tokens);
-	tokens = NULL;
 	act = pre_tokens;
 	while (act)
 	{
@@ -125,8 +118,22 @@ t_list	*ft_lex(const char *input)
 		}
 		act = act->next;
 	}
-	tokens = ft_fuse_word(tokens);
+	return (tokens);
+}
+
+t_list	*ft_lex(const char *input)
+{
+	t_list	*tokens;
+	t_list	*pre_tokens;
+
+	pre_tokens = ft_doom_split(input);
+	if (!pre_tokens)
+		return (NULL);
+	pre_tokens = ft_remove_whitespace(pre_tokens);
+	tokens = NULL;
+	tokens = ft_string_to_token(tokens, pre_tokens);
 	ft_lstprint_string(pre_tokens, "Print strings :");
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
+	tokens = ft_fuse_word(tokens);
 	return (tokens);
 }

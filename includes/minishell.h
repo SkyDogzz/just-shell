@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 16:49:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:00:44 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -91,6 +91,7 @@ typedef struct s_tree
 }	t_tree;
 
 void	ft_set_sigaction(void);
+bool	handle_sigint(void);
 
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strreplace(const char *full, const char *old, const char *ne);
