@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 19:48:42 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:08:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	*ft_read_heredoc(char *delimiter)
 	char	*content;
 	char	*input;
 	char	*mem;
+	char	*inputendl;
 
 	content = ft_strdup("");
 	while (true)
@@ -39,7 +40,14 @@ static char	*ft_read_heredoc(char *delimiter)
 			break ;
 		}
 		mem = content;
-		content = ft_strjoin(mem, input);
+		if (ft_strlen(mem) == 0)
+		{
+			inputendl = ft_strjoin(input, "\n");
+			content = ft_strjoin(mem, inputendl);
+			free(inputendl);
+		}
+		else
+			content = ft_strjoin(mem, input);
 		free(mem);
 		free(input);
 	}
