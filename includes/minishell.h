@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 20:22:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:25:33 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -24,6 +24,12 @@
 # include <stdbool.h>
 
 # include "../libft/includes/libft.h"
+
+# define NC		"\e[0m"
+# define RED	"\e[31m"
+# define GREEN	"\e[32m"
+# define PURPLE	"\e[35m"
+# define CYAN	"\e[36m"
 
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!" 
@@ -84,14 +90,19 @@ typedef struct s_cmd
 	int				outfile;
 }	t_cmd;
 
-typedef struct s_tree	t_tree;
-typedef struct s_tree
+typedef struct s_btree	t_btree;
+typedef struct s_btree
+{
+	void	*content;
+	t_btree	*left;
+	t_btree	*right;
+}	t_btree;
+
+typedef struct s_leaf
 {
 	t_node_type		type;
 	t_cmd			*cmd;
-	t_tree			*left;
-	t_tree			*right;
-}	t_tree;
+}	t_leaf;
 
 void	ft_set_sigaction(void);
 bool	handle_sigint(void);
@@ -119,7 +130,23 @@ t_list	*ft_remove_whitespace(t_list *lst);
 t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
-t_tree	*ft_parse(t_list *tokens);
-int		ft_exec(t_tree *root);
+t_btree	*ft_parse(t_list *tokens);
+int		ft_exec(t_btree *root);
+
+// tree related functions
+void	ft_print_tree(t_btree *root, int level, int is_last);
+t_btree	*ft_btree_new(void *content);
+void	ft_btree_insert(t_btree **root, t_btree *ne,
+			int (*cmp)(void *, void *));
+void	ft_btree_inorder(t_btree *root, void (*f)(void *));
+void	ft_btree_preorder(t_btree *root, void (*f)(void *));
+void	ft_btree_postorder(t_btree *root, void (*f)(void *));
+int		ft_btree_size(t_btree *root);
+int		ft_btree_height(t_btree *root);
+void	ft_btree_clear(t_btree **root, void (*del)(void *));
+
+t_leaf	*ft_create_leaf(t_node_type type, char	**args);
+int		ft_cmp_leaf(void *s1, void *s2);
+void	ft_free_leaf(void *leaf);
 
 #endif
