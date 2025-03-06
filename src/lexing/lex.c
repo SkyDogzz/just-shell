@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 19:45:29 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:23:08 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,28 @@ static bool	handle_heredoc_error(t_list **tokens)
 	return (false);
 }
 
+static t_list	*ft_remove_spaces(t_list *tokens)
+{
+	t_list	*act;
+	t_token	*act_t;
+	t_list	*mem;
+
+	act = tokens;
+	while (act && act->next)
+	{
+		act_t = act->next->content;
+		if (act_t->token_type == T_BLANK)
+		{
+			mem = act->next;
+			act->next = act->next->next;
+			ft_lstclear_t_token(mem->content);
+			free(mem);
+		}
+		act = act->next;
+	}
+	return (tokens);
+}
+
 t_list	*ft_lex(const char *input)
 {
 	t_list	*tokens;
@@ -96,5 +118,6 @@ t_list	*ft_lex(const char *input)
 	tokens = ft_fuse_word(tokens);
 	if (handle_heredoc_error(&tokens))
 		return (NULL);
+	tokens = ft_remove_spaces(tokens);
 	return (tokens);
 }
