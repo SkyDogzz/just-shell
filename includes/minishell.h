@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/28 19:34:04 by yandry           ###   ########.fr       */
+/*   Updated: 2025/03/01 15:36:16 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,21 @@
 # define MINISHELL_H
 
 # include "../libft/includes/libft.h"
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/ioctl.h>
+# include <sys/wait.h>
 # include <unistd.h>
+
+# define NC		"\e[0m"
+# define RED	"\e[31m"
+# define GREEN	"\e[32m"
+# define PURPLE	"\e[35m"
+# define CYAN	"\e[36m"
 
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!"
@@ -38,7 +45,8 @@ typedef enum e_quote
 
 typedef enum e_token_type
 {
-	T_OPERATOR,
+	T_OPERATOR_S,
+	T_OPERATOR_M,
 	T_WORD,
 	T_QUOTE,
 	T_EXPANSION,
@@ -81,7 +89,7 @@ typedef struct s_tree	t_tree;
 typedef struct s_tree
 {
 	t_node_type			type;
-	t_cmd				cmd;
+	t_cmd				*cmd;
 	t_tree				*left;
 	t_tree				*right;
 }						t_tree;
@@ -89,7 +97,7 @@ typedef struct s_tree
 void					ft_set_sigaction(void);
 
 t_list					*ft_lex(const char *cmd_line);
-t_tree					*ft_parse(t_list *tokens);
+t_tree					*ft_parse(const t_list *tokens);
 int						ft_exec(t_tree *root);
 
 bool					is_in_charset(const char c, const char *charset);
@@ -98,5 +106,7 @@ bool					is_in_stringset(const char *input,
 
 typedef char			*(*t_readline)(const char *);
 t_token					*ft_new_token(const char *content);
+
+void					ft_print_tree(t_tree *root, int level, int is_last);
 
 #endif
