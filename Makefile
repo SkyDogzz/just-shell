@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/02/28 19:35:11 by yandry           ###   ########.fr        #
+#    Updated: 2025/03/01 11:29:57 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ LDFLAGS = -lreadline
 
 ifdef DEBUG
 CFLAGS += -g3
-CFLAGS += -DDEBUG=TRUE
+CFLAGS += -D DEBUG=TRUE
 endif
 ifdef FSAN
 CFLAGS += -fsanitize=address
@@ -35,12 +35,14 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 LIBFT_PATH = libft/
 
-UTILS_SRC = utils/set.c
+UTILS_SRC = utils/set.c utils/ft_print_tree.c
 SIGNAL_SRC = signal/signal.c
 EXEC_SRC = exec/ft_exec.c
 TOKEN_SRC = token/tokenizer.c
+LEXER_SRC = lex/ft_lex.c
+PARSER_SRC = parse/ft_parse.c
 
-SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(EXEC_SRC) $(TOKEN_SRC)
+SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(EXEC_SRC) $(TOKEN_SRC) $(LEXER_SRC) $(PARSER_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -62,6 +64,9 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)/signal
 	mkdir -p $(OBJ_PATH)/parsing
 	mkdir -p $(OBJ_PATH)/exec
+	mkdir -p $(OBJ_PATH)/token
+	mkdir -p $(OBJ_PATH)/lex
+	mkdir -p $(OBJ_PATH)/parse
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"
