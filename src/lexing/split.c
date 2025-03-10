@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:31:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 17:41:22 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:23:19 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static	int	ft_handle_uquote(const char *input)
 		len = ft_isin_charset(*input, OPERATOR_S);
 	if (!len)
 	{
-		while (input[len] && !ft_isspace(input[len])
-			&& !ft_isin_charset(input[len], QUOTE))
+		while (input[len] && !ft_isin_charset(input[len], OPERATOR_S)
+			&& !ft_isspace(input[len]) && !ft_isin_charset(input[len], QUOTE))
 			len++;
 	}
 	if (!len)
@@ -47,9 +47,15 @@ static int	ft_handle_quote(const char *input, t_quote *quote)
 		len++;
 		pos++;
 	}
-	if (input[pos] == '"' || input[pos] == '\'')
+	if (*quote == DQUOTE && input[pos - 1] == '\\')
+	{
 		len++;
-	*quote = UQUOTE;
+	}
+	if (input[pos] == '"' || input[pos] == '\'')
+	{
+		*quote = UQUOTE;
+		len++;
+	}
 	return (len);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/06 16:25:33 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:50:33 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@
 # define CYAN	"\e[36m"
 
 # define QUOTE "\'\""
-# define OPERATOR_S "<>;|&{}!" 
+# define OPERATOR_S "<>;|&{}!()" 
 # define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
 # define RESERVED "if,then,else,elif,fi,done,do,case,esac,while,until,for,in,!!"
 # define SUBSTITUTE "$((,$(,)),)"

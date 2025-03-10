@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:14:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/06 15:54:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:58:59 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char*g_node_type[] = {
+static char	*g_node_type[] = {
 	"NODE_WORD",
 	"NODE_REDIR",
 	"NODE_PIPE",
@@ -27,11 +27,11 @@ static void	print_indent(int level, int is_last, int curr)
 		ft_printf("%s│   %s", CYAN, NC);
 	else if (level > 0)
 	{
-	if (is_last)
-		ft_printf("%s└── %s", CYAN, NC);
-	else
-		ft_printf("%s├── %s", CYAN, NC);
-}
+		if (is_last)
+			ft_printf("%s└── %s", CYAN, NC);
+		else
+			ft_printf("%s├── %s", CYAN, NC);
+	}
 	print_indent(level, is_last, curr + 1);
 }
 
@@ -65,7 +65,6 @@ void	ft_print_tree(t_btree *root, int level, int is_last)
 	t_leaf	*leaf;
 
 	leaf = root->content;
-	/*printf("%p %p\n", root, root->content);*/
 	if (!leaf)
 		return ;
 	print_indent(level, is_last, 0);
