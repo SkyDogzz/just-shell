@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 16:47:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:30:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	*ft_quit_subshell(char *content)
 	return (NULL);
 }
 
-static int get_level(int level, char *input)
+static int	get_level(int level, char *input)
 {
 	while (*input)
 	{
@@ -73,6 +73,7 @@ char	*ft_read_subshell(int level)
 		level = get_level(level, input);
 		if (level == 0)
 		{
+			content = fuse_content(content, input);
 			free(input);
 			break ;
 		}
