@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 15:12:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:18:09 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -32,10 +32,11 @@
 # define CYAN	"\e[36m"
 
 # define QUOTE "\'\""
-# define OPERATOR_S "<>;|&{}!()" 
+# define OPERATOR_S "<>;|&{}!"
 # define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
 # define RESERVED "if,then,else,elif,fi,done,do,case,esac,while,until,for,in,!!"
-# define SUBSTITUTE "$((,$(,)),)"
+/*# define SUBSTITUTE "$((,$(,)),),`"*/
+# define SUBSTITUTE "$(,),`"
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
@@ -151,5 +152,8 @@ int		ft_cmp_leaf(void *s1, void *s2);
 void	ft_free_leaf(void *leaf);
 
 char	*ft_handle_multiline_quote(char *input);
+
+bool	ft_findsubshell(t_list **tokens);
+char	*ft_read_subshell(int level);
 
 #endif

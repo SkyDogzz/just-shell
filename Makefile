@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/10 15:13:29 by tstephan         ###   ########.fr        #
+#    Updated: 2025/03/10 16:33:04 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,9 +48,10 @@ BTREE_SRC = btree/ft_btree_clear.c btree/ft_btree_height.c \
 			btree/ft_btree_inorder.c btree/ft_btree_insert.c \
 			btree/ft_btree_new.c btree/ft_btree_postorder.c \
 			btree/ft_btree_preorder.c btree/ft_btree_size.c btree/print.c
+SUBSHELL_SRC = subshell/subshell.c subshell/read.c
 
 SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(LEXING_SRC) $(PARSING_SRC) \
-	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC)
+	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC) $(SUBSHELL_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -75,6 +76,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)/heredoc
 	mkdir -p $(OBJ_PATH)/quote
 	mkdir -p $(OBJ_PATH)/btree
+	mkdir -p $(OBJ_PATH)/subshell
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"
