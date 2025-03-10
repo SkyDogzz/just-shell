@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 13:50:33 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:12:55 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -123,6 +123,7 @@ void	ft_lstclear_t_token(void *content);
 void	ft_lstprint_tokens(t_list *lst, const char *s);
 
 int		ft_handle_heredocs(t_list **lst);
+char	*ft_read_heredoc(char *delimiter);
 
 t_list	*ft_lex(const char *cmd_line);
 t_list	*ft_doom_split(const char *input);
@@ -148,5 +149,7 @@ void	ft_btree_clear(t_btree **root, void (*del)(void *));
 t_leaf	*ft_create_leaf(t_node_type type, char	**args);
 int		ft_cmp_leaf(void *s1, void *s2);
 void	ft_free_leaf(void *leaf);
+
+char	*ft_handle_multiline_quote(char *input);
 
 #endif
