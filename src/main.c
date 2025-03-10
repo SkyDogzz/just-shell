@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:58:26 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	main_process(void)
 		if (tokens)
 		{
 			ft_lstprint_tokens(tokens, "Print strings :");
+			ft_findsubshell(&tokens);
 			tree = ft_parse(tokens);
 			ft_lstclear(&tokens, ft_lstclear_t_token);
 			ft_btree_clear(&tree, ft_free_leaf);
