@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 13:57:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:19:47 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_btree	*ft_parse(t_list *tokens)
 				ft_split("seventh", ' '))), ft_cmp_leaf);
 	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(0,
 				ft_split("eigth", ' '))), ft_cmp_leaf);
-	ft_print_tree(root, 0, 0);
+	/*ft_print_tree(root, 0, 0);*/
 	return (root);
 	(void) tokens;
 }

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 15:58:26 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:15:14 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ static int	main_process(void)
 		if (tokens)
 		{
 			ft_lstprint_tokens(tokens, "Print strings :");
-			ft_findsubshell(&tokens);
+			if (!ft_findsubshell(&tokens))
+			{
+				printf("Syntax error near unexpected token ')'\n");
+				ft_lstclear(&tokens, ft_lstclear_t_token);
+				continue ;
+			}
 			tree = ft_parse(tokens);
 			ft_lstclear(&tokens, ft_lstclear_t_token);
 			ft_btree_clear(&tree, ft_free_leaf);
