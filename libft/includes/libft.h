@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:25:07 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/01 15:12:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:44:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-# pragma region ft_memory
-
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -38,10 +36,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-
-# pragma endregion
-
-# pragma region ft_string
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -68,19 +62,11 @@ char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strappend(char **s1, const char *s2);
 
-# pragma endregion
-
-# pragma region ft_file
-
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_get_next_line(int fd);
-
-# pragma endregion
-
-# pragma region ft_list
 
 /**
  * @brief Allocates a new t_list* with the given content
@@ -211,16 +197,11 @@ void	**ft_lsttoarray_s(t_list *lst, ssize_t elem_size);
  * or NULL if the heap failed horribly... Yay :D!!!!
  */
 void	**ft_lsttoarray_c(t_list *lst, void *(*copy_func)(const void *));
-# pragma endregion
-
-# pragma region ft_printf
 
 int		ft_printf(const char *format, ...);
 int		ft_putstr(const char *str);
 int		ft_putchar(char c);
 int		ft_putnbr(int n);
 int		ft_putptr(void *ptr);
-
-# pragma endregion
 
 #endif
