@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 20:15:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:26:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	main_process(void)
 	{
 		if (handle_sigint())
 			continue ;
-		input = readline("Minishell : ");
+		input = ft_readline(PROMPT_MAIN);
 		if (!input)
 			break ;
 		if (is_exit(input))

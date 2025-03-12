@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:50:05 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 14:50:26 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:26:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_handle_multiline_quote(char *input)
 		}
 		mem = ft_strjoin(input, "\n");
 		free(input);
-		rest = readline("> ");
+		rest = ft_readline(PROMPT_QUOTE);
 		if (!rest)
 		{
 			free(mem);
