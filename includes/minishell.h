@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 20:45:53 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:32:17 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -26,6 +26,7 @@
 # include "../libft/includes/libft.h"
 
 # define NC		"\e[0m"
+# define BOLD	"\e[1m"
 # define RED	"\e[31m"
 # define GREEN	"\e[32m"
 # define PURPLE	"\e[35m"
@@ -40,6 +41,14 @@
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
+
+typedef enum e_prompt
+{
+	PROMPT_MAIN,
+	PROMPT_HEREDOC,
+	PROMPT_QUOTE,
+	PROMPT_SUBSHELL
+}	t_prompt;
 
 typedef enum e_quote
 {
@@ -157,5 +166,8 @@ bool	ft_findsubshell(t_list **tokens);
 char	*ft_read_subshell(int level);
 
 t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens);
+
+char	*ft_getenv(char *name);
+char	*ft_readline(t_prompt id);
 
 #endif
