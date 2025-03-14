@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/12 14:42:06 by tstephan         ###   ########.fr        #
+#    Updated: 2025/03/14 15:20:03 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ UTILS_SRC = utils/ft_set.c utils/ft_strndup.c utils/ft_strreplace.c \
 			utils/ft_get_max.c
 SIGNAL_SRC = signal/signal.c
 LEXING_SRC = lexing/lex.c lexing/lst_helper.c lexing/space.c \
-			  lexing/clear.c lexing/expand.c lexing/split.c
+			  lexing/clear.c lexing/expand.c lexing/split.c \
+			  lexing/lst_helper2.c lexing/is.c
 PARSING_SRC = parsing/parse.c parsing/cmp_leaf.c parsing/free_leaf.c \
 			  parsing/create_leaf.c
 HEREDOC_SRC = heredoc/read.c heredoc/handle.c
