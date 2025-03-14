@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:26:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:44:14 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,15 @@ static int	main_process(void)
 		input = ft_handle_multiline_quote(input);
 		if (!input)
 			continue ;
+		if (ft_strlen(input) <= 0)
+		{
+			free(input);
+			continue ;
+		}
 		add_history(input);
 		tokens = ft_lex(input);
 		if (tokens)
 		{
-			ft_lstprint_tokens(tokens, "Print strings :");
 			if (!ft_findsubshell(&tokens))
 			{
 				printf("Syntax error near unexpected token ')'\n");
@@ -54,7 +58,6 @@ static int	main_process(void)
 				continue ;
 			}
 			tree = ft_parse(tokens);
-			ft_lstclear(&tokens, ft_lstclear_t_token);
 			ft_btree_clear(&tree, ft_free_leaf);
 		}
 		free(input);
