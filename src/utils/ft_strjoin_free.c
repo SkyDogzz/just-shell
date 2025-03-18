@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is.c                                               :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 14:03:46 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/18 14:03:47 by tstephan         ###   ########.fr       */
+/*   Created: 2025/03/18 14:17:56 by tstephan          #+#    #+#             */
+/*   Updated: 2025/03/18 14:21:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	ft_is_pipe(t_token *token)
+char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree jfree)
 {
-	return (ft_strlen(token->content) == 1 && token->token_type == T_OPERATOR
-		&& ft_strncmp(token->content, "|", 1) == 0);
+	char	*join;
+
+	join = ft_strjoin(s1, s2);
+	if (jfree == FIRST || jfree == BOTH)
+		free((char *)s1);
+	if (jfree == SECOND || jfree == BOTH)
+		free((char *)s2);
+	return (join);
 }

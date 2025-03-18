@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:27:30 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:16:31 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,17 @@ static int	get_level(int level, char *input)
 
 static char	*fuse_content(char *content, char *input)
 {
-	char	*mem;
-	char	*inputendl;
-
-	mem = content;
-	if (ft_strlen(mem) != 0)
+	if (content && ft_strlen(content) != 0)
 	{
-		inputendl = ft_strjoin("\n", input);
-		content = ft_strjoin(mem, inputendl);
-		free(mem);
-		free(inputendl);
+		input = ft_strjoin_free("\n", input, SECOND);
+		content = ft_strjoin_free(content, input, BOTH);
 	}
 	else
 	{
 		if (ft_strlen(input) == 0)
-			content = ft_strjoin(mem, "\n");
+			content = ft_strjoin_free(content, "\n", FIRST);
 		else
-			content = ft_strjoin(mem, input);
-		free(mem);
+			content = ft_strjoin_free(content, input, FIRST);
 	}
 	return (content);
 }
