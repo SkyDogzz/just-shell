@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:36:32 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:03:36 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ static char	*get_prompt_main(void)
 {
 	char	*prompt;
 	char	*mem;
-	
-	prompt = ft_strjoin(GREEN BOLD "Maxishell | ", ft_getenv("PWD"));
-	mem = ft_strjoin(prompt, " > " NC);
+
+	prompt = ft_strjoin_free(GREEN BOLD "Maxishell | ", ft_getenv("PWD"), NONE);
+	prompt = ft_strjoin_free(prompt, " > " NC, FIRST);
+	mem = ft_strreplace(prompt, ft_getenv("HOME"), "~");
 	free(prompt);
-	prompt = ft_strreplace(mem, ft_getenv("HOME"), "~");
-	free(mem);
-	return (prompt);
+	return (mem);
 }
 
 char	*ft_readline(t_prompt id)

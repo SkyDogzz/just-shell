@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:50:05 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:26:29 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:00:49 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static bool	ft_quote_ended(const char *input)
 
 char	*ft_handle_multiline_quote(char *input)
 {
-	char	*mem;
 	char	*rest;
 
 	while (!ft_quote_ended(input))
@@ -45,17 +44,11 @@ char	*ft_handle_multiline_quote(char *input)
 			free(input);
 			return (NULL);
 		}
-		mem = ft_strjoin(input, "\n");
-		free(input);
+		input = ft_strjoin_free(input, "\n", FIRST);
 		rest = ft_readline(PROMPT_QUOTE);
 		if (!rest)
-		{
-			free(mem);
 			return (NULL);
-		}
-		input = ft_strjoin(mem, rest);
-		free(mem);
-		free(rest);
+		input = ft_strjoin_free(input, rest, BOTH);
 	}
 	return (input);
 }

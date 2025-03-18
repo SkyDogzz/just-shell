@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 20:46:42 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:14:36 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,14 @@ static void	ft_fuse_token(t_list **token)
 	t_list	*mem;
 	t_token	*act_t;
 	t_token	*next_t;
-	char	*content;
 
 	act = *token;
 	if (!act || !act->next)
 		return ;
 	act_t = act->content;
 	next_t = act->next->content;
-	content = ft_strjoin(act_t->content, next_t->content);
-	free(act_t->content);
-	free(next_t->content);
-	act_t->content = content;
-mem = act->next;
+	act_t->content = ft_strjoin_free(act_t->content, next_t->content, BOTH);
+	mem = act->next;
 	act->next = act->next->next;
 	ft_lstclear_t_token(mem);
 }

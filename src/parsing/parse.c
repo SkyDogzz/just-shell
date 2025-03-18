@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/14 15:49:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:03:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ t_btree	*ft_parse(t_list *tokens)
 	pipes = parse_pipe(tokens);
 	ft_lstprint_pipes(pipes, "Print pipes");
 	ft_lstclear(&pipes, ft_lstclear_pipes);
-	/*ft_lstclear(&tokens, ft_lstclear_t_token);*/
 	root = NULL;
 	return (root);
 	(void)tokens;

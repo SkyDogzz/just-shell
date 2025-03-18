@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/14 15:19:35 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:33:14 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -41,6 +41,14 @@
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
+
+typedef enum e_joinfree
+{
+	NONE,
+	FIRST,
+	SECOND,
+	BOTH
+}	t_joinfree;
 
 typedef enum e_prompt
 {
@@ -157,6 +165,7 @@ void	ft_btree_postorder(t_btree *root, void (*f)(void *));
 int		ft_btree_size(t_btree *root);
 int		ft_btree_height(t_btree *root);
 void	ft_btree_clear(t_btree **root, void (*del)(void *));
+char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree flag);
 
 t_leaf	*ft_create_leaf(t_node_type type, char	**args);
 int		ft_cmp_leaf(void *s1, void *s2);

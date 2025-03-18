@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/12 16:26:54 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:13:14 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,20 @@ static void	*ft_quit_heredoc(char *content)
 
 static char	*fuse_content(char *content, char *input)
 {
-	char	*mem;
-	char	*inputendl;
-
-	mem = content;
-	if (ft_strlen(mem) != 0)
+	if (content && ft_strlen(content) != 0)
 	{
-		inputendl = ft_strjoin("\n", input);
-		content = ft_strjoin(mem, inputendl);
-		free(mem);
-		free(inputendl);
+		input = ft_strjoin_free("\n", input, SECOND);
+		content = ft_strjoin_free(content, input, BOTH);
 	}
 	else
 	{
 		if (ft_strlen(input) == 0)
-			content = ft_strjoin(mem, "\n");
+		{
+			content = ft_strjoin_free(content, "\n", FIRST);
+			free(input);
+		}
 		else
-			content = ft_strjoin(mem, input);
-		free(mem);
+			content = ft_strjoin_free(content, input, BOTH);
 	}
 	return (content);
 }
@@ -62,7 +58,6 @@ char	*ft_read_heredoc(char *delimiter)
 			break ;
 		}
 		content = fuse_content(content, input);
-		free(input);
 	}
 	return (content);
 }
