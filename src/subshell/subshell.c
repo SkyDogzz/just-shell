@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:24:34 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:50:54 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static void	ft_group_subshell(t_list **token)
 	while (act)
 	{
 		act_t = act->content;
-		if (ft_strncmp(act_t->content, "$(",
-				ft_getmax(ft_strlen(act_t->content), 2)) == 0)
+		if (ft_strcmp(act_t->content, "$(") == 0)
 		{
 			level++;
 			while (level)
@@ -53,11 +52,9 @@ static void	ft_group_subshell(t_list **token)
 				if (!act->next)
 					break ;
 				act_t = act->next->content;
-				if (ft_strncmp(act_t->content, ")",
-						ft_getmax(ft_strlen(act_t->content), 1)) == 0)
+				if (ft_strcmp(act_t->content, ")") == 0)
 					level--;
-				else if (ft_strncmp(act_t->content, "$(",
-						ft_getmax(ft_strlen(act_t->content), 2)) == 0)
+				else if (ft_strcmp(act_t->content, "$(") == 0)
 					level++;
 				ft_fuse_token(&act);
 			}
@@ -77,11 +74,9 @@ bool	ft_findsubshell(t_list **token)
 		help.act_t = help.act->content;
 		if (help.act_t->token_type == T_SUBSTITUTE)
 		{
-			if (ft_strncmp(help.act_t->content, "$(",
-					ft_getmax(ft_strlen(help.act_t->content), 2)) == 0)
+			if (ft_strcmp(help.act_t->content, "$(") == 0)
 				help.level++;
-			if (ft_strncmp(help.act_t->content, ")",
-					ft_getmax(ft_strlen(help.act_t->content), 1)) == 0)
+			if (ft_strcmp(help.act_t->content, ")") == 0)
 				help.level--;
 		}
 		if (help.level < 0)

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 15:26:32 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:53:02 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static t_list	*ft_replace_heredoc(t_list *lst, char *content)
 	while (act)
 	{
 		act_t = act->content;
-		if (act_t->token_type == T_OPERATOR && ft_strncmp("<<", act_t->content,
-				ft_getmax(ft_strlen(act_t->content), 2)) == 0)
+		if (act_t->token_type == T_OPERATOR && ft_strcmp("<<", act_t->content)
+			== 0)
 		{
 			mem = act_t->content;
 			act_t->content = content;
@@ -73,7 +73,7 @@ int	ft_handle_heredocs(t_list **lst)
 	{
 		act_t = act->content;
 		if (act_t->token_type == T_OPERATOR
-			&& ft_strncmp(act_t->content, "<<", 2) == 0)
+			&& ft_strcmp(act_t->content, "<<") == 0)
 		{
 			error = ft_handle_heredoc(act, lst);
 			if (error)
