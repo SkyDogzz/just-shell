@@ -6,13 +6,22 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/14 14:44:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:18:08 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_sig = 0;
+
+static bool	is_comment(char *input)
+{
+	while (ft_isspace(*input))
+		input++;
+	if (*input == '#')
+		return (true);
+	return (false);
+}
 
 static bool	is_exit(char *input)
 {
@@ -42,7 +51,7 @@ static int	main_process(void)
 		input = ft_handle_multiline_quote(input);
 		if (!input)
 			continue ;
-		if (ft_strlen(input) <= 0)
+		if (ft_strlen(input) <= 0 || is_comment(input))
 		{
 			free(input);
 			continue ;
