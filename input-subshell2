@@ -1,1 +1,1 @@
-echo $(echo $( echo $HOME)) | wc
+echo $(echo $( echo $HOME)) | grep oui | wc
