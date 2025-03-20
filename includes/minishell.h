@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/18 13:33:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:25:16 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -99,6 +99,16 @@ typedef struct s_token
 	char			*content;
 	t_token_type	token_type;
 }	t_token;
+
+typedef struct s_subshell
+{
+	t_list	*act;
+	t_token	*act_t;
+	int		level;
+	t_list	*pre;
+	t_list	*post;
+	char	*input;
+}	t_subshell;
 
 typedef struct s_cmd
 {

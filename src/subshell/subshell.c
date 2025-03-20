@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/18 14:31:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:24:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,40 +68,35 @@ static void	ft_group_subshell(t_list **token)
 
 bool	ft_findsubshell(t_list **token)
 {
-	t_list	*act;
-	t_token	*act_t;
-	int		level;
-	t_list	*pre;
-	t_list	*post;
-	char	*input;
+	t_subshell	help;
 
-	act = *token;
-	level = 0;
-	while (act)
+	help.act = *token;
+	help.level = 0;
+	while (help.act)
 	{
-		act_t = act->content;
-		if (act_t->token_type == T_SUBSTITUTE)
+		help.act_t = help.act->content;
+		if (help.act_t->token_type == T_SUBSTITUTE)
 		{
-			if (ft_strncmp(act_t->content, "$(",
-					ft_getmax(ft_strlen(act_t->content), 2)) == 0)
-				level++;
-			if (ft_strncmp(act_t->content, ")",
-					ft_getmax(ft_strlen(act_t->content), 1)) == 0)
-				level--;
+			if (ft_strncmp(help.act_t->content, "$(",
+					ft_getmax(ft_strlen(help.act_t->content), 2)) == 0)
+				help.level++;
+			if (ft_strncmp(help.act_t->content, ")",
+					ft_getmax(ft_strlen(help.act_t->content), 1)) == 0)
+				help.level--;
 		}
-		if (level < 0)
+		if (help.level < 0)
 			return (false);
-		act = act->next;
+		help.act = help.act->next;
 	}
-	if (level != 0)
+	if (help.level != 0)
 	{
-		input = ft_read_subshell(level);
-		pre = ft_doom_split(input);
-		free(input);
-		post = NULL;
-		post = ft_string_to_token(post, pre);
-		ft_lstadd_back(token, post);
-		ft_lstclear(&pre, ft_lstclear_string);
+		help.input = ft_read_subshell(help.level);
+		help.pre = ft_doom_split(help.input);
+		free(help.input);
+		help.post = NULL;
+		help.post = ft_string_to_token(help.post, help.pre);
+		ft_lstadd_back(token, help.post);
+		ft_lstclear(&help.pre, ft_lstclear_string);
 	}
 	ft_lstprint_tokens(*token, "Print pre subshell");
 	ft_group_subshell(token);
