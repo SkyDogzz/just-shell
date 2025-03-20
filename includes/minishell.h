@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:25:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:30:43 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -131,6 +131,8 @@ typedef struct s_leaf
 	t_node_type		type;
 	t_cmd			*cmd;
 }	t_leaf;
+
+int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
 bool	handle_sigint(void);

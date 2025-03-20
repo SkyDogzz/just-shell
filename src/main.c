@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:18:08 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:53:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	is_comment(char *input)
 
 static bool	is_exit(char *input)
 {
-	if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
+	if (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0)
 	{
 		free(input);
 		return (true);

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 20:45:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:51:48 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
 		dup->token_type = ft_gettype(dup->content);
 		dup = ft_expand(dup);
 		dup = ft_remove_quote(dup);
-		if (ft_strncmp(dup->content, "", ft_strlen(dup->content) != 0))
+		if (ft_strcmp(dup->content, "") != 0)
 			ft_lstadd_back(&tokens, ft_lstnew(dup));
 		else
 		{

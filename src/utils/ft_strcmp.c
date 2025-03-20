@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is.c                                               :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 14:03:46 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:47:48 by tstephan         ###   ########.fr       */
+/*   Created: 2025/03/20 16:29:05 by tstephan          #+#    #+#             */
+/*   Updated: 2025/03/20 16:49:50 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	ft_is_pipe(t_token *token)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	return (ft_strlen(token->content) == 1 && token->token_type == T_OPERATOR
-		&& ft_strcmp(token->content, "|") == 0);
+	while (*s1 || *s2)
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		s1++;
+		s2++;
+	}
+	return (0);
 }
