@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/20 16:34:23 by tstephan         ###   ########.fr        #
+#    Updated: 2025/03/25 17:43:24 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ QUOTE_SRC = quote/read.c
 BTREE_SRC = btree/ft_btree_clear.c btree/ft_btree_height.c \
 			btree/ft_btree_inorder.c btree/ft_btree_insert.c \
 			btree/ft_btree_new.c btree/ft_btree_postorder.c \
-			btree/ft_btree_preorder.c btree/ft_btree_size.c btree/print.c
+			btree/ft_btree_preorder.c btree/ft_btree_size.c btree/print.c \
+			btree/ft_btree_insert_in.c
 SUBSHELL_SRC = subshell/subshell.c subshell/read.c
 PROMPT_SRC = prompt/shell.c
 

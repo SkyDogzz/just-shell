@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/25 17:23:28 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:12:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ static int	cmp(void *c1, void *c2)
 
 	leaf1 = c1;
 	leaf2 = c2;
-	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_PIPE)
-		return (1);
-	if (leaf1->type == NODE_PIPE && leaf2->type != NODE_PIPE)
-		return (-1);
+	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_WORD)
+		return (0);
 	return (1);
 }
 
@@ -109,12 +107,12 @@ void	ft_fill_tree(t_btree **root, t_list *pipes)
 		if (ft_lstsize(tokens) == 1 && ft_is_pipe(token))
 		{
 			leaf = ft_create_leaf(NODE_PIPE, NULL);
-			ft_btree_insert(root, ft_btree_new(leaf), cmp);
+			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
 		}
 		else
 		{
 			leaf = ft_create_leaf(NODE_WORD, args_from_lst(tokens));
-			ft_btree_insert(root, ft_btree_new(leaf), cmp);
+			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
 		}
 		pipes = pipes->next;
 	}
