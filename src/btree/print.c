@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:14:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 13:58:59 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:48:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	ft_print_tree(t_btree *root, int level, int is_last)
 {
 	t_leaf	*leaf;
 
+	if (!root)
+		return ;
 	leaf = root->content;
 	if (!leaf)
 		return ;

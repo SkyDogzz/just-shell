@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:50:54 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:45:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ bool	ft_findsubshell(t_list **token)
 		ft_lstadd_back(token, help.post);
 		ft_lstclear(&help.pre, ft_lstclear_string);
 	}
-	ft_lstprint_tokens(*token, "Print pre subshell");
 	ft_group_subshell(token);
-	ft_lstprint_tokens(*token, "Print subshell");
 	return (true);
 }
