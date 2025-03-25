@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:30:43 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:44:25 by tstephan         ###   ########.fr       */
 /*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -170,6 +170,8 @@ int		ft_exec(t_btree *root);
 void	ft_print_tree(t_btree *root, int level, int is_last);
 t_btree	*ft_btree_new(void *content);
 void	ft_btree_insert(t_btree **root, t_btree *ne,
+			int (*cmp)(void *, void *));
+void	ft_btree_insert_in(t_btree **root, t_btree *ne,
 			int (*cmp)(void *, void *));
 void	ft_btree_inorder(t_btree *root, void (*f)(void *));
 void	ft_btree_preorder(t_btree *root, void (*f)(void *));
