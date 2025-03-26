@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 15:04:08 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:15:59 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,40 @@ static t_list	*ft_remove_spaces(t_list *tokens)
 	return (tokens);
 }
 
+static char	*check_tokens(t_list *tokens)
+{
+	t_token	*token;
+	int		prev;
+
+	if (!tokens)
+		return (NULL);
+	token = tokens->content;
+	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
+		return (token->content);
+	token = ft_lstlast(tokens)->content;
+	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
+		return (token->content);
+	token = tokens->content;
+	prev = 0;
+	while (tokens)
+	{
+		token = tokens->content;
+		if (prev == 1 && token->token_type == T_OPERATOR)
+			return (token->content);
+		if (token->token_type == T_OPERATOR)
+			prev = 1;
+		else
+			prev = 0;
+		tokens = tokens->next;
+	}
+	return (NULL);
+}
+
 t_list	*ft_lex(const char *input)
 {
 	t_list	*tokens;
-	t_token	*token;
 	t_list	*pre_tokens;
+	char	*unexpected;
 
 	pre_tokens = ft_doom_split(input);
 	if (!pre_tokens)
@@ -117,22 +146,14 @@ t_list	*ft_lex(const char *input)
 	tokens = ft_string_to_token(tokens, pre_tokens);
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	tokens = ft_fuse_word(tokens);
-	token = tokens->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
-	{
-		printf("Syntax error near unexpected token \"%s\"\n", token->content);
-		ft_lstclear(&tokens, ft_lstclear_t_token);
-		return (NULL);
-	}
-	token = ft_lstlast(tokens)->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
-	{
-		printf("Syntax error near unexpected token \"%s\"\n", token->content);
-		ft_lstclear(&tokens, ft_lstclear_t_token);
-		return (NULL);
-	}
 	if (handle_heredoc_error(&tokens))
 		return (NULL);
 	tokens = ft_remove_spaces(tokens);
+	if ((unexpected = check_tokens(tokens)))
+	{
+		printf("Syntax error near unexpected token \"%s\"\n", unexpected);
+		ft_lstclear(&tokens, ft_lstclear_t_token);
+		return (NULL);
+	}
 	return (tokens);
 }
