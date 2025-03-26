@@ -6,11 +6,20 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 15:01:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:40:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static bool	ft_is_logical(t_token *token)
+{
+	if (token->token_type != T_OPERATOR)
+		return (false);
+	if (ft_strcmp(token->content, "||") == 0 || ft_strcmp(token->content, "&&") == 0)
+		return (true);
+	return (false);
+}
 
 static void	*cut_and_get_pipe(t_list **tokens)
 {
@@ -22,7 +31,7 @@ static void	*cut_and_get_pipe(t_list **tokens)
 	while (*tokens)
 	{
 		act_t = (*tokens)->content;
-		if (ft_is_pipe(act_t))
+		if (ft_is_pipe(act_t) || ft_is_logical(act_t))
 		{
 			mem = (*tokens)->next;
 			(*tokens)->next = NULL;
@@ -47,7 +56,7 @@ static t_list	*parse_pipe(t_list *tokens)
 		ft_lstadd_back(&pipes, ft_lstnew(cut_and_get_pipe(&tokens)));
 		last = ft_lstlast(pipes)->content;
 		token = ft_lstlast(last)->content;
-		if (ft_is_pipe(token))
+		if (ft_is_pipe(token) || ft_is_logical(token))
 		{
 			pre = last;
 			while (pre && pre->next && pre->next->next)
@@ -67,6 +76,8 @@ static int	cmp(void *c1, void *c2)
 	leaf1 = c1;
 	leaf2 = c2;
 	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_WORD)
+		return (0);
+	if (leaf1->type == NODE_LOGICAL && leaf2->type == NODE_WORD)
 		return (0);
 	return (1);
 }
@@ -111,6 +122,14 @@ void	ft_fill_tree(t_btree **root, t_list *pipes)
 		if (ft_lstsize(tokens) == 1 && ft_is_pipe(token))
 		{
 			leaf = ft_create_leaf(NODE_PIPE, NULL);
+			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+		}
+		else if (ft_lstsize(tokens) == 1 && ft_is_logical(token))
+		{
+			if (ft_strcmp(token->content, "||") == 0)
+				leaf = ft_create_leaf(NODE_LOGICAL, ft_split("or", 0));
+			else
+				leaf = ft_create_leaf(NODE_LOGICAL, ft_split("and", 0));
 			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
 		}
 		else
