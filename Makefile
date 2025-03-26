@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/25 17:43:24 by tstephan         ###   ########.fr        #
+#    Updated: 2025/03/26 16:36:13 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SIGNAL_SRC = signal/signal.c
 LEXING_SRC = lexing/lex.c lexing/lst_helper.c lexing/space.c \
 			  lexing/clear.c lexing/expand.c lexing/split.c \
 			  lexing/lst_helper2.c lexing/is.c
-PARSING_SRC = parsing/parse.c parsing/cmp_leaf.c parsing/free_leaf.c \
+PARSING_SRC = parsing/parse.c parsing/free_leaf.c \
 			  parsing/create_leaf.c
 HEREDOC_SRC = heredoc/read.c heredoc/handle.c
 QUOTE_SRC = quote/read.c

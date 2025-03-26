@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 15:40:03 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:35:09 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	*cut_and_get_pipe(t_list **tokens)
 	start = *tokens;
 	while (*tokens)
 	{
-		act_t = (*tokens)->content;
+		act_t = (t_token *)(*tokens)->content;
 		if (ft_is_pipe(act_t) || ft_is_logical(act_t))
 		{
 			mem = (*tokens)->next;
@@ -54,8 +54,8 @@ static t_list	*parse_pipe(t_list *tokens)
 	while (tokens)
 	{
 		ft_lstadd_back(&pipes, ft_lstnew(cut_and_get_pipe(&tokens)));
-		last = ft_lstlast(pipes)->content;
-		token = ft_lstlast(last)->content;
+		last = (t_list *)ft_lstlast(pipes)->content;
+		token = (t_token *)ft_lstlast(last)->content;
 		if (ft_is_pipe(token) || ft_is_logical(token))
 		{
 			pre = last;
@@ -73,8 +73,8 @@ static int	cmp(void *c1, void *c2)
 	t_leaf	*leaf1;
 	t_leaf	*leaf2;
 
-	leaf1 = c1;
-	leaf2 = c2;
+	leaf1 = (t_leaf *)c1;
+	leaf2 = (t_leaf *)c2;
 	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_WORD)
 		return (0);
 	if (leaf1->type == NODE_LOGICAL && leaf2->type == NODE_WORD)
@@ -96,7 +96,7 @@ static char	**args_from_lst(t_list *tokens)
 	pos = 0;
 	while (tokens)
 	{
-		token = tokens->content;
+		token = (t_token *)tokens->content;
 		content[pos++] = ft_strdup(token->content);
 		tokens = tokens->next;
 	}
@@ -112,7 +112,7 @@ void	ft_fill_tree(t_btree **root, t_list *pipes)
 
 	while (pipes)
 	{
-		tokens = pipes->content;
+		tokens = (t_list *)pipes->content;
 		if (!tokens)
 		{
 			pipes = pipes->next;

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:46:58 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:19:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:29:44 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_list	*ft_fuse_word(t_list *lst)
 	act_l = lst;
 	while (act_l && act_l->next)
 	{
-		act_t = act_l->content;
-		next_t = act_l->next->content;
+		act_t = (t_token *)act_l->content;
+		next_t = (t_token *)act_l->next->content;
 		if (act_t->token_type == T_WORD && next_t->token_type == T_WORD)
 		{
 			act_t->content = ft_strjoin_free(act_t->content,

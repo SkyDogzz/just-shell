@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:12:04 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/10 13:57:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:33:48 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ void	ft_free_leaf(void *content)
 
 	if (!content)
 		return ;
-	leaf = content;
+	leaf = (t_leaf *)content;
 	if (leaf->cmd)
 	{
 		ft_free_args(leaf->cmd->args);
 		free(leaf->cmd);
 	}
-	leaf = content;
 	free(leaf);
 	return ;
 }
