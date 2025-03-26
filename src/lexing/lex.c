@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:51:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:10:09 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ static t_list	*ft_remove_spaces(t_list *tokens)
 t_list	*ft_lex(const char *input)
 {
 	t_list	*tokens;
+	t_token	*token;
 	t_list	*pre_tokens;
 
 	pre_tokens = ft_doom_split(input);
@@ -116,6 +117,13 @@ t_list	*ft_lex(const char *input)
 	tokens = ft_string_to_token(tokens, pre_tokens);
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	tokens = ft_fuse_word(tokens);
+	token = tokens->content;
+	if (token->token_type == T_OPERATOR)
+	{
+		printf("Syntax error near unexpected token \"%s\"\n", token->content);
+		ft_lstclear(&tokens, ft_lstclear_t_token);
+		return (NULL);
+	}
 	if (handle_heredoc_error(&tokens))
 		return (NULL);
 	tokens = ft_remove_spaces(tokens);
