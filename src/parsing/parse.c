@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/25 18:12:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:01:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	*cut_and_get_pipe(t_list **tokens)
 	t_list	*mem;
 
 	start = *tokens;
-	*tokens = (*tokens)->next;
 	while (*tokens)
 	{
 		act_t = (*tokens)->content;
@@ -103,6 +102,11 @@ void	ft_fill_tree(t_btree **root, t_list *pipes)
 	while (pipes)
 	{
 		tokens = pipes->content;
+		if (!tokens)
+		{
+			pipes = pipes->next;
+			continue ;
+		}
 		token = tokens->content;
 		if (ft_lstsize(tokens) == 1 && ft_is_pipe(token))
 		{
@@ -116,8 +120,6 @@ void	ft_fill_tree(t_btree **root, t_list *pipes)
 		}
 		pipes = pipes->next;
 	}
-	(void) pipes;
-	(void) root;
 }
 
 t_btree	*ft_parse(t_list *tokens)
@@ -125,6 +127,7 @@ t_btree	*ft_parse(t_list *tokens)
 	t_btree	*root;
 	t_list	*pipes;
 
+	ft_lstprint_tokens(tokens, "Print tokens");
 	pipes = parse_pipe(tokens);
 	ft_lstprint_pipes(pipes, "Print pipes");
 	root = NULL;

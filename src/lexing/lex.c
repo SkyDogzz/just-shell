@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 14:10:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:59:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,13 @@ t_list	*ft_lex(const char *input)
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	tokens = ft_fuse_word(tokens);
 	token = tokens->content;
+	if (token->token_type == T_OPERATOR)
+	{
+		printf("Syntax error near unexpected token \"%s\"\n", token->content);
+		ft_lstclear(&tokens, ft_lstclear_t_token);
+		return (NULL);
+	}
+	token = ft_lstlast(tokens)->content;
 	if (token->token_type == T_OPERATOR)
 	{
 		printf("Syntax error near unexpected token \"%s\"\n", token->content);
