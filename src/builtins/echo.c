@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 19:31:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/28 19:36:40 by yandry           ###   ########.fr       */
+/*   Created: 2025/03/25 16:50:50 by yandry            #+#    #+#             */
+/*   Updated: 2025/03/25 16:58:47 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes/libft.h"
 #include "minishell.h"
 
-static void	identify_token(t_token *token)
+int	ft_echo(const t_cmd *cmd)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (token->content[i])
-	{
-		if (is_in_charset(token->content[i], OPERATOR_S))
-			token->token_type = T_OPERATOR;
-		else
-			token->token_type = T_WORD;
-		i++;
-	}
-}
+	i = 2;
 
-t_token	*ft_new_token(const char *content)
-{
-	t_token	*tok;
-
-	tok = (t_token *)malloc(sizeof(t_token));
-	if (!tok)
-		return (NULL);
-	tok->content = (char *)content;
-	identify_token(tok);
-	return (tok);
+	while(cmd->args[i])
+		ft_putstr_fd(cmd->args[i++], cmd->outfile);
+	if (ft_strncmp(cmd->args[1], "-n", 2) == 0) 
+		ft_putendl_fd("", cmd->outfile);
+	return (0);
 }

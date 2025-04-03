@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "includes/libft.h"
 
 extern int	g_sig;
 
@@ -24,6 +25,12 @@ static void	ft_signal_handler(int signal)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
+
+	if (signal == SIGSEGV)
+	{
+		ft_printf("death by segv\n");
+		exit(130);
+	}
 }
 
 void	ft_set_sigaction(void)
@@ -32,4 +39,5 @@ void	ft_set_sigaction(void)
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGSEGV, ft_signal_handler);
 }
