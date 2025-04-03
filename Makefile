@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/01 11:29:57 by yandry           ###   ########.fr        #
+#    Updated: 2025/03/25 16:59:20 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,14 +35,11 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 LIBFT_PATH = libft/
 
-UTILS_SRC = utils/set.c utils/ft_print_tree.c
 SIGNAL_SRC = signal/signal.c
-EXEC_SRC = exec/ft_exec.c
-TOKEN_SRC = token/tokenizer.c
-LEXER_SRC = lex/ft_lex.c
-PARSER_SRC = parse/ft_parse.c
+EXEC_SRC = execution/ft_exec.c
+BUILTINS_SRC = builtins/echo.c
 
-SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(EXEC_SRC) $(TOKEN_SRC) $(LEXER_SRC) $(PARSER_SRC)
+SRC = main.c $(SIGNAL_SRC) $(EXEC_SRC) $(BUILTINS_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -60,13 +57,10 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c includes/minishell.h
 $(OBJ_PATH):
 	@echo -n "$(Blue)"
 	mkdir -p $(OBJ_PATH)
-	mkdir -p $(OBJ_PATH)/utils
-	mkdir -p $(OBJ_PATH)/signal
-	mkdir -p $(OBJ_PATH)/parsing
-	mkdir -p $(OBJ_PATH)/exec
-	mkdir -p $(OBJ_PATH)/token
-	mkdir -p $(OBJ_PATH)/lex
-	mkdir -p $(OBJ_PATH)/parse
+	mkdir -p $(OBJ_PATH)utils
+	mkdir -p $(OBJ_PATH)signal
+	mkdir -p $(OBJ_PATH)execution
+	mkdir -p $(OBJ_PATH)builtins
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"

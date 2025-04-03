@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/01 15:36:16 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/03 16:57:55 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,8 @@ typedef struct s_tree
 }						t_tree;
 
 void					ft_set_sigaction(void);
-
-t_list					*ft_lex(const char *cmd_line);
-t_tree					*ft_parse(const t_list *tokens);
-int						ft_exec(t_tree *root);
-
-bool					is_in_charset(const char c, const char *charset);
-bool					is_in_stringset(const char *input,
-							const char *stringset, char delim);
-
+int						ft_exec(t_tree *root, char **env);
 typedef char			*(*t_readline)(const char *);
-t_token					*ft_new_token(const char *content);
-
-void					ft_print_tree(t_tree *root, int level, int is_last);
+int						ft_echo(const t_cmd *cmd);
 
 #endif

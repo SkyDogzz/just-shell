@@ -6,40 +6,21 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/01 19:13:08 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/03 17:06:28 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-int	g_sig = 0;
-
-static int	handle_input(char *input)
-{
-	t_list	*tokens;
-	t_tree	*root;
-
-	if (ft_strlen(input) == 0)
-	{
-		free(input);
-		return (0);
-	}
-	add_history(input);
-	tokens = ft_lex(input);
-	root = ft_parse(tokens);
-	ft_lstclear(&tokens, free);
-	ft_print_tree(root, 0, 1);
-	//ft_exec(root);
-	free(input);
-	return (1);
-}
+int			g_sig = 0;
 
 static int	main_process(char *argp[])
 {
 	char		*input;
 	char		*prompt;
 	t_readline	ft_readline;
+	t_tree		*root;
 
 	ft_readline = readline;
 	while (true)
@@ -54,8 +35,10 @@ static int	main_process(char *argp[])
 		free(prompt);
 		if (!input)
 			break ;
-		if (!handle_input(input))
-			continue ;
+		root = (t_tree *)malloc(sizeof(t_tree));
+		root->cmd = (t_cmd *)malloc(sizeof(t_cmd));
+		root->cmd->args = ft_split(input, ' ');
+		ft_exec(root, argp);
 	}
 	return (0);
 	(void)argp;
