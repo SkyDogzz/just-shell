@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/03 16:57:55 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/03 21:33:47 by Yanis Andry      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_tree
 }						t_tree;
 
 void					ft_set_sigaction(void);
-int						ft_exec(t_tree *root, char **env);
+int						ft_exec(t_tree *root);
 typedef char			*(*t_readline)(const char *);
 int						ft_echo(const t_cmd *cmd);
 

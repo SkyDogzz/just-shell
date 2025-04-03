@@ -6,39 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/03 17:07:04 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/03 21:33:34 by Yanis Andry      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <unistd.h>
 
-static char	*ft_getenv(const char *name, char **env)
-{
-	int		i;
-	int		j;
-	char	*target;
-
-	i = 0;
-
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		target = ft_substr(env[i], 0, j);
-		if (ft_strncmp(target, name, j) == 0)
-		{
-			free(target);
-			return (env[i] + j + 1);
-		}
-		free(target);
-		i++;
-	}
-	return (NULL);
-}
-
-static char	*get_path(const t_cmd *cmd, char **env)
+static char	*get_path(const t_cmd *cmd)
 {
 	const char	*fullpath;
 	char	**splitted_paths;
@@ -47,7 +21,7 @@ static char	*get_path(const t_cmd *cmd, char **env)
 	int		i;
 	if (cmd->args[0][0] == '/')
 		return (cmd->args[0]);
-	fullpath = ft_getenv("PATH", env);
+	fullpath = getenv("PATH");
 	if (!fullpath)
 		return (NULL);
 	splitted_paths = ft_split(fullpath, ':');
@@ -107,14 +81,10 @@ static int	exec_pipeline(const t_tree *root)
 	return (0);
 }
 
-int	ft_exec(t_tree	*root, char **env)
+int	ft_exec(t_tree	*root)
 {
 	if (!root)
 		return (1);
-	if (root->type == NODE_PIPE)
-		return (exec_pipeline(root));
-	exec_pipeline(root);
-
-	ft_putendl_fd(get_path(root->cmd, env), 1);
-	return (238);
+	ft_putendl_fd(get_path(root->cmd), 1);
+	return (exec_pipeline(root));
 }

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/03 17:06:28 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/03 21:34:08 by Yanis Andry      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	main_process(char *argp[])
 		root = (t_tree *)malloc(sizeof(t_tree));
 		root->cmd = (t_cmd *)malloc(sizeof(t_cmd));
 		root->cmd->args = ft_split(input, ' ');
-		ft_exec(root, argp);
+		ft_exec(root);
 	}
 	return (0);
 	(void)argp;
