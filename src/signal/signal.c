@@ -26,11 +26,11 @@ static void	ft_signal_handler(int signal)
 		rl_replace_line("", 0);
 	}
 
-	if (signal == SIGSEGV)
+	/*if (signal == SIGSEGV)
 	{
 		ft_printf("death by segv\n");
 		exit(130);
-	}
+	}*/
 }
 
 void	ft_set_sigaction(void)
@@ -39,5 +39,5 @@ void	ft_set_sigaction(void)
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGSEGV, ft_signal_handler);
+	//signal(SIGSEGV, ft_signal_handler);
 }
