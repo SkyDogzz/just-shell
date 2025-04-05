@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/04 17:51:23 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:24:30 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 static char	*get_path(const t_cmd *cmd)
 {
@@ -53,16 +54,37 @@ static void execute(const t_cmd *cmd, char *env[])
 	if (execve(executable, cmd->args,env) == -1)
 	{
 		ft_putstr_fd("Could not run ", 2);
-		ft_putendl_fd(executable, 2);
+		ft_putendl_fd(cmd->args[0], 2);
 		exit(1);
 	}
+}
+
+static void	open_redirs(int in, int out, int redir_in, int redir_out)
+{
+	dup2(in, redir_in);
+	dup2(out, redir_out);
+}
+
+static size_t	get_cmd_count(const t_tree *root)
+{
+	size_t	count;
+
+	count = 0;
+	if (!root)
+		return (count);
+	if (root->type == NODE_WORD)
+		count++;
+	count += get_cmd_count(root->left);
+	count += get_cmd_count(root->right);
+	return (count);
 }
 
 static void	child(const t_tree *root, const int *pipe_fd, char **env)
 {
 	if (!root)
 		return ;
-	dup2(pipe_fd[1], STDOUT_FILENO);
+
+	open_redirs(root->cmd->io[0], pipe_fd[1], STDIN_FILENO, STDOUT_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	execute(root->cmd, env);
@@ -122,7 +144,9 @@ int	ft_exec(t_tree	*root, char **env)
 	ret = 0;
 	if (!root)
 		return (1);
-	ft_putendl_fd(get_path(root->cmd), 1);
+
+	ft_printf("preparing to run %d commands\n", get_cmd_count(root));
+	return (0);
 	if (root->type == NODE_WORD)
 		ret = exec_simple(root, env);
 	else if (root->type == NODE_PIPE)

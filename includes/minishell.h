@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/04 16:48:02 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 12:22:17 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ typedef struct s_cmd
 {
 	char				**args;
 	t_redirect_type		redirect_type;
-	int					infile;
-	int					outfile;
+	int					io[2];
 }						t_cmd;
 
 typedef struct s_tree	t_tree;

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/04 17:38:34 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:25:38 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_tree	*ls(void)
 		free(root);
 		return (NULL);
 	}
-	root->cmd->args = ft_split("ls -lRa src/", ' ');
+	root->cmd->args = ft_split("lasfjnklawsrfbjklwes -lRa src/", ' ');
 	return (root);
 }
 
@@ -72,8 +72,7 @@ static int	main_process(char *argp[])
 	//char		*prompt;
 	//t_readline	ft_readline;
 
-	return (ft_exec(ls(), argp));
-	return ft_exec(cat_thing_pipe_grep_something(), argp);
+	return (1 ? ft_exec(cat_thing_pipe_grep_something(), argp) : ft_exec(ls(), argp));
 	//ft_readline = readline;
 	while (true)
 	{
