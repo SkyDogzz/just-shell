@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 16:31:21 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 16:38:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ t_btree	*ft_parse(t_list *tokens)
 	ft_lstclear(&pipes, ft_lstclear_pipes);
 	//ft_print_tree(root, 0, 1);
 	return (root);
-	(void)tokens;
 }
 
 /*t_btree	*ft_parse(t_list *tokens)*/

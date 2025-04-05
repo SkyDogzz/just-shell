@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/05 15:51:05 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/07 10:07:16 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,14 @@ static size_t	get_cmd_count(const t_btree *root)
 
 static void	child(const t_btree *root, const int *pipe_fd, char **env)
 {
+	t_cmd	*cmd;
 	if (!root)
 		return ;
-
-	open_redirs(((t_leaf *)root->content)->cmd->io[0], pipe_fd[1], STDIN_FILENO, STDOUT_FILENO);
+	cmd = ((t_leaf *)root->content)->cmd;
+	open_redirs(cmd->io[0], pipe_fd[1], STDIN_FILENO, STDOUT_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	execute(((t_leaf *)root->content)->cmd, env);
+	execute(cmd, env);
 	exit(0);
 }
 
@@ -104,6 +105,8 @@ static int	exec_pipeline(const t_btree *root, char **env)
 	int		pipe_fd[2];
 	pid_t	pid[2];
 
+	size_t cmd_count = get_cmd_count(root);
+	(void)cmd_count;
 	if (pipe(pipe_fd) == -1)
 		exit(-1);
 	pid[0] = fork();
@@ -142,11 +145,8 @@ int	ft_exec(t_btree	*root, char **env)
 	int	ret;
 
 	ret = 0;
-	if (!root)
+	if (!root || !root->content)
 		return (1);
-
-	ft_printf("preparing to run %d commands\n", get_cmd_count(root));
-	return (0);
 	if (((t_leaf *)root->content)->type == NODE_WORD)
 		ret = exec_simple(root, env);
 	else if (((t_leaf *)root->content)->type == NODE_PIPE)
