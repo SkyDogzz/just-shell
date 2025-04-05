@@ -6,99 +6,83 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:25:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:30:09 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdlib.h>
+#include "../includes/minishell.h"
 
-int			g_sig = 0;
+int	g_sig = 0;
 
-static t_tree	*cat_thing_pipe_grep_something(void)
+static bool	is_comment(char *input)
 {
-	t_tree	*root;
-
-	root = (t_tree *)ft_calloc(1, sizeof(t_tree));
-	if (!root)
-		return (NULL);
-	root->type = NODE_PIPE;
-	root->left = (t_tree *)ft_calloc(1, sizeof(t_tree));
-	if (!root->left)
-	{
-		free(root);
-		return (NULL);
-	}
-	root->left->type = NODE_WORD;
-	root->right = (t_tree *)ft_calloc(1, sizeof(t_tree));
-	if (!root->right)
-	{
-		free(root->left);
-		free(root->right);
-		return (NULL);
-	}
-	root->right->type = NODE_WORD;
-
-	root->left->cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	root->right->cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-
-	root->left->cmd->args = ft_split("cat -e Makefile", ' ');
-	root->right->cmd->args = ft_split("grep #", ' ');
-
-	return (root);
+	while (ft_isspace(*input))
+		input++;
+	if (*input == '#')
+		return (true);
+	return (false);
 }
 
-static t_tree	*ls(void)
+static bool	is_exit(char *input)
 {
-	t_tree	*root;
-
-	root = (t_tree *)ft_calloc(1, sizeof(t_tree));
-	if (!root)
-		return (NULL);
-	root->type = NODE_WORD;
-	root->cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	if (!root->cmd)
+	if (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0)
 	{
-		free(root);
-		return (NULL);
+		free(input);
+		return (true);
 	}
-	root->cmd->args = ft_split("lasfjnklawsrfbjklwes -lRa src/", ' ');
-	return (root);
+	return (false);
 }
 
-static int	main_process(char *argp[])
+static int	main_process(void)
 {
-	//char		*input;
-	//char		*prompt;
-	//t_readline	ft_readline;
+	t_list	*tokens;
+	t_btree	*tree;
+	char	*input;
 
-	return (1 ? ft_exec(cat_thing_pipe_grep_something(), argp) : ft_exec(ls(), argp));
-	//ft_readline = readline;
 	while (true)
 	{
-		if (g_sig == SIGINT)
+		if (handle_sigint())
+			continue ;
+		input = ft_readline(PROMPT_MAIN);
+		if (!input)
+			break ;
+		if (is_exit(input))
+			return (0);
+		input = ft_handle_multiline_quote(input);
+		if (!input)
+			continue ;
+		if (ft_strlen(input) <= 0 || is_comment(input))
 		{
-			g_sig = 0;
+			free(input);
 			continue ;
 		}
-		//prompt = ft_strjoin(getenv("PWD"), " ~> ");
-		//input = ft_readline(prompt);
-		//free(prompt);
-		//if (!input)
-			//break ;
+		add_history(input);
+		tokens = ft_lex(input);
+		if (tokens)
+		{
+			if (!ft_findsubshell(&tokens))
+			{
+				printf("Syntax error near unexpected token ')'\n");
+				ft_lstclear(&tokens, ft_lstclear_t_token);
+				continue ;
+			}
+			tree = ft_parse(tokens);
+			ft_btree_clear(&tree, ft_free_leaf);
+		}
+		free(input);
 	}
 	return (0);
-	(void)argp;
 }
 
 int	main(int argc, char *argv[], char *argp[])
 {
-	int	exit_code;
+	int		exit_code;
 
 	ft_set_sigaction();
-	exit_code = main_process(argp);
+	exit_code = main_process();
 	printf("exit\n");
 	return (exit_code);
-	(void)argc;
-	(void)argv;
+	(void) argc;
+	(void) argv;
+	(void) argp;
 }

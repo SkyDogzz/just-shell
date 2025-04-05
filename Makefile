@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/03/25 16:59:20 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/05 15:30:44 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,26 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 LIBFT_PATH = libft/
 
+UTILS_SRC = utils/ft_set.c utils/ft_strndup.c utils/ft_strreplace.c \
+			utils/ft_get_max.c utils/ft_strjoin_free.c utils/ft_strcmp.c
 SIGNAL_SRC = signal/signal.c
-EXEC_SRC = execution/ft_exec.c
-BUILTINS_SRC = builtins/echo.c
+LEXING_SRC = lexing/lex.c lexing/lst_helper.c lexing/space.c \
+			  lexing/clear.c lexing/expand.c lexing/split.c \
+			  lexing/lst_helper2.c lexing/is.c
+PARSING_SRC = parsing/parse.c parsing/free_leaf.c \
+			  parsing/create_leaf.c
+HEREDOC_SRC = heredoc/read.c heredoc/handle.c
+QUOTE_SRC = quote/read.c
+BTREE_SRC = btree/ft_btree_clear.c btree/ft_btree_height.c \
+			btree/ft_btree_inorder.c btree/ft_btree_insert.c \
+			btree/ft_btree_new.c btree/ft_btree_postorder.c \
+			btree/ft_btree_preorder.c btree/ft_btree_size.c btree/print.c \
+			btree/ft_btree_insert_in.c
+SUBSHELL_SRC = subshell/subshell.c subshell/read.c
+PROMPT_SRC = prompt/shell.c
 
-SRC = main.c $(SIGNAL_SRC) $(EXEC_SRC) $(BUILTINS_SRC)
+SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(LEXING_SRC) $(PARSING_SRC) \
+	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC) $(SUBSHELL_SRC) $(PROMPT_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -57,10 +72,15 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c includes/minishell.h
 $(OBJ_PATH):
 	@echo -n "$(Blue)"
 	mkdir -p $(OBJ_PATH)
-	mkdir -p $(OBJ_PATH)utils
-	mkdir -p $(OBJ_PATH)signal
-	mkdir -p $(OBJ_PATH)execution
-	mkdir -p $(OBJ_PATH)builtins
+	mkdir -p $(OBJ_PATH)/utils
+	mkdir -p $(OBJ_PATH)/signal
+	mkdir -p $(OBJ_PATH)/lexing
+	mkdir -p $(OBJ_PATH)/parsing
+	mkdir -p $(OBJ_PATH)/heredoc
+	mkdir -p $(OBJ_PATH)/quote
+	mkdir -p $(OBJ_PATH)/btree
+	mkdir -p $(OBJ_PATH)/subshell
+	mkdir -p $(OBJ_PATH)/prompt
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"
