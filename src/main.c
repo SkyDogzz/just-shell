@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:30:09 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:52:21 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static bool	is_exit(char *input)
 	return (false);
 }
 
-static int	main_process(void)
+static int	main_process(char **env)
 {
 	t_list	*tokens;
 	t_btree	*tree;
@@ -67,6 +67,7 @@ static int	main_process(void)
 				continue ;
 			}
 			tree = ft_parse(tokens);
+			ft_exec(tree, env);
 			ft_btree_clear(&tree, ft_free_leaf);
 		}
 		free(input);
@@ -79,7 +80,7 @@ int	main(int argc, char *argv[], char *argp[])
 	int		exit_code;
 
 	ft_set_sigaction();
-	exit_code = main_process();
+	exit_code = main_process(argp);
 	printf("exit\n");
 	return (exit_code);
 	(void) argc;

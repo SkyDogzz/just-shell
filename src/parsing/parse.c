@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 16:35:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:31:21 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	ft_is_logical(t_token *token)
 {
-	if (token->token_type != T_OPERATOR)
+	if (token->token_type != T_OPERATOR_M)
 		return (false);
 	if (ft_strcmp(token->content, "||") == 0 || ft_strcmp(token->content, "&&") == 0)
 		return (true);
@@ -146,13 +146,13 @@ t_btree	*ft_parse(t_list *tokens)
 	t_btree	*root;
 	t_list	*pipes;
 
-	ft_lstprint_tokens(tokens, "Print tokens");
+	//ft_lstprint_tokens(tokens, "Print tokens");
 	pipes = parse_pipe(tokens);
-	ft_lstprint_pipes(pipes, "Print pipes");
+	//ft_lstprint_pipes(pipes, "Print pipes");
 	root = NULL;
 	ft_fill_tree(&root, pipes);
 	ft_lstclear(&pipes, ft_lstclear_pipes);
-	ft_print_tree(root, 0, 1);
+	//ft_print_tree(root, 0, 1);
 	return (root);
 	(void)tokens;
 }

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:31:29 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:51:20 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
-int		ft_exec(t_btree *root);
+int		ft_exec(t_btree *root, char **env);
 
 // tree related functions
 void	ft_print_tree(t_btree *root, int level, int is_last);
