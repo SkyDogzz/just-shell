@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:25:07 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/28 19:26:46 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:33:31 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,13 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_get_next_line(int fd);
 
+/**
+ * @brief Allocates a new t_list* with the given content
+ * 
+ * @param content The content to put in the new t_list*
+ * @return t_list* The new t_list* with the given content,
+ * NULL if the allocation failed
+ */
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *nw);
 void	ft_lstadd_back(t_list **lst, t_list *nw);
@@ -82,6 +89,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	**ft_lsttoarray_s(t_list *lst, ssize_t elem_size);
 void	**ft_lsttoarray_c(t_list *lst, void *(*copy_func)(const void *));
+
 int		ft_printf(const char *format, ...);
 int		ft_putstr(const char *str);
 int		ft_putchar(char c);
