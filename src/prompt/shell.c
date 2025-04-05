@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/18 14:03:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:47:39 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*ft_readline(t_prompt id)
 		return (readline(CYAN BOLD "subshell> " NC));
 	else
 		prompt = get_prompt_main();
-	input = readline(prompt);
+	//input = readline(prompt);
+	input = ft_strdup("cat Makefile | grep # | wc -l");
 	free(prompt);
 	return (input);
 }
