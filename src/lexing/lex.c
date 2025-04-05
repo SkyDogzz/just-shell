@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 16:32:18 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:42:09 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static t_token_type	ft_gettype(char *s)
 	if (ft_strlen(s) == 1 && ft_isspace(s[0]))
 		return (T_BLANK);
 	else if (ft_strlen(s) == 1 && ft_isin_charset(s[0], OPERATOR_S))
-		return (T_OPERATOR);
+		return (T_OPERATOR_S);
 	else if (ft_isin_stringset(s, OPERATOR_M, ','))
-		return (T_OPERATOR);
+		return (T_OPERATOR_M);
 	else if (ft_isin_stringset(s, RESERVED, ','))
 		return (T_RESERVED);
 	else if (ft_isin_stringset(s, SUBSTITUTE, ','))
@@ -111,19 +111,19 @@ static char	*check_tokens(t_list *tokens)
 	if (!tokens)
 		return (NULL);
 	token = (t_token *)tokens->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
+	if (token->token_type == T_OPERATOR_S && ft_strcmp(token->content, ";") != 0)
 		return (token->content);
 	token = ft_lstlast(tokens)->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
+	if (token->token_type == T_OPERATOR_S && ft_strcmp(token->content, ";") != 0)
 		return (token->content);
 	token = (t_token *)tokens->content;
 	prev = 0;
 	while (tokens)
 	{
 		token = (t_token *)tokens->content;
-		if (prev == 1 && token->token_type == T_OPERATOR)
+		if (prev == 1 && token->token_type == T_OPERATOR_S)
 			return (token->content);
-		if (token->token_type == T_OPERATOR)
+		if (token->token_type == T_OPERATOR_S)
 			prev = 1;
 		else
 			prev = 0;

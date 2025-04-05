@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/05 15:24:30 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/05 15:51:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,41 +65,41 @@ static void	open_redirs(int in, int out, int redir_in, int redir_out)
 	dup2(out, redir_out);
 }
 
-static size_t	get_cmd_count(const t_tree *root)
+static size_t	get_cmd_count(const t_btree *root)
 {
 	size_t	count;
 
 	count = 0;
 	if (!root)
 		return (count);
-	if (root->type == NODE_WORD)
+	if (((t_leaf *)root->content)->type == NODE_WORD)
 		count++;
 	count += get_cmd_count(root->left);
 	count += get_cmd_count(root->right);
 	return (count);
 }
 
-static void	child(const t_tree *root, const int *pipe_fd, char **env)
+static void	child(const t_btree *root, const int *pipe_fd, char **env)
 {
 	if (!root)
 		return ;
 
-	open_redirs(root->cmd->io[0], pipe_fd[1], STDIN_FILENO, STDOUT_FILENO);
+	open_redirs(((t_leaf *)root->content)->cmd->io[0], pipe_fd[1], STDIN_FILENO, STDOUT_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	execute(root->cmd, env);
+	execute(((t_leaf *)root->content)->cmd, env);
 	exit(0);
 }
 
-static void	middle_child(const t_tree *root, char **env)
+static void	middle_child(const t_btree *root, char **env)
 {
 	if (!root)
 		return ;
-	execute(root->cmd, env);
+	execute(((t_leaf *)root->content)->cmd, env);
 	exit(0);
 }
 
-static int	exec_pipeline(const t_tree *root, char **env)
+static int	exec_pipeline(const t_btree *root, char **env)
 {
 	int		pipe_fd[2];
 	pid_t	pid[2];
@@ -123,7 +123,7 @@ static int	exec_pipeline(const t_tree *root, char **env)
 	return (0);
 }
 
-static int	exec_simple(const t_tree *root, char **env)
+static int	exec_simple(const t_btree *root, char **env)
 {
 	int	pid;
 	int	status;
@@ -137,7 +137,7 @@ static int	exec_simple(const t_tree *root, char **env)
 	return (status);
 }
 
-int	ft_exec(t_tree	*root, char **env)
+int	ft_exec(t_btree	*root, char **env)
 {
 	int	ret;
 
@@ -147,9 +147,9 @@ int	ft_exec(t_tree	*root, char **env)
 
 	ft_printf("preparing to run %d commands\n", get_cmd_count(root));
 	return (0);
-	if (root->type == NODE_WORD)
+	if (((t_leaf *)root->content)->type == NODE_WORD)
 		ret = exec_simple(root, env);
-	else if (root->type == NODE_PIPE)
+	else if (((t_leaf *)root->content)->type == NODE_PIPE)
 		ret = exec_pipeline(root, env);
 	return (ret);
 }
