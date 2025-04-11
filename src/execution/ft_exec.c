@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/07 10:07:16 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/08 11:59:14 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ static int	exec_pipeline(const t_btree *root, char **env)
 	pid_t	pid[2];
 
 	size_t cmd_count = get_cmd_count(root);
-	(void)cmd_count;
+	ft_printf("running %d commands\n", cmd_count);
+	return (3);
 	if (pipe(pipe_fd) == -1)
 		exit(-1);
 	pid[0] = fork();
