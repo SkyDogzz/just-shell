@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:52:21 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/08 11:58:37 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int	main_process(char **env)
 				continue ;
 			}
 			tree = ft_parse(tokens);
-			ft_exec(tree, env);
+			if (ft_exec(tree, env))
+				break ;
 			ft_btree_clear(&tree, ft_free_leaf);
 		}
 		free(input);
