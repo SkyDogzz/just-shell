@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:51:20 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/12 16:46:07 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,16 @@
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
 
+# define DEFAULT_PROMPT PURPLE BOLD "$user @ $host"\
+	NC " in "\
+	GREEN BOLD "$path"\
+	NC " [ $last_exit ]\n"\
+	CYAN"~> " NC
+
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
+
+extern int	g_sig;
 
 typedef enum e_joinfree
 {
@@ -134,6 +142,17 @@ typedef struct s_leaf
 	t_cmd			*cmd;
 }	t_leaf;
 
+typedef struct s_expand
+{
+	char	*find;
+	char	*mem;
+	int		size;
+	char	*envname;
+	char	*envvar;
+	char	*envvarr;
+	int		offset;
+}			t_expand;
+
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
@@ -199,4 +218,5 @@ char	*ft_readline(t_prompt id);
 
 bool	ft_is_pipe(t_token *token);
 
+char	*ft_gethostname(void);
 #endif

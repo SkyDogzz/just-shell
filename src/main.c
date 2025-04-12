@@ -6,13 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/08 11:58:37 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/12 18:49:19 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_sig = 0;
+int	g_sig;
 
 static bool	is_comment(char *input)
 {
@@ -41,8 +41,6 @@ static int	main_process(char **env)
 
 	while (true)
 	{
-		if (handle_sigint())
-			continue ;
 		input = ft_readline(PROMPT_MAIN);
 		if (!input)
 			break ;
@@ -67,8 +65,7 @@ static int	main_process(char **env)
 				continue ;
 			}
 			tree = ft_parse(tokens);
-			if (ft_exec(tree, env))
-				break ;
+			ft_exec(tree, env);
 			ft_btree_clear(&tree, ft_free_leaf);
 		}
 		free(input);
@@ -81,8 +78,8 @@ int	main(int argc, char *argv[], char *argp[])
 	int		exit_code;
 
 	ft_set_sigaction();
+	g_sig = 0;
 	exit_code = main_process(argp);
-	printf("exit\n");
 	return (exit_code);
 	(void) argc;
 	(void) argv;
