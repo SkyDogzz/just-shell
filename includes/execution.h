@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 16:50:50 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/12 16:35:51 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/12 18:32:31 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-int	ft_echo(const t_cmd *cmd)
-{
-	int	i;
+# include "minishell.h"
 
-	i = 2;
-	while (cmd->args[i])
-		ft_putstr_fd(cmd->args[i++], cmd->io[1]);
-	if (ft_strncmp(cmd->args[1], "-n", 2) == 0)
-		ft_putendl_fd("", cmd->io[1]);
-	return (0);
-}
+int		ft_exec_simple(const t_btree *root, char **env);
+
+void	ft_subprocess(const t_btree *root, char **env);
+void	ft_execft(const char *path, char *args[], char *env[]);
+char	*ft_get_executable_path(const t_cmd *cmd);
+#endif

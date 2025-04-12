@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/05 15:46:44 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/12 11:18:21 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,10 +52,11 @@ BTREE_SRC = btree/ft_btree_clear.c btree/ft_btree_height.c \
 			btree/ft_btree_insert_in.c
 SUBSHELL_SRC = subshell/subshell.c subshell/read.c
 PROMPT_SRC = prompt/shell.c
-EXEC_SRC = execution/ft_exec.c
+EXEC_SRC = execution/ft_exec.c execution/ft_execute_simple_cmd.c execution/ft_execft.c execution/execution_utils.c
+IO_SRC = io/ft_gethostname.c
 
 SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(LEXING_SRC) $(PARSING_SRC) \
-	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC) $(SUBSHELL_SRC) $(PROMPT_SRC) $(EXEC_SRC)
+	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC) $(SUBSHELL_SRC) $(PROMPT_SRC) $(EXEC_SRC) $(IO_SRC)
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -83,6 +84,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)/subshell
 	mkdir -p $(OBJ_PATH)/prompt
 	mkdir -p $(OBJ_PATH)/execution
+	mkdir -p $(OBJ_PATH)/io
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"

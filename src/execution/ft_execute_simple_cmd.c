@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_execute_simple_cmd.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 16:50:50 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/12 16:35:51 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/12 18:28:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
-int	ft_echo(const t_cmd *cmd)
+int	ft_exec_simple(const t_btree *root, char **env)
 {
-	int	i;
+	int	pid;
+	int	status;
 
-	i = 2;
-	while (cmd->args[i])
-		ft_putstr_fd(cmd->args[i++], cmd->io[1]);
-	if (ft_strncmp(cmd->args[1], "-n", 2) == 0)
-		ft_putendl_fd("", cmd->io[1]);
-	return (0);
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
+		ft_subprocess(root, env);
+	waitpid(pid, &status, 0);
+	return (status);
 }
