@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 16:46:07 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/12 23:37:47 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 # include "../libft/includes/libft.h"
 # include <stdio.h>
 # include <readline/history.h>
-# include <readline/readline.h>
+
+# ifdef USE_CUSTOM_RL
+#  include "ft_readline.h"
+# else
+#  include <readline/readline.h>
+# endif
+
 # include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -41,11 +47,13 @@
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
 
-# define DEFAULT_PROMPT PURPLE BOLD "$user @ $host"\
-	NC " in "\
-	GREEN BOLD "$path"\
-	NC " [ $last_exit ]\n"\
-	CYAN"~> " NC
+# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
+
+//# define DEFAULT_PROMPT PURPLE BOLD "$user @ $host"\
+//	NC " in "\
+//	GREEN BOLD "$path"\
+//	NC " [ $last_exit ]\n"\
+//	CYAN"~> " NC
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
@@ -128,12 +136,11 @@ typedef struct s_cmd
 	int					io[2];
 }						t_cmd;
 
-typedef struct s_btree	t_btree;
 typedef struct s_btree
 {
-	void	*content;
-	t_btree	*left;
-	t_btree	*right;
+	void			*content;
+	struct s_btree	*left;
+	struct s_btree	*right;
 }	t_btree;
 
 typedef struct s_leaf
