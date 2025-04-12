@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 18:49:19 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/12 22:46:31 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <readline/readline.h>
 
 int	g_sig;
 
@@ -39,13 +40,15 @@ static int	main_process(char **env)
 	t_btree	*tree;
 	char	*input;
 
+	tokens = NULL;
+	tree = NULL;
 	while (true)
 	{
 		input = ft_readline(PROMPT_MAIN);
 		if (!input)
 			break ;
 		if (is_exit(input))
-			return (0);
+			break ;
 		input = ft_handle_multiline_quote(input);
 		if (!input)
 			continue ;
@@ -54,7 +57,7 @@ static int	main_process(char **env)
 			free(input);
 			continue ;
 		}
-		add_history(input);
+		//add_history(input);
 		tokens = ft_lex(input);
 		if (tokens)
 		{
@@ -62,6 +65,7 @@ static int	main_process(char **env)
 			{
 				printf("Syntax error near unexpected token ')'\n");
 				ft_lstclear(&tokens, ft_lstclear_t_token);
+				free(input);
 				continue ;
 			}
 			tree = ft_parse(tokens);
@@ -80,6 +84,7 @@ int	main(int argc, char *argv[], char *argp[])
 	ft_set_sigaction();
 	g_sig = 0;
 	exit_code = main_process(argp);
+	rl_clear_history();
 	return (exit_code);
 	(void) argc;
 	(void) argv;

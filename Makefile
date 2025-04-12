@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/12 11:18:21 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/12 23:34:38 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ CFLAGS += -D DEBUG=TRUE
 endif
 ifdef FSAN
 CFLAGS += -fsanitize=address
+endif
+ifdef CUSTOM_RL
+CFLAGS += -D USE_CUSTOM_RL
 endif
 
 SRC_PATH = src/
@@ -54,9 +57,10 @@ SUBSHELL_SRC = subshell/subshell.c subshell/read.c
 PROMPT_SRC = prompt/shell.c
 EXEC_SRC = execution/ft_exec.c execution/ft_execute_simple_cmd.c execution/ft_execft.c execution/execution_utils.c
 IO_SRC = io/ft_gethostname.c
+FT_READLINE_SRC = ft_readline/ft_readline.c ft_readline/handle_chars.c ft_readline/init.c ft_readline/terminal.c
 
 SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(LEXING_SRC) $(PARSING_SRC) \
-	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC) $(SUBSHELL_SRC) $(PROMPT_SRC) $(EXEC_SRC) $(IO_SRC)
+	  $(HEREDOC_SRC) $(QUOTE_SRC) $(BTREE_SRC) $(SUBSHELL_SRC) $(PROMPT_SRC) $(EXEC_SRC) $(IO_SRC) $(addprefix io/, $(FT_READLINE_SRC))
 
 OBJ = $(SRC:.c=.o)
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -85,6 +89,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)/prompt
 	mkdir -p $(OBJ_PATH)/execution
 	mkdir -p $(OBJ_PATH)/io
+	mkdir -p $(OBJ_PATH)/io/ft_readline
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo -n "$(Green)"
