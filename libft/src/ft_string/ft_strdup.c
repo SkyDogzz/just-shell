@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:24:27 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:09:27 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s)
 	char	*new;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	new = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!new)
 		return (NULL);
