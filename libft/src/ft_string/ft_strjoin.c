@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 23:06:06 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/12 15:47:16 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/13 11:16:03 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,24 @@ char	*ft_strmultijoin(const char **strs, size_t elem_count)
 	char	*ptr;
 	size_t	total_len;
 	size_t	i;
+	size_t	len;
 
+	if (!strs)
+		return (NULL);
 	i = 0;
 	total_len = 0;
 	while (i < elem_count && strs[i])
 		total_len += ft_strlen(strs[i++]);
-	new = ft_calloc(total_len, sizeof(char));
+	new = ft_calloc(total_len + 1, sizeof(char));
 	if (!new)
 		return (NULL);
 	ptr = new;
 	i = 0;
 	while (i < elem_count && strs[i])
 	{
-		ptr = ft_memcpy(ptr, strs[i], sizeof(char));
-		ptr += ft_strlen(strs[i]);
+		len = ft_strlen(strs[i]);
+		ft_memcpy(ptr, strs[i], len);
+		ptr += len;
 		i++;
 	}
 	return (new);

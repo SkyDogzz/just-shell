@@ -6,68 +6,82 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 23:33:06 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/13 19:40:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "ft_readline.h"
+#include "includes/libft.h"
 
 static const char	*g_signal_names[] = {"SIGHUP", "SIGINT", "SIGQUIT"};
 
-static char	*prompt_with_user_at_host(const char	*old_prompt)
+static size_t	get_base_prompt_len(const char *prompt_base)
 {
-	char	*with_user;
-	char	*with_host;
-	char	*user;
-	char	*host;
+	char	*trimmed_prompt;
+	size_t	len;
 
-	user = getenv("USER");
-	if (!user)
-		user = "unknown";
-	host = ft_gethostname();
-	if (!host)
-		host = ft_strdup("nowhere");
-	with_user = ft_strreplace(old_prompt, "$user", user);
-	with_host = ft_strreplace(with_user, "$host", host);
-	free(with_user);
-	free(host);
-	return (with_host);
+	trimmed_prompt = ft_strtrim(prompt_base, "%s");
+	len = ft_strlen(trimmed_prompt);
+	free(trimmed_prompt);
+	len += ft_strlen(PURPLE);
+	len += ft_strlen(GREEN);
+	len += ft_strlen(CYAN);
+	len += ft_strlen(BOLD) * 2;
+	len += ft_strlen(NC) * 3;
+	return (len);
 }
 
-static char	*prompt_with_path_and_exit(const char	*old_prompt)
+static void	*free_prompt_info(t_prompt_info *prompt)
 {
-	char	*with_path;
-	char	*with_exit;
-	char	*path;
-	char	*temp_path;
-	char	*last_exit;
+	free(prompt->user);
+	prompt->user = NULL;
+	free(prompt->host);
+	prompt->host = NULL;
+	free(prompt->path);
+	prompt->path = NULL;
+	free(prompt->last_exit);
+	prompt->last_exit = NULL;
+	return (NULL);
+}
 
-	temp_path = ft_strdup(getenv("PWD"));
-	if (!temp_path)
-		temp_path = ft_strdup("the void");
-	path = ft_strreplace(temp_path, getenv("HOME"), "~");
+static void	init_prompt_info(t_prompt_info *prompt_info)
+{
+	char	*fullpath;
+
+	prompt_info->user = ft_strdup(getenv("USER"));
+	if (!prompt_info->user)
+		prompt_info->user = ft_strdup("unknown");
+	prompt_info->host = ft_gethostname();
+	if (!prompt_info->host)
+		prompt_info->host = ft_strdup("nowhere");
+	fullpath = ft_strdup(getenv("PWD"));
+	if (!fullpath)
+		fullpath = ft_strdup("the void");
+	prompt_info->path = ft_strreplace(fullpath, getenv("HOME"), "~");
+	free(fullpath);
 	if (g_sig >= 1)
-		last_exit = ft_strdup(g_signal_names[g_sig - 1]);
+		prompt_info->last_exit = ft_strdup(g_signal_names[g_sig - 1]);
 	else
-		last_exit = ft_strdup("✓");
-	with_path = ft_strreplace(old_prompt, "$path", path);
-	with_exit = ft_strreplace(with_path, "$last_exit", last_exit);
-	free(with_path);
-	free(last_exit);
-	free(temp_path);
-	free(path);
-	return (with_exit);
+		prompt_info->last_exit = ft_strdup("✓");
+	prompt_info->prompt_len = get_base_prompt_len(DEFAULT_PROMPT)
+		+ ft_strlen(prompt_info->user) + ft_strlen(prompt_info->host)
+		+ ft_strlen(prompt_info->path) + ft_strlen(prompt_info->last_exit);
 }
 
 static char	*get_prompt_main(void)
 {
-	char	*prompt;
-	char	*temp;
+	char			*prompt;
+	t_prompt_info	prompt_info;
 
-	temp = prompt_with_user_at_host(DEFAULT_PROMPT);
-	prompt = prompt_with_path_and_exit(temp);
-	free(temp);
+	init_prompt_info(&prompt_info);
+	prompt = ft_calloc(prompt_info.prompt_len + 1, sizeof(char));
+	if (!prompt)
+		return (free_prompt_info(&prompt_info));
+	ft_snprintf(prompt, prompt_info.prompt_len, DEFAULT_PROMPT,
+		PURPLE, BOLD, prompt_info.user, prompt_info.host, NC,
+		GREEN, BOLD, prompt_info.path, NC, prompt_info.last_exit, CYAN, NC);
+	free_prompt_info(&prompt_info);
 	return (prompt);
 }
 
