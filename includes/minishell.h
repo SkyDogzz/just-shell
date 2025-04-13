@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 23:37:47 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/13 19:42:33 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,9 @@
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
 
-# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
+//# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
 
-//# define DEFAULT_PROMPT PURPLE BOLD "$user @ $host"\
-//	NC " in "\
-//	GREEN BOLD "$path"\
-//	NC " [ $last_exit ]\n"\
-//	CYAN"~> " NC
+# define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
@@ -112,6 +108,15 @@ typedef enum e_redirect_type
 	REDIR_APPEND,
 	REDIR_HEREDOC
 }						t_redirect_type;
+
+typedef struct s_prompt_info
+{
+	size_t	prompt_len;
+	char	*user;
+	char	*host;
+	char	*path;
+	char	*last_exit;
+}			t_prompt_info;
 
 typedef struct s_token
 {
