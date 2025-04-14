@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/12 18:35:02 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 03:03:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <stdlib.h>
 
 void	ft_execft(const char *path, char **args, char **env)
 {
@@ -22,14 +23,12 @@ void	ft_execft(const char *path, char **args, char **env)
 	}
 }
 
-void	ft_subprocess(const t_btree *root, char **env)
+void	ft_subprocess(const t_cmd *cmd, char **env)
 {
 	char	*path;
-	t_cmd	*cmd;
 
-	if (!root || !root->content || !((t_leaf *)root->content)->cmd)
-		return ;
-	cmd = ((t_leaf *)root->content)->cmd;
+	if (!cmd)
+		exit(EXIT_FAILURE);
 	path = ft_get_executable_path(cmd);
 	if (!path)
 	{
