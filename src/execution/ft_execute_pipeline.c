@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/14 17:11:17 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 19:05:38 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,18 @@ int	ft_exec_pipeline(const t_btree *root, char **env)
 	pids[0] = fork_pipe_process(root, env, pipe_fds, 0);
 	if (pids[0] == -1)
 	{
-		cleanup_pipe(pipe_fds);
+		destop_turbo(pipe_fds);
 		return (-1);
 	}
 	pids[1] = fork_pipe_process(root, env, pipe_fds, 1);
 	if (pids[1] == -1)
 	{
-		cleanup_pipe(pipe_fds);
+		destop_turbo(pipe_fds);
 		kill(pids[0], SIGTERM);
 		waitpid(pids[0], NULL, 0);
 		return (-1);
 	}
-	cleanup_pipe(pipe_fds);
+	destop_turbo(pipe_fds);
 	waitpid(pids[0], &statuses[0], 0);
 	waitpid(pids[1], &statuses[1], 0);
 	return (statuses[1]);

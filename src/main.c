@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 22:46:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:26:31 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	main_process(char **env)
 			free(input);
 			continue ;
 		}
-		//add_history(input);
+		add_history(input);
 		tokens = ft_lex(input);
 		if (tokens)
 		{
