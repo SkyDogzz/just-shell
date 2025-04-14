@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/12 23:34:38 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/14 17:10:44 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,8 @@ BTREE_SRC = btree/ft_btree_clear.c btree/ft_btree_height.c \
 			btree/ft_btree_insert_in.c
 SUBSHELL_SRC = subshell/subshell.c subshell/read.c
 PROMPT_SRC = prompt/shell.c
-EXEC_SRC = execution/ft_exec.c execution/ft_execute_simple_cmd.c execution/ft_execft.c execution/execution_utils.c
-IO_SRC = io/ft_gethostname.c
+EXEC_SRC = execution/ft_exec.c execution/ft_execute_simple_cmd.c execution/ft_execft.c execution/execution_utils.c execution/ft_execute_pipeline.c
+IO_SRC = io/ft_gethostname.c io/ft_tuyau.c
 FT_READLINE_SRC = ft_readline/ft_readline.c ft_readline/handle_chars.c ft_readline/init.c ft_readline/terminal.c
 
 SRC = main.c $(UTILS_SRC) $(SIGNAL_SRC) $(LEXING_SRC) $(PARSING_SRC) \
