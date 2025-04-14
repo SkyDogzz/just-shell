@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:24:47 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 18:31:32 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
 
-	i = 0;
 	i = ft_strlen(s);
 	while (i >= 0)
 	{
