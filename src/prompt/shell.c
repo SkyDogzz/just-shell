@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/14 03:30:49 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:20:39 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static void	init_prompt_info(t_prompt_info *prompt_info)
 	if (!prompt_info->host)
 		prompt_info->host = ft_strdup("nowhere");
 	fullpath = ft_strdup(getenv("PWD"));
-	if (!fullpath)
-		fullpath = ft_strdup("the void");
 	prompt_info->path = ft_strreplace(fullpath, getenv("HOME"), "~");
+	if (!prompt_info->path)
+		prompt_info->path = ft_strdup("the void *dun dun dun*");
 	free(fullpath);
 	if (g_sig >= 1)
 		prompt_info->last_exit = ft_strdup(g_signal_names[g_sig - 1]);
