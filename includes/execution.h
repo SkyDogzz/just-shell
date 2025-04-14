@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/14 17:12:02 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 19:05:38 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	ft_execft(const char *path, char *args[], char *env[]);
 char	*ft_get_executable_path(const t_cmd *cmd);
 
 int		setup_pipe(int pipe_fds[2]);
-void	cleanup_pipe(int pipe_fds[2]);
+void	destop_turbo(int pipe_fds[2]);
 #endif

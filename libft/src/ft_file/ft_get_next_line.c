@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:50:10 by yandry            #+#    #+#             */
-/*   Updated: 2024/12/22 12:17:56 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 18:43:16 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ static void	clear_list(t_list **list)
 	char	*buff;
 
 	buff = (char *)malloc(BUFFER_SIZE + 1);
-	clean = (t_list *)malloc(sizeof(t_list));
-	if (!buff || !clean)
+	if (!buff)
 		return ;
+	clean = (t_list *)malloc(sizeof(t_list));
+	if (!clean)
+		return (free(buff));
 	last = ft_lstlast(*list);
 	i = 0;
 	k = 0;
@@ -100,7 +102,7 @@ char	*ft_get_next_line(int fd)
 	static t_list	*list;
 	char			*next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	create_list(&list, fd);
 	if (!list)

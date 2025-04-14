@@ -6,13 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:20:39 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 19:59:46 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "ft_readline.h"
-#include "includes/libft.h"
 
 static const char	*g_signal_names[] = {"SIGHUP", "SIGINT", "SIGQUIT"};
 

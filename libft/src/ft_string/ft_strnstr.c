@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 18:20:32 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 18:33:09 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	i;
 	size_t	j;
 
-	if (!big && !little)
+	if (!big || !little)
 		return (NULL);
 	if (!ft_strlen(little))
 		return ((char *) big);
