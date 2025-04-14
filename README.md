@@ -16,3 +16,11 @@ Pourquoi faire minishell quand on peut faire 42sh (spoiler: parce qu'on peut pas
 |
 |
 | -- Attrocite inomable
+
+## Les stats
+
+### Ca build ou pas?
+[![Compile](https://github.com/SkyDogzz/just-shell/actions/workflows/compile.yml/badge.svg)](https://github.com/SkyDogzz/just-shell/actions/workflows/compile.yml)
+
+### Ca normine ou pas?
+[![Norminette](https://github.com/SkyDogzz/just-shell/actions/workflows/norm.yml/badge.svg)](https://github.com/SkyDogzz/just-shell/actions/workflows/norm.yml)
