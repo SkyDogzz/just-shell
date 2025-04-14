@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/18 14:16:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/10 19:05:02 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*fuse_content(char *content, char *input)
 {
 	if (content && ft_strlen(content) != 0)
 	{
-		input = ft_strjoin_free("\n", input, SECOND);
+		input = ft_strjoin_free("\n", input, NONE);
 		content = ft_strjoin_free(content, input, BOTH);
 	}
 	else
