@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/13 19:40:59 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/14 03:30:49 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,11 @@ char	*ft_readline(t_prompt id)
 		return (readline(CYAN BOLD "subshell> " NC));
 	else
 		prompt = get_prompt_main();
-	input = readline(prompt);
-	free(prompt);
-	return (input);
+	if (prompt != NULL)
+	{
+		input = readline(prompt);
+		free(prompt);
+		return (input);
+	}
+	return (readline("ssh-xx-1.0$"));
 }
