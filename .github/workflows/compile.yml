@@ -1,0 +1,16 @@
+name: Compile
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  compile_job:
+    runs-on: ubuntu-latest
+    name: Compile your amazing minishell :D
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make
