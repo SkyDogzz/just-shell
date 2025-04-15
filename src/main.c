@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:14:06 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 22:58:09 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,7 @@ static bool	is_comment(char *input)
 
 static bool	is_exit(char *input)
 {
-	if (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0)
-	{
-		free(input);
-		return (true);
-	}
-	return (false);
+	return (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0);
 }
 
 static int	handle_input(char *input)
@@ -54,6 +49,7 @@ static int	handle_input(char *input)
 		return (0);
 	}
 	tree = ft_parse(tokens);
+	ft_exec(tree, NULL);
 	ft_btree_clear(&tree, ft_free_leaf);
 	return (0);
 }
@@ -77,7 +73,7 @@ static int	main_process(void)
 			free(input);
 			continue ;
 		}
-		if (status == 2)
+		else if (status == 2)
 			return (free(input), 0);
 		free(input);
 	}
