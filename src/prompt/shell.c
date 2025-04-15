@@ -6,23 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:35:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/18 14:03:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:32:35 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-static char	*get_prompt_main(void)
-{
-	char	*prompt;
-	char	*mem;
-
-	prompt = ft_strjoin_free(GREEN BOLD "Maxishell | ", ft_getenv("PWD"), NONE);
-	prompt = ft_strjoin_free(prompt, " > " NC, FIRST);
-	mem = ft_strreplace(prompt, ft_getenv("HOME"), "~");
-	free(prompt);
-	return (mem);
-}
+#include "minishell.h"
+#include "includes/libft.h"
 
 char	*ft_readline(t_prompt id)
 {
@@ -37,7 +26,11 @@ char	*ft_readline(t_prompt id)
 		return (readline(CYAN BOLD "subshell> " NC));
 	else
 		prompt = get_prompt_main();
-	input = readline(prompt);
-	free(prompt);
-	return (input);
+	if (prompt != NULL)
+	{
+		input = readline(prompt);
+		free(prompt);
+		return (input);
+	}
+	return (readline("ssh-xx-1.0$"));
 }

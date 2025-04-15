@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is.c                                               :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 14:03:46 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:42:26 by yandry           ###   ########.fr       */
+/*   Created: 2025/03/25 16:50:50 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/12 16:35:51 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-bool	ft_is_pipe(t_token *token)
+int	ft_echo(const t_cmd *cmd)
 {
-	return (ft_strlen(token->content) == 1 && token->token_type == T_OPERATOR_S
-		&& ft_strcmp(token->content, "|") == 0);
+	int	i;
+
+	i = 2;
+	while (cmd->args[i])
+		ft_putstr_fd(cmd->args[i++], cmd->io[1]);
+	if (ft_strncmp(cmd->args[1], "-n", 2) == 0)
+		ft_putendl_fd("", cmd->io[1]);
+	return (0);
 }

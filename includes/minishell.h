@@ -3,23 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
 /*   Updated: 2025/04/15 15:08:09 by tstephan         ###   ########.fr       */
-/*   Updated: 2025/03/04 16:35:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/includes/libft.h"
 # include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+
+# ifdef USE_CUSTOM_RL
+#  include "ft_readline.h"
+# else
+#  include <readline/readline.h>
+# endif
+
 # include <signal.h>
+# include <stdbool.h>
+# include <stdlib.h>
 # include <sys/ioctl.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <stdbool.h>
 
@@ -29,6 +37,8 @@
 # define BOLD	"\e[1m"
 # define RED	"\e[31m"
 # define GREEN	"\e[32m"
+# define YELLOW	"\e[33m"
+# define ORANGE	"\e[34m"
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
 
@@ -39,8 +49,14 @@
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
 
+//# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
+
+# define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
+
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
+
+extern int	g_exit;
 
 typedef enum e_joinfree
 {
@@ -63,11 +79,12 @@ typedef enum e_quote
 	UQUOTE,
 	SQUOTE,
 	DQUOTE
-}	t_quote;
+}						t_quote;
 
 typedef enum e_token_type
 {
-	T_OPERATOR,
+	T_OPERATOR_S,
+	T_OPERATOR_M,
 	T_WORD,
 	T_QUOTE,
 	T_EXPANSION,
@@ -84,7 +101,7 @@ typedef enum e_node_type
 	NODE_REDIR,
 	NODE_PIPE,
 	NODE_LOGICAL
-}	t_node_type;
+}						t_node_type;
 
 typedef enum e_redirect_type
 {
@@ -92,7 +109,16 @@ typedef enum e_redirect_type
 	REDIR_TRUNC,
 	REDIR_APPEND,
 	REDIR_HEREDOC
-}	t_redirect_type;
+}						t_redirect_type;
+
+typedef struct s_prompt_info
+{
+	size_t		prompt_len;
+	const char	*user;
+	const char	*host;
+	const char	*path;
+	const char	*last_exit;
+}			t_prompt_info;
 
 typedef struct s_token
 {
@@ -112,18 +138,16 @@ typedef struct s_subshell
 
 typedef struct s_cmd
 {
-	char			**args;
-	t_redirect_type	redirect_type;
-	int				infile;
-	int				outfile;
-}	t_cmd;
+	char				**args;
+	t_redirect_type		redirect_type;
+	int					io[2];
+}						t_cmd;
 
-typedef struct s_btree	t_btree;
 typedef struct s_btree
 {
-	void	*content;
-	t_btree	*left;
-	t_btree	*right;
+	void			*content;
+	struct s_btree	*left;
+	struct s_btree	*right;
 }	t_btree;
 
 typedef struct s_leaf
@@ -131,6 +155,17 @@ typedef struct s_leaf
 	t_node_type		type;
 	t_cmd			*cmd;
 }	t_leaf;
+
+typedef struct s_expand
+{
+	char	*find;
+	char	*mem;
+	int		size;
+	char	*envname;
+	char	*envvar;
+	char	*envvarr;
+	int		offset;
+}			t_expand;
 
 int		ft_strcmp(const char *s1, const char *s2);
 
@@ -164,7 +199,7 @@ t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
-int		ft_exec(t_btree *root);
+int		ft_exec(t_btree *root, char **env);
 
 // tree related functions
 void	ft_print_tree(t_btree *root, int level, int is_last);
@@ -200,4 +235,6 @@ char	*ft_readline(t_prompt id);
 bool	ft_is_pipe(t_token *token);
 bool	ft_is_logical(t_token *token);
 
+char	*ft_gethostname(void);
+char	*get_prompt_main(void);
 #endif
