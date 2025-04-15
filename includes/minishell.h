@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:08:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:19:47 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ typedef enum e_quote
 
 typedef enum e_token_type
 {
-	T_OPERATOR_S,
-	T_OPERATOR_M,
+	T_OPERATOR,
 	T_WORD,
 	T_QUOTE,
 	T_EXPANSION,

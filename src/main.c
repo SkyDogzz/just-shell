@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:35:29 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:14:06 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ static int	main_process(void)
 	char	*input;
 	int		status;
 
-	tokens = NULL;
-	tree = NULL;
 	while (true)
 	{
 		input = ft_readline(PROMPT_MAIN);
@@ -92,7 +90,7 @@ int	main(int argc, char *argv[], char *argp[])
 
 	ft_set_sigaction();
 	g_exit = 0;
-	exit_code = main_process(argp);
+	exit_code = main_process();
 	rl_clear_history();
 	return (exit_code);
 	(void) argc;
