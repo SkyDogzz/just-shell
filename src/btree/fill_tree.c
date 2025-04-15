@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:07:34 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:14:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,34 @@ static char	**args_from_lst(t_list *tokens)
 	return (content);
 }
 
+static void	ft_choice(t_list *tokens, t_token *token, t_btree **root )
+{
+	t_leaf	*leaf;
+
+	if (ft_lstsize(tokens) == 1 && ft_is_pipe(token))
+	{
+		leaf = ft_create_leaf(NODE_PIPE, NULL);
+		ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+	}
+	else if (ft_lstsize(tokens) == 1 && ft_is_logical(token))
+	{
+		if (ft_strcmp(token->content, "||") == 0)
+			leaf = ft_create_leaf(NODE_LOGICAL, ft_split("or", 0));
+		else
+			leaf = ft_create_leaf(NODE_LOGICAL, ft_split("and", 0));
+		ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+	}
+	else
+	{
+		leaf = ft_create_leaf(NODE_WORD, args_from_lst(tokens));
+		ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+	}
+}
+
 void	ft_fill_tree(t_btree **root, t_list *pipes)
 {
 	t_list	*tokens;
 	t_token	*token;
-	t_leaf	*leaf;
 
 	while (pipes)
 	{
@@ -63,24 +86,7 @@ void	ft_fill_tree(t_btree **root, t_list *pipes)
 			continue ;
 		}
 		token = tokens->content;
-		if (ft_lstsize(tokens) == 1 && ft_is_pipe(token))
-		{
-			leaf = ft_create_leaf(NODE_PIPE, NULL);
-			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
-		}
-		else if (ft_lstsize(tokens) == 1 && ft_is_logical(token))
-		{
-			if (ft_strcmp(token->content, "||") == 0)
-				leaf = ft_create_leaf(NODE_LOGICAL, ft_split("or", 0));
-			else
-				leaf = ft_create_leaf(NODE_LOGICAL, ft_split("and", 0));
-			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
-		}
-		else
-		{
-			leaf = ft_create_leaf(NODE_WORD, args_from_lst(tokens));
-			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
-		}
+		ft_choice(tokens, token, root);
 		pipes = pipes->next;
 	}
 }
