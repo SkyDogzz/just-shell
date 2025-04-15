@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/14 19:05:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:54:36 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int	ft_exec_pipeline(const t_btree *root, char **env)
 	destop_turbo(pipe_fds);
 	waitpid(pids[0], &statuses[0], 0);
 	waitpid(pids[1], &statuses[1], 0);
+	g_exit = statuses[1];
 	return (statuses[1]);
 }

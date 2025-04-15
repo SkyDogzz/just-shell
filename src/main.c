@@ -13,7 +13,7 @@
 #include "../includes/minishell.h"
 #include <readline/readline.h>
 
-int	g_sig;
+int	g_exit;
 
 static bool	is_comment(char *input)
 {
@@ -82,7 +82,7 @@ int	main(int argc, char *argv[], char *argp[])
 	int		exit_code;
 
 	ft_set_sigaction();
-	g_sig = 0;
+	g_exit = 0;
 	exit_code = main_process(argp);
 	rl_clear_history();
 	return (exit_code);

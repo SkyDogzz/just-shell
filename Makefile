@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/14 19:58:58 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/15 15:44:07 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,9 @@ BTREE_SRC 		:= ft_btree_clear.c \
 SUBSHELL_SRC 	:= subshell.c \
 				   read.c
 
-PROMPT_SRC		:= shell.c
+PROMPT_SRC		:= shell.c \
+				   prompt_builder.c \
+				   prompt_builder_utils.c
 
 EXEC_SRC		:= ft_exec.c \
 				   ft_execute_simple_cmd.c \
