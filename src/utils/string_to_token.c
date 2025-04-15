@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:19:36 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 18:24:03 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_token_type	ft_gettype(char *s)
 }
 
 t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
-{	
+{
 	t_list	*act;
 	t_token	*dup;
 
