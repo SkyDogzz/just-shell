@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:09:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/14 19:05:43 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 10:05:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	setup_pipe(int pipe_fds[2])
 
 void	destop_turbo(int pipe_fds[2])
 {
-	close(pipe_fds[0]);
-	close(pipe_fds[1]);
+	if (pipe_fds[0] >= 0)
+		close(pipe_fds[0]);
+	if (pipe_fds[1] >= 0)
+		close(pipe_fds[1]);
 }
