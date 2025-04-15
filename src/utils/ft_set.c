@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.c                                              :+:      :+:    :+:   */
+/*   ft_set.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:44:35 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/17 20:02:38 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:37:34 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_split(char **split)
+static void	free_split(char **split)
 {
 	int		pos;
 
@@ -25,7 +25,7 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	is_in_stringset(const char *input, const char *stringset, char delim)
+int	ft_isin_stringset(const char *input, const char *stringset, char delim)
 {
 	char	**set;
 	int		pos;
@@ -36,7 +36,7 @@ int	is_in_stringset(const char *input, const char *stringset, char delim)
 	while (set[pos])
 	{
 		if (ft_strncmp(input, set[pos], ft_strlen(set[pos])) == 0)
-		{	
+		{
 			len = ft_strlen(set[pos]);
 			free_split(set);
 			return (len);
@@ -47,7 +47,7 @@ int	is_in_stringset(const char *input, const char *stringset, char delim)
 	return (0);
 }
 
-bool	is_in_charset(char c, const char *charset)
+bool	ft_isin_charset(char c, const char *charset)
 {
 	while (*charset)
 	{
@@ -56,4 +56,9 @@ bool	is_in_charset(char c, const char *charset)
 		charset++;
 	}
 	return (false);
+}
+
+bool	ft_isspace(char c)
+{
+	return (c == ' ' || (c >= 8 && c <= 13));
 }
