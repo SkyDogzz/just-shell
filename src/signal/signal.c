@@ -16,7 +16,7 @@ static void	ft_signal_handler(const int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_sig = SIGINT;
+		g_exit = SIGINT;
 		rl_done = 1;
 		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
 		rl_on_new_line();
@@ -33,9 +33,9 @@ void	ft_set_sigaction(void)
 
 bool	handle_sigint(void)
 {
-	if (g_sig == SIGINT)
+	if (g_exit == SIGINT)
 	{
-		g_sig = 0;
+		g_exit = 0;
 		return (true);
 	}
 	return (false);

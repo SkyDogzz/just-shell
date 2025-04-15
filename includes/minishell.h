@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/13 19:42:33 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:53:21 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define BOLD	"\e[1m"
 # define RED	"\e[31m"
 # define GREEN	"\e[32m"
+# define YELLOW	"\e[33m"
+# define ORANGE	"\e[34m"
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
 
@@ -54,7 +56,7 @@
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
 
-extern int	g_sig;
+extern int	g_exit;
 
 typedef enum e_joinfree
 {
@@ -111,11 +113,11 @@ typedef enum e_redirect_type
 
 typedef struct s_prompt_info
 {
-	size_t	prompt_len;
-	char	*user;
-	char	*host;
-	char	*path;
-	char	*last_exit;
+	size_t		prompt_len;
+	const char	*user;
+	const char	*host;
+	const char	*path;
+	const char	*last_exit;
 }			t_prompt_info;
 
 typedef struct s_token
@@ -231,4 +233,5 @@ char	*ft_readline(t_prompt id);
 bool	ft_is_pipe(t_token *token);
 
 char	*ft_gethostname(void);
+char	*get_prompt_main(void);
 #endif
