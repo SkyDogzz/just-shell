@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 16:31:04 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/12 16:37:33 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ char	*ft_getenv(char *name)
 		return ("");
 	return (value);
 }
-
-typedef struct s_expand
-{
-	char	*find;
-	char	*mem;
-	int		size;
-	char	*envname;
-	char	*envvar;
-	char	*envvarr;
-	int		offset;
-}	t_expand;
 
 static bool	ft_find_expand(t_expand *expand, t_token *token)
 {

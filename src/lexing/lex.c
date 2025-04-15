@@ -64,19 +64,19 @@ static char	*check_tokens(t_list *tokens)
 	if (!tokens)
 		return (NULL);
 	token = (t_token *)tokens->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
+	if (token->token_type == T_OPERATOR_S && ft_strcmp(token->content, ";") != 0)
 		return (token->content);
 	token = ft_lstlast(tokens)->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
+	if (token->token_type == T_OPERATOR_S && ft_strcmp(token->content, ";") != 0)
 		return (token->content);
 	token = (t_token *)tokens->content;
 	prev = 0;
 	while (tokens)
 	{
 		token = (t_token *)tokens->content;
-		if (prev == 1 && token->token_type == T_OPERATOR)
+		if (prev == 1 && token->token_type == T_OPERATOR_S)
 			return (token->content);
-		if (token->token_type == T_OPERATOR)
+		if (token->token_type == T_OPERATOR_S)
 			prev = 1;
 		else
 			prev = 0;

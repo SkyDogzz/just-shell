@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is.c                                               :+:      :+:    :+:   */
+/*   ft_tuyau.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 14:03:46 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:42:26 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/14 17:09:29 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/15 10:05:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "execution.h"
 
-bool	ft_is_pipe(t_token *token)
+int	setup_pipe(int pipe_fds[2])
 {
-	return (ft_strlen(token->content) == 1 && token->token_type == T_OPERATOR_S
-		&& ft_strcmp(token->content, "|") == 0);
+	if (pipe(pipe_fds) == -1)
+		return (-1);
+	return (0);
+}
+
+void	destop_turbo(int pipe_fds[2])
+{
+	if (pipe_fds[0] >= 0)
+		close(pipe_fds[0]);
+	if (pipe_fds[1] >= 0)
+		close(pipe_fds[1]);
 }

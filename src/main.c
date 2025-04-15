@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
 /*   Updated: 2025/04/15 15:35:29 by tstephan         ###   ########.fr       */
@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <readline/readline.h>
 
-int	g_sig = 0;
+int	g_exit;
 
 static bool	is_comment(char *input)
 {
@@ -62,10 +63,10 @@ static int	main_process(void)
 	char	*input;
 	int		status;
 
+	tokens = NULL;
+	tree = NULL;
 	while (true)
 	{
-		if (handle_sigint())
-			continue ;
 		input = ft_readline(PROMPT_MAIN);
 		if (!input)
 			break ;
@@ -90,8 +91,9 @@ int	main(int argc, char *argv[], char *argp[])
 	int		exit_code;
 
 	ft_set_sigaction();
-	exit_code = main_process();
-	printf("exit\n");
+	g_exit = 0;
+	exit_code = main_process(argp);
+	rl_clear_history();
 	return (exit_code);
 	(void) argc;
 	(void) argv;

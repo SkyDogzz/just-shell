@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_set.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:44:35 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:52:43 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:37:34 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_split(char **split)
+static void	free_split(char **split)
 {
 	int		pos;
 
@@ -36,7 +36,7 @@ int	ft_isin_stringset(const char *input, const char *stringset, char delim)
 	while (set[pos])
 	{
 		if (ft_strncmp(input, set[pos], ft_strlen(set[pos])) == 0)
-		{	
+		{
 			len = ft_strlen(set[pos]);
 			free_split(set);
 			return (len);

@@ -64,15 +64,11 @@ t_btree	*ft_parse(t_list *tokens)
 	t_btree	*root;
 	t_list	*pipes;
 
-	ft_lstprint_tokens(tokens, "Print tokens");
 	pipes = parse_pipe(tokens);
-	ft_lstprint_pipes(pipes, "Print pipes");
 	root = NULL;
 	ft_fill_tree(&root, pipes);
 	ft_lstclear(&pipes, ft_lstclear_pipes);
-	ft_print_tree(root, 0, 1);
 	return (root);
-	(void)tokens;
 }
 
 /*t_btree	*ft_parse(t_list *tokens)*/
