@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/25 16:45:34 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:21:44 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ static void	ft_fuse_token(t_list **token)
 	ft_lstclear_t_token(mem);
 }
 
+static bool	ft_leveling(t_list *act, t_token *act_t, int *level)
+{
+	if (!act->next)
+		return (false);
+	act_t = act->next->content;
+	if (ft_strcmp(act_t->content, ")") == 0)
+		level--;
+	else if (ft_strcmp(act_t->content, "$(") == 0)
+		level++;
+	ft_fuse_token(&act);
+	return (true);
+}
+
 static void	ft_group_subshell(t_list **token)
 {
 	t_list	*act;
@@ -48,19 +61,27 @@ static void	ft_group_subshell(t_list **token)
 		{
 			level++;
 			while (level)
-			{
-				if (!act->next)
+				if (!ft_leveling(act, act_t, &level))
 					break ;
-				act_t = act->next->content;
-				if (ft_strcmp(act_t->content, ")") == 0)
-					level--;
-				else if (ft_strcmp(act_t->content, "$(") == 0)
-					level++;
-				ft_fuse_token(&act);
-			}
 		}
 		act = act->next;
 	}
+}
+
+static bool	ft_help(t_subshell *help)
+{
+	help->act_t = help->act->content;
+	if (help->act_t->token_type == T_SUBSTITUTE)
+	{
+		if (ft_strcmp(help->act_t->content, "$(") == 0)
+			help->level++;
+		if (ft_strcmp(help->act_t->content, ")") == 0)
+			help->level--;
+	}
+	if (help->level < 0)
+		return (false);
+	help->act = help->act->next;
+	return (true);
 }
 
 bool	ft_findsubshell(t_list **token)
@@ -71,17 +92,8 @@ bool	ft_findsubshell(t_list **token)
 	help.level = 0;
 	while (help.act)
 	{
-		help.act_t = help.act->content;
-		if (help.act_t->token_type == T_SUBSTITUTE)
-		{
-			if (ft_strcmp(help.act_t->content, "$(") == 0)
-				help.level++;
-			if (ft_strcmp(help.act_t->content, ")") == 0)
-				help.level--;
-		}
-		if (help.level < 0)
+		if (!ft_help(&help))
 			return (false);
-		help.act = help.act->next;
 	}
 	if (help.level != 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:26:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:35:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,34 @@ static bool	is_exit(char *input)
 	return (false);
 }
 
-static int	main_process(char **env)
+static int	handle_input(char *input)
 {
 	t_list	*tokens;
 	t_btree	*tree;
+
+	if (ft_strlen(input) <= 0 || is_comment(input))
+		return (1);
+	if (is_exit(input))
+		return (2);
+	add_history(input);
+	tokens = ft_lex(input);
+	if (!tokens)
+		return (0);
+	if (!ft_findsubshell(&tokens))
+	{
+		printf("Syntax error near unexpected token ')'\n");
+		ft_lstclear(&tokens, ft_lstclear_t_token);
+		return (0);
+	}
+	tree = ft_parse(tokens);
+	ft_btree_clear(&tree, ft_free_leaf);
+	return (0);
+}
+
+static int	main_process(void)
+{
 	char	*input;
+	int		status;
 
 	tokens = NULL;
 	tree = NULL;
@@ -47,31 +70,17 @@ static int	main_process(char **env)
 		input = ft_readline(PROMPT_MAIN);
 		if (!input)
 			break ;
-		if (is_exit(input))
-			break ;
 		input = ft_handle_multiline_quote(input);
 		if (!input)
 			continue ;
-		if (ft_strlen(input) <= 0 || is_comment(input))
+		status = handle_input(input);
+		if (status == 1)
 		{
 			free(input);
 			continue ;
 		}
-		add_history(input);
-		tokens = ft_lex(input);
-		if (tokens)
-		{
-			if (!ft_findsubshell(&tokens))
-			{
-				printf("Syntax error near unexpected token ')'\n");
-				ft_lstclear(&tokens, ft_lstclear_t_token);
-				free(input);
-				continue ;
-			}
-			tree = ft_parse(tokens);
-			ft_exec(tree, env);
-			ft_btree_clear(&tree, ft_free_leaf);
-		}
+		if (status == 2)
+			return (free(input), 0);
 		free(input);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:53:21 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:08:09 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ void	ft_btree_postorder(t_btree *root, void (*f)(void *));
 int		ft_btree_size(t_btree *root);
 int		ft_btree_height(t_btree *root);
 void	ft_btree_clear(t_btree **root, void (*del)(void *));
+void	ft_fill_tree(t_btree **root, t_list *pipes);
+
 char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree flag);
 
 t_leaf	*ft_create_leaf(t_node_type type, char	**args);
@@ -231,6 +233,7 @@ char	*ft_getenv(char *name);
 char	*ft_readline(t_prompt id);
 
 bool	ft_is_pipe(t_token *token);
+bool	ft_is_logical(t_token *token);
 
 char	*ft_gethostname(void);
 char	*get_prompt_main(void);
