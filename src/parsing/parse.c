@@ -5,87 +5,176 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/18 12:33:53 by tstephan         ###   ########.fr       */
+/*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
+/*   Updated: 2025/04/12 16:36:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_string	*ft_doom_split(const char *input)
+static bool	ft_is_logical(t_token *token)
 {
-	t_string			*top;
-	char				*dup;
-	int					len;
-	static t_quote		quote = UNQUOTED;
-
-	top = NULL;
-	while (input && *input)
-	{
-		if (!quote && is_in_charset(*input, QUOTE))
-		{
-			quote = SINGLE_QUOTED;
-			if (*input == '"')
-				quote = DOUBLE_QUOTED;
-			continue ;
-		}
-		if (!quote)
-		{
-			len = is_in_stringset(input, OPERATOR_M, ',');
-			if (!len)
-				len = is_in_stringset(input, RESERVED, ',');
-			if (!len)
-				len = is_in_stringset(input, SUBSTITUTE, ',');
-			if (!len)
-				len = is_in_charset(*input, OPERATOR_S);
-			if (!len)
-				len = 1;
-		}
-		else if(quote)
-		{
-			len = 1;
-			int pos = 1;
-			while (input[pos] && ((quote == SINGLE_QUOTED && input[pos] != '\'') || (quote == DOUBLE_QUOTED && input[pos] != '"')))
-			{
-				len++;
-				pos++;
-			}
-			if (input[pos] == '"' || input[pos] == '\'')
-			{
-				len++;
-				quote = UNQUOTED;
-			}
-		}
-		dup = ft_strndup(input, len);
-		if (!dup)
-			continue ;
-		top = string_add_bottom(top, string_create(dup));
-		free(dup);
-		input += len;
-	}
-	if (!top)
-		return (NULL);
-	return (top);
+	if (token->token_type != T_OPERATOR_M)
+		return (false);
+	if (ft_strcmp(token->content, "||") == 0
+		|| ft_strcmp(token->content, "&&") == 0)
+		return (true);
+	return (false);
 }
 
-t_token	*parse_tokens(char *input)
+static void	*cut_and_get_pipe(t_list **tokens)
 {
-	t_token		*tokens;
-	t_string	*pre_tokens;
-	t_string	*act;
+	t_list	*start;
+	t_token	*act_t;
+	t_list	*mem;
 
-	pre_tokens = ft_doom_split(input);
-	if (!pre_tokens)
-		return (NULL);
-	tokens = NULL;
-	act = pre_tokens;
-	while (act)
+	start = *tokens;
+	while (*tokens)
 	{
-		tokens = token_add_bottom(tokens, token_create(act->content, 0));
-		act = act->next;
+		act_t = (t_token *)(*tokens)->content;
+		if (ft_is_pipe(act_t) || ft_is_logical(act_t))
+		{
+			mem = (*tokens)->next;
+			(*tokens)->next = NULL;
+			(*tokens) = mem;
+			break ;
+		}
+		*tokens = (*tokens)->next;
 	}
-	string_free(pre_tokens);
-	token_print(tokens);
-	return (tokens);
-	(void) input;
+	return (start);
 }
+
+static t_list	*parse_pipe(t_list *tokens)
+{
+	t_list	*pipes;
+	t_list	*last;
+	t_token	*token;
+	t_list	*pre;
+
+	pipes = NULL;
+	while (tokens)
+	{
+		ft_lstadd_back(&pipes, ft_lstnew(cut_and_get_pipe(&tokens)));
+		last = (t_list *)ft_lstlast(pipes)->content;
+		token = (t_token *)ft_lstlast(last)->content;
+		if (ft_is_pipe(token) || ft_is_logical(token))
+		{
+			pre = last;
+			while (pre && pre->next && pre->next->next)
+				pre = pre->next;
+			ft_lstadd_back(&pipes, ft_lstnew(pre->next));
+			pre->next = NULL;
+		}
+	}
+	return (pipes);
+}
+
+static int	cmp(void *c1, void *c2)
+{
+	t_leaf	*leaf1;
+	t_leaf	*leaf2;
+
+	leaf1 = (t_leaf *)c1;
+	leaf2 = (t_leaf *)c2;
+	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_WORD)
+		return (0);
+	if (leaf1->type == NODE_LOGICAL && leaf2->type == NODE_WORD)
+		return (0);
+	return (1);
+}
+
+static char	**args_from_lst(t_list *tokens)
+{
+	char	**content;
+	t_token	*token;
+	int		size;
+	int		pos;
+
+	size = ft_lstsize(tokens);
+	content = (char **)malloc(sizeof(char *) * (size + 1));
+	if (!content)
+		return (NULL);
+	pos = 0;
+	while (tokens)
+	{
+		token = (t_token *)tokens->content;
+		content[pos++] = ft_strdup(token->content);
+		tokens = tokens->next;
+	}
+	content[size] = 0;
+	return (content);
+}
+
+void	ft_fill_tree(t_btree **root, t_list *pipes)
+{
+	t_list	*tokens;
+	t_token	*token;
+	t_leaf	*leaf;
+
+	while (pipes)
+	{
+		tokens = (t_list *)pipes->content;
+		if (!tokens)
+		{
+			pipes = pipes->next;
+			continue ;
+		}
+		token = tokens->content;
+		if (ft_lstsize(tokens) == 1 && ft_is_pipe(token))
+		{
+			leaf = ft_create_leaf(NODE_PIPE, NULL);
+			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+		}
+		else if (ft_lstsize(tokens) == 1 && ft_is_logical(token))
+		{
+			if (ft_strcmp(token->content, "||") == 0)
+				leaf = ft_create_leaf(NODE_LOGICAL, ft_split("or", 0));
+			else
+				leaf = ft_create_leaf(NODE_LOGICAL, ft_split("and", 0));
+			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+		}
+		else
+		{
+			leaf = ft_create_leaf(NODE_WORD, args_from_lst(tokens));
+			ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
+		}
+		pipes = pipes->next;
+	}
+}
+
+t_btree	*ft_parse(t_list *tokens)
+{
+	t_btree	*root;
+	t_list	*pipes;
+
+	pipes = parse_pipe(tokens);
+	root = NULL;
+	ft_fill_tree(&root, pipes);
+	ft_lstclear(&pipes, ft_lstclear_pipes);
+	return (root);
+}
+
+/*t_btree	*ft_parse(t_list *tokens)*/
+/*{*/
+/*	t_btree	*root;*/
+/**/
+/*	root = ft_btree_new(ft_create_leaf(1,*/
+/*				ft_split("first", ' ')));*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(2,*/
+/*				ft_split("second", ' '))), ft_cmp_leaf);*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(3,*/
+/*				ft_split("third", ' '))), ft_cmp_leaf);*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(0,*/
+/*				ft_split("fourth", ' '))), ft_cmp_leaf);*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(0,*/
+/*				ft_split("fifth", ' '))), ft_cmp_leaf);*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(0,*/
+/*				ft_split("sixth", ' '))), ft_cmp_leaf);*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(0,*/
+/*				ft_split("seventh", ' '))), ft_cmp_leaf);*/
+/*	ft_btree_insert(&root, ft_btree_new(ft_create_leaf(0,*/
+/*				ft_split("eigth", ' '))), ft_cmp_leaf);*/
+/*	ft_print_tree(root, 0, 0);*/
+/*	return (root);*/
+/*	(void) tokens;*/
+/*}*/

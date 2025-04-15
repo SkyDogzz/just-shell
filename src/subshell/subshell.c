@@ -1,0 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   subshell.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
+/*   Updated: 2025/03/25 16:45:34 by tstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/minishell.h"
+
+/*https://unix.stackexchange.com/questions/442692/is-a-subshell*/
+
+static void	ft_fuse_token(t_list **token)
+{
+	t_list	*act;
+	t_list	*mem;
+	t_token	*act_t;
+	t_token	*next_t;
+
+	act = *token;
+	if (!act || !act->next)
+		return ;
+	act_t = act->content;
+	next_t = act->next->content;
+	act_t->content = ft_strjoin_free(act_t->content, next_t->content, BOTH);
+	act_t->content = ft_strjoin_free(act_t->content, " ", FIRST);
+	mem = act->next;
+	act->next = act->next->next;
+	ft_lstclear_t_token(mem);
+}
+
+static void	ft_group_subshell(t_list **token)
+{
+	t_list	*act;
+	t_token	*act_t;
+	int		level;
+
+	level = 0;
+	act = *token;
+	while (act)
+	{
+		act_t = act->content;
+		if (ft_strcmp(act_t->content, "$(") == 0)
+		{
+			level++;
+			while (level)
+			{
+				if (!act->next)
+					break ;
+				act_t = act->next->content;
+				if (ft_strcmp(act_t->content, ")") == 0)
+					level--;
+				else if (ft_strcmp(act_t->content, "$(") == 0)
+					level++;
+				ft_fuse_token(&act);
+			}
+		}
+		act = act->next;
+	}
+}
+
+bool	ft_findsubshell(t_list **token)
+{
+	t_subshell	help;
+
+	help.act = *token;
+	help.level = 0;
+	while (help.act)
+	{
+		help.act_t = help.act->content;
+		if (help.act_t->token_type == T_SUBSTITUTE)
+		{
+			if (ft_strcmp(help.act_t->content, "$(") == 0)
+				help.level++;
+			if (ft_strcmp(help.act_t->content, ")") == 0)
+				help.level--;
+		}
+		if (help.level < 0)
+			return (false);
+		help.act = help.act->next;
+	}
+	if (help.level != 0)
+	{
+		help.input = ft_read_subshell(help.level);
+		help.pre = ft_doom_split(help.input);
+		free(help.input);
+		help.post = NULL;
+		help.post = ft_string_to_token(help.post, help.pre);
+		ft_lstadd_back(token, help.post);
+		ft_lstclear(&help.pre, ft_lstclear_string);
+	}
+	ft_group_subshell(token);
+	return (true);
+}
