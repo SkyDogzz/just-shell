@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/15 18:15:40 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/16 23:10:13 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,6 +96,8 @@ EXEC_SRC		:= ft_exec.c \
 IO_SRC			:= ft_gethostname.c \
 				   ft_tuyau.c
 
+BUILTINS_SRC	:= echo.c
+
 FT_READLINE_SRC := ft_readline.c \
 				   handle_chars.c \
 				   init.c \
@@ -112,7 +114,8 @@ SRC := main.c \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix execution/, $(EXEC_SRC)) \
-	   $(addprefix io/, $(IO_SRC))
+	   $(addprefix io/, $(IO_SRC)) \
+	   $(addprefix builtins/, $(BUILTINS_SRC))
 
 ifdef CUSTOM_RL
 SRC += $(addprefix io/ft_readline/, $(FT_READLINE_SRC))
