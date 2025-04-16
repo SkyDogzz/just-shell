@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 22:58:09 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/16 22:29:51 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	is_exit(char *input)
 	return (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0);
 }
 
-static int	handle_input(char *input)
+static int	handle_input(char *input, char **env)
 {
 	t_list	*tokens;
 	t_btree	*tree;
@@ -49,12 +49,12 @@ static int	handle_input(char *input)
 		return (0);
 	}
 	tree = ft_parse(tokens);
-	ft_exec(tree, NULL);
+	ft_exec(tree, env);
 	ft_btree_clear(&tree, ft_free_leaf);
 	return (0);
 }
 
-static int	main_process(void)
+static int	main_process(char **env)
 {
 	char	*input;
 	int		status;
@@ -67,7 +67,7 @@ static int	main_process(void)
 		input = ft_handle_multiline_quote(input);
 		if (!input)
 			continue ;
-		status = handle_input(input);
+		status = handle_input(input, env);
 		if (status == 1)
 		{
 			free(input);
@@ -86,7 +86,7 @@ int	main(int argc, char *argv[], char *argp[])
 
 	ft_set_sigaction();
 	g_exit = 0;
-	exit_code = main_process();
+	exit_code = main_process(argp);
 	rl_clear_history();
 	return (exit_code);
 	(void) argc;
