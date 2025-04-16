@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:19:47 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/16 19:05:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,17 @@ typedef struct s_subshell
 	char	*input;
 }	t_subshell;
 
+typedef struct s_redir
+{
+	char			*file;
+	t_redirect_type	type;
+}	t_redir;
+
 typedef struct s_cmd
 {
-	char				**args;
-	t_redirect_type		redirect_type;
-	int					io[2];
-}						t_cmd;
+	char	**args;
+	t_list	*redir;
+}	t_cmd;
 
 typedef struct s_btree
 {
