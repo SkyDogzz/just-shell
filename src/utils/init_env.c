@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:14:58 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/17 18:34:15 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 21:30:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ void	clear_env(void *env)
 	env = NULL;
 }
 
-static void	*ft_clean_failed_env(t_list **env, t_env *env_node)
-{
-	ft_lstclear(env, clear_env);
-	if (env_node)
-		clear_env(env_node);
-	return (NULL);
-}
-
 static void	ft_free_arr(char **array)
 {
 	int	i;
@@ -38,35 +30,45 @@ static void	ft_free_arr(char **array)
 	free(array);
 }
 
-static bool	init_env_node(t_env **env, char **split)
+static t_env	*create_node(char *name, char *value)
 {
-	*env = ft_calloc(1, sizeof(t_env));
-	if (!*env)
-		return (false);
-	(*env)->name = ft_strdup(split[0]);
-	if (!(*env)->name)
-	{
-		free(*env);
-		*env = NULL;
-		return (false);
-	}
-	(*env)->value = ft_strdup(split[1]);
-	if (!(*env)->value)
-	{
-		free((*env)->name);
-		free(*env);
-		*env = NULL;
-		return (false);
-	}
-	ft_free_arr(split);
-	return (true);
+	t_env	*env_node;
+
+	env_node = ft_calloc(1, sizeof(t_env));
+	if (!env_node)
+		return (NULL);
+	env_node->name = name;
+	env_node->value = value;
+	return (env_node);
+}
+
+static t_list	*append_env_node(t_list *env_list, char **split)
+{
+	char	*name;
+	char	*value;
+	t_env	*env_node;
+	t_list	*node;
+
+	if (!split || !split[0] || !split[1])
+		return (NULL);
+	name = ft_strdup(split[0]);
+	value = ft_strdup(split[1]);
+	if (!name || !value)
+		return (free(name), free(value), NULL);
+	env_node = create_node(name, value);
+	if (!env_node)
+		return (free(name), free(value), NULL);
+	node = ft_lstnew(env_node);
+	if (!node)
+		return (clear_env(env_node), NULL);
+	ft_lstadd_back(&env_list, node);
+	return (env_list);
 }
 
 t_list	*ft_init_env(const char **env)
 {
 	t_list	*env_list;
 	t_list	*current_node;
-	t_env	*env_node;
 	char	**splitted_env;
 	int		i;
 
@@ -75,15 +77,12 @@ t_list	*ft_init_env(const char **env)
 	while (env[i])
 	{
 		splitted_env = ft_split(env[i], '=');
-		if (!splitted_env || !splitted_env[0] || !splitted_env[1])
-			return (ft_free_arr(splitted_env),
-				ft_lstclear(&env_list, clear_env), NULL);
-		if (!init_env_node(&env_node, splitted_env))
-			return (ft_clean_failed_env(&env_list, env_node));
-		current_node = ft_lstnew(env_node);
+		current_node = append_env_node(env_list, splitted_env);
+		ft_free_arr(splitted_env);
 		if (!current_node)
-			return (ft_clean_failed_env(&env_list, env_node));
-		ft_lstadd_back(&env_list, current_node);
+			return (ft_lstclear(&env_list, clear_env), NULL);
+		if (!env_list)
+			env_list = current_node;
 		i++;
 	}
 	return (env_list);
