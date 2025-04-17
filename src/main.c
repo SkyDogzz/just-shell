@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/16 18:03:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:47:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	handle_input(char *input)
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (0);
 	}
-	ft_lstprint_tokens(tokens, "tokens");
 	tree = ft_parse(tokens);
 	ft_print_tree(tree, 0, 0);
 	ft_exec(tree, NULL);

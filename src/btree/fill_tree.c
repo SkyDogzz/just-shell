@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/16 19:05:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:49:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static char	**args_from_lst(t_list *tokens)
 	while (tokens)
 	{
 		token = (t_token *)tokens->content;
-		if (token->token_type == T_HEREDOC)
+		if (token->token_type == T_HEREDOC || (is_operator(token, "<"))
+			|| is_operator(token, ">") || is_operator(token, ">>"))
 		{
 			tokens = tokens->next->next;
 			continue ;
@@ -51,28 +52,6 @@ static char	**args_from_lst(t_list *tokens)
 	}
 	content[pos] = 0;
 	return (content);
-}
-
-static t_list	*parse_redir(t_list *tokens)
-{
-	t_token	*token;
-	t_list	*redirs;
-	t_redir	*redir;
-
-	redirs = NULL;
-	while (tokens)
-	{
-		token = tokens->content;
-		if (token->token_type == T_HEREDOC)
-		{
-			redir = (t_redir *)malloc(sizeof(t_redir));
-			redir->file = ft_strdup(token->content);
-			redir->type = REDIR_HEREDOC;
-			ft_lstadd_back(&redirs, ft_lstnew(redir));
-		}
-		tokens = tokens->next;
-	}
-	return (redirs);
 }
 
 static void	ft_choice(t_list *tokens, t_token *token, t_btree **root )
