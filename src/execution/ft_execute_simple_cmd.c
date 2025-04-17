@@ -6,13 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/15 14:31:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:40:39 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	ft_exec_simple(const t_btree *root, char **env)
+int	ft_exec_simple(const t_btree *root, t_list *env)
 {
 	int		pid;
 	int		status;

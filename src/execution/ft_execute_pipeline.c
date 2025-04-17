@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/15 15:54:36 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:41:37 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	execute_command(t_leaf *leaf, char **env)
+static void	execute_command(t_leaf *leaf, t_list *env)
 {
 	ft_subprocess(leaf->cmd, env);
 	exit(EXIT_FAILURE);
 }
 
-static int	exec_pipe_left(const t_btree *node, char **env, int pipe_fds[2])
+static int	exec_pipe_left(const t_btree *node, t_list *env, int pipe_fds[2])
 {
 	t_leaf	*leaf;
 
@@ -45,7 +45,7 @@ static int	exec_pipe_left(const t_btree *node, char **env, int pipe_fds[2])
 	exit(EXIT_FAILURE);
 }
 
-static int	exec_pipe_right(const t_btree *node, char **env, int pipe_fds[2])
+static int	exec_pipe_right(const t_btree *node, t_list *env, int pipe_fds[2])
 {
 	t_leaf	*leaf;
 
@@ -67,7 +67,7 @@ static int	exec_pipe_right(const t_btree *node, char **env, int pipe_fds[2])
 	exit(EXIT_FAILURE);
 }
 
-static pid_t	fork_pipe_process(const t_btree *node, char **env,
+static pid_t	fork_pipe_process(const t_btree *node, t_list *env,
 							int pipe_fds[2], int pipe_side)
 {
 	pid_t	pid;
@@ -85,7 +85,7 @@ static pid_t	fork_pipe_process(const t_btree *node, char **env,
 	return (pid);
 }
 
-int	ft_exec_pipeline(const t_btree *root, char **env)
+int	ft_exec_pipeline(const t_btree *root, t_list *env)
 {
 	int		pipe_fds[2];
 	pid_t	pids[2];

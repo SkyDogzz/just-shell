@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:19:47 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:25:54 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,12 @@ typedef struct s_expand
 	int		offset;
 }			t_expand;
 
+typedef struct s_env
+{
+	char	*name;
+	char	*value;
+}	t_env;
+
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
@@ -198,7 +204,7 @@ t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
-int		ft_exec(t_btree *root, char **env);
+int		ft_exec(t_btree *root, t_list *env);
 
 // tree related functions
 void	ft_print_tree(t_btree *root, int level, int is_last);
