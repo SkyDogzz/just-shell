@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:18:17 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:33:04 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static char	*check_tokens(t_list *tokens)
 
 	if (!tokens)
 		return (NULL);
-	token = (t_token *)tokens->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
-		return (token->content);
 	token = ft_lstlast(tokens)->content;
 	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
 		return (token->content);
 	token = (t_token *)tokens->content;
+	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0
+		&& ft_strcmp(token->content, "<"))
+		return (token->content);
 	prev = 0;
 	while (tokens)
 	{

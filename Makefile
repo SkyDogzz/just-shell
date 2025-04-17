@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/15 18:15:40 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/17 17:36:24 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ UTILS_SRC		:= ft_set.c \
 				   ft_strjoin_free.c \
 				   ft_strcmp.c \
 				   string_to_token.c \
-				   is_logical.c
+				   is_logical.c \
+				   is_operator.c
 
 SIGNAL_SRC		:= signal.c
 
@@ -78,7 +79,8 @@ BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_size.c \
 				   print.c \
 				   ft_btree_insert_in.c\
-				   fill_tree.c
+				   fill_tree.c \
+				   parse_redir.c
 
 SUBSHELL_SRC 	:= subshell.c \
 				   read.c
