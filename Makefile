@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/17 17:17:57 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/17 23:27:44 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,8 @@ EXEC_SRC		:= ft_exec.c \
 IO_SRC			:= ft_gethostname.c \
 				   ft_tuyau.c
 
-BUILTINS_SRC	:= echo.c
+BUILTINS_SRC	:= echo.c \
+				   cd.c
 
 FT_READLINE_SRC := ft_readline.c \
 				   handle_chars.c \
