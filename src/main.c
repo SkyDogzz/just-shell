@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 17:19:34 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:01:29 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	main(int argc, char *argv[], char *argp[])
 	g_exit = 0;
 	exit_code = main_process(env);
 	rl_clear_history();
+	ft_lstclear(&env, clear_env);
 	return (exit_code);
 	(void) argc;
 	(void) argv;
