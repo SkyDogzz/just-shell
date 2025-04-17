@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/17 16:58:20 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:19:25 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static void	*copy_env_to_str(const void *env)
 
 void	ft_execft(const char *path, char **args, t_list *env)
 {
-	if (execve(path, args, (char *const *)ft_lsttoarray_c(env, copy_env_to_str)) == -1)
+	if (execve(
+			path,
+			args,
+			(char *const *)ft_lsttoarray_c(env, copy_env_to_str)) == -1)
 	{
 		ft_putstr_fd("ssh-xx: failed to run ", 2);
 		ft_putendl_fd(args[0], 2);
