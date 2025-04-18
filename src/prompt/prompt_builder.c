@@ -6,12 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:38:05 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/15 15:52:45 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 11:34:50 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_signals.h"
+
+char	*get_current_wd(void);
 
 static size_t	get_base_prompt_len(const char *prompt_base)
 {
@@ -65,7 +67,7 @@ static void	init_prompt_info(t_prompt_info *prompt_info)
 	prompt_info->host = ft_gethostname();
 	if (!prompt_info->host)
 		prompt_info->host = ft_strdup("nowhere");
-	fullpath = ft_strdup(getenv("PWD"));
+	fullpath = get_current_wd();
 	prompt_info->path = ft_strreplace(fullpath, getenv("HOME"), "~");
 	if (!prompt_info->path)
 		prompt_info->path = ft_strdup("the void *dun dun dun*");

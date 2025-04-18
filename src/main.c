@@ -29,7 +29,7 @@ static bool	is_exit(char *input)
 	return (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0);
 }
 
-static int	handle_input(char *input)
+static int	handle_input(char *input, t_list *env)
 {
 	t_list	*tokens;
 	t_btree	*tree;
@@ -49,13 +49,12 @@ static int	handle_input(char *input)
 		return (0);
 	}
 	tree = ft_parse(tokens);
-	ft_print_tree(tree, 0, 0);
-	ft_exec(tree, NULL);
+	ft_exec(tree, env);
 	ft_btree_clear(&tree, ft_free_leaf);
 	return (0);
 }
 
-static int	main_process(void)
+static int	main_process(t_list *env)
 {
 	char	*input;
 	int		status;
@@ -68,7 +67,7 @@ static int	main_process(void)
 		input = ft_handle_multiline_quote(input);
 		if (!input)
 			continue ;
-		status = handle_input(input);
+		status = handle_input(input, env);
 		if (status == 1)
 		{
 			free(input);
@@ -84,11 +83,14 @@ static int	main_process(void)
 int	main(int argc, char *argv[], char *argp[])
 {
 	int		exit_code;
+	t_list	*env;
 
+	env = ft_init_env((const char **)argp);
 	ft_set_sigaction();
 	g_exit = 0;
-	exit_code = main_process();
+	exit_code = main_process(env);
 	rl_clear_history();
+	ft_lstclear(&env, clear_env);
 	return (exit_code);
 	(void) argc;
 	(void) argv;
