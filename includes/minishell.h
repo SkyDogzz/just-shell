@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 18:01:01 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 11:43:37 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@
 
 //# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
 
-# define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
+# ifdef DEBUG
+#  define DEFAULT_PROMPT "%s%s%s @ %s%s debugging in %s%s%s%s [ %s ]\n%s~>%s "
+# else 
+#  define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
+# endif
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2

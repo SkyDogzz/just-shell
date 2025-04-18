@@ -6,12 +6,29 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:11:23 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/14 17:14:03 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 11:57:33 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
+
+static char	*set_hostname(char *hostname)
+{
+	char	*final;
+
+	if (!hostname)
+		return (NULL);
+	if (ft_strncmp(getenv("USER"), "root", 4) == 0)
+	{
+		final = ft_calloc(ft_strlen(hostname) + 9, sizeof(char));
+		if (!final)
+			return (NULL);
+		ft_snprintf(final, ft_strlen(hostname) + 8, "nasa (%s)", hostname);
+		return (final);
+	}
+	return (ft_strdup(hostname));
+}
 
 char	*ft_gethostname(void)
 {
@@ -31,7 +48,7 @@ char	*ft_gethostname(void)
 	free(hostname);
 	if (!hostname_split || !hostname_split[0])
 		return (NULL);
-	hostname = ft_strdup(hostname_split[0]);
+	hostname = set_hostname(hostname_split[0]);
 	i = 0;
 	while (hostname_split[i])
 		free(hostname_split[i++]);
