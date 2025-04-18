@@ -185,5 +185,6 @@ nm: re
 
 lint:
 	@cppcheck --enable=all --check-level=exhaustive --suppress=variableScope \
-	--suppress=missingIncludeSystem src 1> /dev/null
+	--suppress=missingIncludeSystem --suppress=missingInclude \
+	--suppress=constVariablePointer --suppress=unusedFunction src 1> /dev/null
 

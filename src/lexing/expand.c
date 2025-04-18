@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 16:37:33 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:31:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_getenv(char *name)
+char	*ft_getenv(const char *name)
 {
 	char	*value;
 
@@ -22,7 +22,7 @@ char	*ft_getenv(char *name)
 	return (value);
 }
 
-static bool	ft_find_expand(t_expand *expand, t_token *token)
+static bool	ft_find_expand(t_expand *expand, const t_token *token)
 {
 	expand->offset = 0;
 	while (true)
