@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:20:52 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 11:38:45 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 13:03:36 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ char	*get_current_wd(void)
 	if (!cwd)
 		return (NULL);
 	if (getcwd(cwd, PATH_MAX) != NULL)
-		return (ft_printf("%s\n", cwd), cwd);
+		return (cwd);
 	return (NULL);
 }
