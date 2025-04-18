@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 11:43:37 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:31:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	ft_lstclear_pipes(void *content);
 void	ft_lstprint_pipes(t_list *lst, const char *s);
 
 int		ft_handle_heredocs(t_list **lst);
-char	*ft_read_heredoc(char *delimiter);
+char	*ft_read_heredoc(const char *delimiter);
 
 t_list	*ft_lex(const char *cmd_line);
 t_list	*ft_doom_split(const char *input);
@@ -245,12 +245,12 @@ char	*ft_read_subshell(int level);
 
 t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens);
 
-char	*ft_getenv(char *name);
+char	*ft_getenv(const char *name);
 char	*ft_readline(t_prompt id);
 
-bool	ft_is_pipe(t_token *token);
-bool	ft_is_logical(t_token *token);
-bool	is_operator(t_token *token, const char *op);
+bool	ft_is_pipe(const t_token *token);
+bool	ft_is_logical(const t_token *token);
+bool	is_operator(const t_token *token, const char *op);
 
 t_list	*ft_init_env(const char **env);
 void	clear_env(void *env);

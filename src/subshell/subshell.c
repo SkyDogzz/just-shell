@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:21:44 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:09:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ static void	ft_fuse_token(t_list **token)
 	ft_lstclear_t_token(mem);
 }
 
-static bool	ft_leveling(t_list *act, t_token *act_t, int *level)
+static bool	ft_leveling(t_list *act, const t_token *act_t, int *level)
 {
 	if (!act->next)
 		return (false);
 	act_t = act->next->content;
 	if (ft_strcmp(act_t->content, ")") == 0)
-		level--;
+		(*level)--;
 	else if (ft_strcmp(act_t->content, "$(") == 0)
-		level++;
+		(*level)++;
 	ft_fuse_token(&act);
 	return (true);
 }
