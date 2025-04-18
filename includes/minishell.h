@@ -45,7 +45,8 @@
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!"
 # define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
-# define RESERVED "if,then,else,elif,fi,done,do,case,esac,while,until,for,in,!!"
+# define RESERVED "if ,then ,else ,elif ,fi ,\
+	done ,do ,case ,esac ,while ,until ,for ,in ,!!"
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
 
@@ -139,12 +140,17 @@ typedef struct s_subshell
 	char	*input;
 }	t_subshell;
 
+typedef struct s_redir
+{
+	char			*file;
+	t_redirect_type	type;
+}	t_redir;
+
 typedef struct s_cmd
 {
-	char				**args;
-	t_redirect_type		redirect_type;
-	int					io[2];
-}						t_cmd;
+	char	**args;
+	t_list	*redir;
+}	t_cmd;
 
 typedef struct s_btree
 {
@@ -224,6 +230,7 @@ int		ft_btree_size(t_btree *root);
 int		ft_btree_height(t_btree *root);
 void	ft_btree_clear(t_btree **root, void (*del)(void *));
 void	ft_fill_tree(t_btree **root, t_list *pipes);
+t_list	*parse_redir(t_list *tokens);
 
 char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree flag);
 
@@ -243,6 +250,7 @@ char	*ft_readline(t_prompt id);
 
 bool	ft_is_pipe(t_token *token);
 bool	ft_is_logical(t_token *token);
+bool	is_operator(t_token *token, const char *op);
 
 t_list	*ft_init_env(const char **env);
 void	clear_env(void *env);
