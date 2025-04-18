@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:14:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/16 18:49:13 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:59:54 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	print_redir_line(t_btree *node, int level)
 
 static void	print_cmd_args(t_btree *node, int level)
 {
-	t_leaf	*leaf;
+	const t_leaf	*leaf;
 
 	leaf = node->content;
 	if (!leaf->cmd)

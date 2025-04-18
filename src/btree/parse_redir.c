@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:34:33 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 17:49:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:01:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static t_list	*parse_infile(t_list *tokens, t_list *redirs)
 {
-	t_token	*act;
-	t_token	*next;
-	t_redir	*redir;
+	const t_token	*next;
+	t_token			*act;
+	t_redir			*redir;
 
 	while (tokens && tokens->next)
 	{
@@ -39,8 +39,8 @@ static t_list	*parse_infile(t_list *tokens, t_list *redirs)
 
 static t_list	*parse_heredoc(t_list *tokens, t_list *redirs)
 {
-	t_token	*token;
-	t_redir	*redir;
+	const t_token	*token;
+	t_redir			*redir;
 
 	while (tokens)
 	{
