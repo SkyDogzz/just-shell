@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/10 19:05:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:08:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	get_level(int level, char *input)
 	return (level);
 }
 
-static char	*fuse_content(char *content, char *input)
+static char	*fuse_content(char *content, const char *input)
 {
 	if (content && ft_strlen(content) != 0)
 	{

@@ -6,12 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:23:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 17:25:33 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:10:50 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-bool	is_operator(t_token *token, const char *op)
+bool	is_operator(const t_token *token, const char *op)
 {
 	if (token->token_type != T_OPERATOR)
 		return (false);

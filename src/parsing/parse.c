@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/16 17:39:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:07:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static t_list	*parse_pipe(t_list *tokens)
 			pre = last;
 			while (pre && pre->next && pre->next->next)
 				pre = pre->next;
+			if (!pre || !pre->next)
+				break ;
 			ft_lstadd_back(&pipes, ft_lstnew(pre->next));
 			pre->next = NULL;
 		}
