@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:08:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/06 17:22:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:15:02 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_list	*ft_remove_multispace(t_list *lst)
 	act = lst;
 	if (!act)
 		return (NULL);
-	while (act->next && act->next->next)
+	while (act && act->next && act->next->next)
 	{
 		if (ft_strlen(act->content) == 1 && ft_strlen(act->next->content) == 1
 			&& ft_isspace(((char *)act->content)[0])
