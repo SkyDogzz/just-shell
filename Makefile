@@ -48,6 +48,7 @@ UTILS_SRC		:= ft_set.c \
 				   string_to_token.c \
 				   is_logical.c \
 				   is_operator.c
+				   init_env.c
 
 SIGNAL_SRC		:= signal.c
 
@@ -98,6 +99,8 @@ EXEC_SRC		:= ft_exec.c \
 IO_SRC			:= ft_gethostname.c \
 				   ft_tuyau.c
 
+BUILTINS_SRC	:= echo.c
+
 FT_READLINE_SRC := ft_readline.c \
 				   handle_chars.c \
 				   init.c \
@@ -114,7 +117,8 @@ SRC := main.c \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix execution/, $(EXEC_SRC)) \
-	   $(addprefix io/, $(IO_SRC))
+	   $(addprefix io/, $(IO_SRC)) \
+	   $(addprefix builtins/, $(BUILTINS_SRC))
 
 ifdef CUSTOM_RL
 SRC += $(addprefix io/ft_readline/, $(FT_READLINE_SRC))

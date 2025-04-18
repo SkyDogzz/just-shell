@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_simple_cmd.c                            :+:      :+:    :+:   */
+/*   ft_builtins.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/17 16:40:39 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/16 14:35:17 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/16 14:41:00 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#ifndef FT_BUILTINS_H
+# define FT_BUILTINS_H
 
-int	ft_exec_simple(const t_btree *root, t_list *env)
-{
-	int		pid;
-	int		status;
-	t_leaf	*leaf;
+# include "minishell.h"
 
-	if (!root)
-		return (0);
-	leaf = (t_leaf *)root->content;
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
-		ft_subprocess(leaf->cmd, env);
-	waitpid(pid, &status, 0);
-	g_exit = status;
-	return (status);
-}
+void	ft_echo(const t_cmd *cmd);
+
+#endif

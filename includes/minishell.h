@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 17:35:56 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:43:37 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@
 
 //# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
 
-# define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
+# ifdef DEBUG
+#  define DEFAULT_PROMPT "%s%s%s @ %s%s debugging in %s%s%s%s [ %s ]\n%s~>%s "
+# else 
+#  define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
+# endif
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
@@ -172,6 +176,12 @@ typedef struct s_expand
 	int		offset;
 }			t_expand;
 
+typedef struct s_env
+{
+	char	*name;
+	char	*value;
+}	t_env;
+
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
@@ -204,7 +214,7 @@ t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
-int		ft_exec(t_btree *root, char **env);
+int		ft_exec(t_btree *root, t_list *env);
 
 // tree related functions
 void	ft_print_tree(t_btree *root, int level, int is_last);
@@ -242,6 +252,8 @@ bool	ft_is_pipe(t_token *token);
 bool	ft_is_logical(t_token *token);
 bool	is_operator(t_token *token, const char *op);
 
+t_list	*ft_init_env(const char **env);
+void	clear_env(void *env);
 char	*ft_gethostname(void);
 char	*get_prompt_main(void);
 #endif
