@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:11:23 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 11:57:33 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 19:25:45 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 static char	*set_hostname(char *hostname)
 {
 	char	*final;
+	char	*user;
 
-	if (!hostname)
+	user = getenv("USER");
+	if (!hostname || ! user)
 		return (NULL);
-	if (ft_strncmp(getenv("USER"), "root", 4) == 0)
+	if (ft_strncmp(user, "root", 4) == 0)
 	{
 		final = ft_calloc(ft_strlen(hostname) + 9, sizeof(char));
 		if (!final)
