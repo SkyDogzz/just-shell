@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/18 14:14:05 by tstephan         ###   ########.fr        #
+#    Updated: 2025/04/18 16:27:41 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,12 +101,15 @@ IO_SRC			:= ft_gethostname.c \
 
 BUILTINS_SRC	:= echo.c
 
+CORE_SRC		:= sinistershell.c
+
 FT_READLINE_SRC := ft_readline.c \
 				   handle_chars.c \
 				   init.c \
 				   terminal.c
 
 SRC := main.c \
+	   $(addprefix core/, $(CORE_SRC)) \
 	   $(addprefix utils/, $(UTILS_SRC)) \
 	   $(addprefix signal/, $(SIGNAL_SRC)) \
 	   $(addprefix lexing/, $(LEXING_SRC)) \

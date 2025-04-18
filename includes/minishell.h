@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 11:43:37 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 17:45:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,4 +256,6 @@ t_list	*ft_init_env(const char **env);
 void	clear_env(void *env);
 char	*ft_gethostname(void);
 char	*get_prompt_main(void);
+
+int		ft_sinistre(char **env);
 #endif

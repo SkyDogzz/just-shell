@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 22:04:33 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/12 23:14:53 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 15:58:14 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*finalize_input(t_readline *rl, int status)
 	return (result);
 }
 
-char	*ft_readline_2(const char *prompt)
+char	*readline(const char *prompt)
 {
 	t_readline	rl;
 	int			status;
