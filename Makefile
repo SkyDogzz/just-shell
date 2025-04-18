@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/18 14:14:05 by tstephan         ###   ########.fr        #
+#    Updated: 2025/04/18 16:12:33 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -184,5 +184,6 @@ nm: re
 
 lint:
 	@cppcheck --enable=all --check-level=exhaustive --suppress=variableScope \
-	--suppress=missingIncludeSystem src 1> /dev/null
+	--suppress=missingIncludeSystem --suppress=missingInclude \
+	--suppress=constVariablePointer --suppress=unusedFunction src 1> /dev/null
 

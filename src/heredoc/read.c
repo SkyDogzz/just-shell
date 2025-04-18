@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:37:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:02:49 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*fuse_content(char *content, char *input)
 	return (content);
 }
 
-char	*ft_read_heredoc(char *delimiter)
+char	*ft_read_heredoc(const char *delimiter)
 {
 	char	*content;
 	char	*input;

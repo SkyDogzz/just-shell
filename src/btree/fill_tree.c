@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 17:49:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:11:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	cmp(void *c1, void *c2)
 {
-	t_leaf	*leaf1;
-	t_leaf	*leaf2;
+	const t_leaf	*leaf1;
+	const t_leaf	*leaf2;
 
 	leaf1 = (t_leaf *)c1;
 	leaf2 = (t_leaf *)c2;
@@ -54,7 +54,7 @@ static char	**args_from_lst(t_list *tokens)
 	return (content);
 }
 
-static void	ft_choice(t_list *tokens, t_token *token, t_btree **root )
+static void	ft_choice(t_list *tokens, const t_token *token, t_btree **root )
 {
 	t_leaf	*leaf;
 
