@@ -6,12 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:20:52 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/15 15:49:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 11:38:45 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_signals.h"
 #include "minishell.h"
+#include <linux/limits.h>
 
 const char	*get_signal_name(int sig_no)
 {
@@ -68,4 +69,16 @@ const char	*get_signaled_status(void)
 	last_status = ft_strjoin(temp, NC);
 	free(temp);
 	return (last_status);
+}
+
+char	*get_current_wd(void)
+{
+	char	*cwd;
+
+	cwd = ft_calloc(PATH_MAX, sizeof(char));
+	if (!cwd)
+		return (NULL);
+	if (getcwd(cwd, PATH_MAX) != NULL)
+		return (ft_printf("%s\n", cwd), cwd);
+	return (NULL);
 }
