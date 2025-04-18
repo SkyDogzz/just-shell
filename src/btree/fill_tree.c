@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:14:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:49:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,16 @@ static char	**args_from_lst(t_list *tokens)
 	while (tokens)
 	{
 		token = (t_token *)tokens->content;
+		if (token->token_type == T_HEREDOC || (is_operator(token, "<"))
+			|| is_operator(token, ">") || is_operator(token, ">>"))
+		{
+			tokens = tokens->next->next;
+			continue ;
+		}
 		content[pos++] = ft_strdup(token->content);
 		tokens = tokens->next;
 	}
-	content[size] = 0;
+	content[pos] = 0;
 	return (content);
 }
 
@@ -68,6 +74,7 @@ static void	ft_choice(t_list *tokens, t_token *token, t_btree **root )
 	else
 	{
 		leaf = ft_create_leaf(NODE_WORD, args_from_lst(tokens));
+		leaf->cmd->redir = parse_redir(tokens);
 		ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
 	}
 }
