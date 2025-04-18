@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/17 17:36:24 by tstephan         ###   ########.fr        #
+#    Updated: 2025/04/18 14:14:05 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ UTILS_SRC		:= ft_set.c \
 				   ft_strcmp.c \
 				   string_to_token.c \
 				   is_logical.c \
-				   is_operator.c
+				   is_operator.c \
 				   init_env.c
 
 SIGNAL_SRC		:= signal.c

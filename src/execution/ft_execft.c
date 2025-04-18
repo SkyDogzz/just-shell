@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/17 17:19:25 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 15:49:44 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static bool	is_builtin(const t_cmd *cmd)
 
 static void	execute_builtin(t_cmd *cmd)
 {
-	cmd->io[1] = STDOUT_FILENO;
 	ft_echo(cmd);
 	exit(0);
 }
