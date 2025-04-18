@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:10:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:31:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ char	*ft_read_subshell(int level);
 
 t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens);
 
-char	*ft_getenv(char *name);
+char	*ft_getenv(const char *name);
 char	*ft_readline(t_prompt id);
 
 bool	ft_is_pipe(const t_token *token);

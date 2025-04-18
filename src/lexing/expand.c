@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:03:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:31:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_getenv(char *name)
+char	*ft_getenv(const char *name)
 {
 	char	*value;
 
