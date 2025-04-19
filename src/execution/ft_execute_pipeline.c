@@ -6,110 +6,57 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 18:31:29 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:35:10 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
-#include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	execute_command(t_leaf *leaf, t_list *env)
+void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 {
-	ft_subprocess(leaf->cmd, env);
+	if (fd_in != STDIN_FILENO)
+	{
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
+	}
+	if (fd_out != STDOUT_FILENO)
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	ft_subprocess(cmd, env);
 	exit(EXIT_FAILURE);
 }
 
-static int	exec_pipe_left(const t_btree *node, t_list *env, int pipe_fds[2])
-{
-	t_leaf	*leaf;
-
-	close(pipe_fds[0]);
-	if (dup2(pipe_fds[1], STDOUT_FILENO) == -1)
-	{
-		close(pipe_fds[1]);
-		exit(EXIT_FAILURE);
-	}
-	close(pipe_fds[1]);
-	if (node->left)
-	{
-		leaf = (t_leaf *)node->left->content;
-		if (leaf->type == NODE_WORD)
-			execute_command(leaf, env);
-		else
-			exit(ft_exec(node->left, env));
-	}
-	exit(EXIT_FAILURE);
-}
-
-static int	exec_pipe_right(const t_btree *node, t_list *env, int pipe_fds[2])
-{
-	t_leaf	*leaf;
-
-	close(pipe_fds[1]);
-	if (dup2(pipe_fds[0], STDIN_FILENO) == -1)
-	{
-		close(pipe_fds[0]);
-		exit(EXIT_FAILURE);
-	}
-	close(pipe_fds[0]);
-	if (node->right)
-	{
-		leaf = (t_leaf *)node->right->content;
-		if (leaf->type == NODE_WORD)
-			execute_command(leaf, env);
-		else
-			exit(ft_exec(node->right, env));
-	}
-	exit(EXIT_FAILURE);
-}
-
-static pid_t	fork_pipe_process(const t_btree *node, t_list *env,
-							int pipe_fds[2], int pipe_side)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
-	{
-		if (pipe_side == 0)
-			exec_pipe_left(node, env, pipe_fds);
-		else
-			exec_pipe_right(node, env, pipe_fds);
-	}
-	return (pid);
-}
-
-int	ft_exec_pipeline(const t_btree *root, t_list *env)
+static int	exec_pipe_node(t_btree *node, t_list *env, int fd_in)
 {
 	int		pipe_fds[2];
-	pid_t	pids[2];
-	int		statuses[2];
+	pid_t	left_pid;
 
 	if (setup_pipe(pipe_fds) == -1)
 		return (-1);
-	pids[0] = fork_pipe_process(root, env, pipe_fds, 0);
-	if (pids[0] == -1)
-	{
-		destop_turbo(pipe_fds);
+	left_pid = exec_left_child(node, env, fd_in, pipe_fds);
+	if (left_pid < 0)
 		return (-1);
-	}
-	pids[1] = fork_pipe_process(root, env, pipe_fds, 1);
-	if (pids[1] == -1)
-	{
-		destop_turbo(pipe_fds);
-		kill(pids[0], SIGTERM);
-		waitpid(pids[0], NULL, 0);
-		return (-1);
-	}
-	destop_turbo(pipe_fds);
-	waitpid(pids[0], &statuses[0], 0);
-	waitpid(pids[1], &statuses[1], 0);
-	g_exit = statuses[1];
-	return (statuses[1]);
+	if (fd_in != STDIN_FILENO)
+		close(fd_in);
+	close(pipe_fds[PIPE_RIGHT]);
+	if (((t_leaf *)node->right->content)->type == NODE_WORD)
+		return (handle_right_word_node(node, env,
+				pipe_fds[PIPE_LEFT], left_pid));
+	else
+		return (handle_right_node(node, env, pipe_fds[PIPE_LEFT], left_pid));
+}
+
+int	ft_exec_pipeline(const t_btree *root, t_list *env, int fd_in)
+{
+	if (!root)
+		return (0);
+	if (((t_leaf *)root->content)->type == NODE_PIPE)
+		return (exec_pipe_node((t_btree *)root, env, fd_in));
+	return (-1);
 }
