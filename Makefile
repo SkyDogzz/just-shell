@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/18 18:50:59 by tstephan         ###   ########.fr        #
+#    Updated: 2025/04/19 19:32:20 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,9 +93,9 @@ PROMPT_SRC		:= shell.c \
 EXEC_SRC		:= ft_exec.c \
 				   ft_execute_simple_cmd.c \
 				   ft_execft.c \
+				   pipeline_utils.c \
 				   execution_utils.c \
-				   ft_execute_pipeline_recursive.c
-				   # ft_execute_pipeline.c
+				   ft_execute_pipeline.c
 
 IO_SRC			:= ft_gethostname.c \
 				   ft_tuyau.c
