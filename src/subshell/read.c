@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:08:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/20 22:03:17 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_read_subshell(int level)
 	{
 		if (handle_sigint())
 			return (ft_quit_subshell(content));
-		input = ft_readline(PROMPT_SUBSHELL);
+		input = ft_readline(PROMPT_SUBSHELL, NULL);
 		if (!input)
 			return (ft_quit_subshell(content));
 		level = get_level(level, input);

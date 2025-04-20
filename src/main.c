@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 17:42:48 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:02:14 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	main_process(t_list *env)
 
 	while (true)
 	{
-		input = ft_readline(PROMPT_MAIN);
+		input = ft_readline(PROMPT_MAIN, env);
 		if (!input)
 			break ;
 		input = ft_handle_multiline_quote(input);

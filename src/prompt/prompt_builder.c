@@ -6,14 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:38:05 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 11:34:50 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:28:32 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_prompt.h"
 #include "minishell.h"
-#include "ft_signals.h"
-
-char	*get_current_wd(void);
 
 static size_t	get_base_prompt_len(const char *prompt_base)
 {
@@ -44,35 +42,12 @@ static void	*free_prompt_info(t_prompt_info *prompt)
 	return (NULL);
 }
 
-static const char	*retrieve_last_exit(void)
+static void	init_prompt_info(t_prompt_info *prompt_info, t_list *env)
 {
-	const char	*last_status;
-
-	if (WIFEXITED(g_exit))
-		last_status = get_exited_status();
-	else if (WIFSIGNALED(g_exit))
-		last_status = get_signaled_status();
-	else
-		last_status = ft_strdup("N/A");
-	return (last_status);
-}
-
-static void	init_prompt_info(t_prompt_info *prompt_info)
-{
-	char	*fullpath;
-
-	prompt_info->user = ft_strdup(getenv("USER"));
-	if (!prompt_info->user)
-		prompt_info->user = ft_strdup("unknown");
-	prompt_info->host = ft_gethostname();
-	if (!prompt_info->host)
-		prompt_info->host = ft_strdup("nowhere");
-	fullpath = get_current_wd();
-	prompt_info->path = ft_strreplace(fullpath, getenv("HOME"), "~");
-	if (!prompt_info->path)
-		prompt_info->path = ft_strdup("the void *dun dun dun*");
-	free(fullpath);
-	prompt_info->last_exit = retrieve_last_exit();
+	prompt_info->user = get_prompt_user(env);
+	prompt_info->host = get_prompt_host(env);
+	prompt_info->path = get_prompt_path(env);
+	prompt_info->last_exit = get_prompt_last_exit();
 	if (!prompt_info->last_exit)
 		prompt_info->last_exit = ft_strdup("N/A");
 	prompt_info->prompt_len = get_base_prompt_len(DEFAULT_PROMPT)
@@ -80,12 +55,12 @@ static void	init_prompt_info(t_prompt_info *prompt_info)
 		+ ft_strlen(prompt_info->path) + ft_strlen(prompt_info->last_exit);
 }
 
-char	*get_prompt_main(void)
+const char	*get_prompt_main(t_list *env)
 {
 	char			*prompt;
 	t_prompt_info	prompt_info;
 
-	init_prompt_info(&prompt_info);
+	init_prompt_info(&prompt_info, env);
 	prompt = ft_calloc(prompt_info.prompt_len + 1, sizeof(char));
 	if (!prompt)
 		return (free_prompt_info(&prompt_info));

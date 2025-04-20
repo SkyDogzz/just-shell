@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:28:10 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/19 19:32:41 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:33:06 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "ft_execution.h"
 
 int	exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2])
 {

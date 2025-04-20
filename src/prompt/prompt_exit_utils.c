@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_builder_utils.c                             :+:      :+:    :+:   */
+/*   prompt_exit_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 15:20:52 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 13:03:36 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/20 22:07:36 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_signals.h"
 #include "minishell.h"
-#include <linux/limits.h>
+#include "ft_signals.h"
 
 const char	*get_signal_name(int sig_no)
 {
@@ -71,14 +70,15 @@ const char	*get_signaled_status(void)
 	return (last_status);
 }
 
-char	*get_current_wd(void)
+const char	*get_prompt_last_exit(void)
 {
-	char	*cwd;
+	const char	*last_status;
 
-	cwd = ft_calloc(PATH_MAX, sizeof(char));
-	if (!cwd)
-		return (NULL);
-	if (getcwd(cwd, PATH_MAX) != NULL)
-		return (cwd);
-	return (NULL);
+	if (WIFEXITED(g_exit))
+		last_status = get_exited_status();
+	else if (WIFSIGNALED(g_exit))
+		last_status = get_signaled_status();
+	else
+		last_status = ft_strdup("N/A");
+	return (last_status);
 }
