@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 14:13:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:29:57 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,6 @@
 	done ,do ,case ,esac ,while ,until ,for ,in ,!!"
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
-
-//# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
-
-# ifdef DEBUG
-#  define DEFAULT_PROMPT "%s%s%s @ %s%s debugging in %s%s%s%s [ %s ]\n%s~>%s "
-# else 
-#  define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
-# endif
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
@@ -238,12 +230,10 @@ char	*ft_read_subshell(int level);
 t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens);
 
 char	*ft_getenv(const char *name);
-char	*ft_readline(t_prompt id);
+char	*ft_readline(t_prompt id, t_list *env);
 
 bool	ft_is_pipe(const t_token *token);
 bool	ft_is_logical(const t_token *token);
 bool	is_operator(const t_token *token, const char *op);
 
-char	*ft_gethostname(void);
-char	*get_prompt_main(void);
 #endif

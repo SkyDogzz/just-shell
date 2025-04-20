@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/20 18:05:39 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/20 22:16:47 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,10 @@ SUBSHELL_SRC 	:= subshell.c \
 
 PROMPT_SRC		:= shell.c \
 				   prompt_builder.c \
-				   prompt_builder_utils.c
+				   prompt_user_utils.c \
+				   prompt_host_utils.c \
+				   prompt_path_utils.c \
+				   prompt_exit_utils.c
 
 EXEC_SRC		:= ft_exec.c \
 				   ft_execute_simple_cmd.c \
@@ -104,8 +107,7 @@ EXEC_SRC		:= ft_exec.c \
 				   execution_utils.c \
 				   ft_execute_pipeline.c
 
-IO_SRC			:= ft_gethostname.c \
-				   ft_tuyau.c
+IO_SRC			:= ft_tuyau.c
 
 BUILTINS_SRC	:= echo.c
 

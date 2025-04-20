@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_simple_cmd.c                            :+:      :+:    :+:   */
+/*   ft_free_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:32:09 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/20 21:18:29 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/20 21:18:51 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_execution.h"
+#include "libft.h"
 
-int	ft_exec_simple(const t_btree *root, t_list *env)
+void	ft_free_array(void ***array)
 {
-	int		pid;
-	int		status;
-	t_leaf	*leaf;
+	size_t	i;
 
-	if (!root)
-		return (0);
-	leaf = (t_leaf *)root->content;
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
-		ft_subprocess(leaf->cmd, env);
-	waitpid(pid, &status, 0);
-	g_exit = status;
-	return (status);
+	if (!array || !*array)
+		return ;
+	i = 0;
+	while ((*array)[i])
+		free((*array)[i++]);
+	free(*array);
+	*array = NULL;
 }

@@ -6,12 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/19 19:35:10 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:32:22 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "execution.h"
+#include "ft_execution.h"
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>

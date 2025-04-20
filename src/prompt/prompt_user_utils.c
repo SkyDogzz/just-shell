@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_simple_cmd.c                            :+:      :+:    :+:   */
+/*   prompt_user_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:32:09 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/20 21:43:15 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/20 22:21:10 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_execution.h"
+#include "minishell.h"
 
-int	ft_exec_simple(const t_btree *root, t_list *env)
+const char	*get_prompt_user(t_list *env)
 {
-	int		pid;
-	int		status;
-	t_leaf	*leaf;
+	char	*user;
 
-	if (!root)
-		return (0);
-	leaf = (t_leaf *)root->content;
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
-		ft_subprocess(leaf->cmd, env);
-	waitpid(pid, &status, 0);
-	g_exit = status;
-	return (status);
+	(void)env;
+	user = getenv("USER");
+	if (!user)
+		return (ft_strdup("unknown"));
+	return (ft_strdup(user));
 }

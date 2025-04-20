@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:53:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 17:37:56 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 22:33:22 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "ft_execution.h"
 #include "ft_env.h"
 
 static void	free_array(char **array)
