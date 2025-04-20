@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/19 19:31:53 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 16:53:43 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out);
 
 void	ft_subprocess(const t_cmd *cmd, t_list *env);
 void	ft_execft(const char *path, char *args[], t_list *env);
-char	*ft_get_executable_path(const t_cmd *cmd);
+char	*ft_get_executable_path(const t_cmd *cmd, t_list *env);
 
 int		setup_pipe(int pipe_fds[2]);
 void	destop_turbo(int pipe_fds[2]);

@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/19 19:32:20 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/20 18:05:39 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,15 @@ UTILS_SRC		:= ft_set.c \
 				   ft_strcmp.c \
 				   string_to_token.c \
 				   is_logical.c \
-				   is_operator.c \
-				   init_env.c
+				   is_operator.c 
+
+ENV_SRC			:= ft_init_env.c \
+				   ft_clear_env.c \
+				   ft_new_env.c \
+				   ft_get_env.c \
+				   ft_update_env.c \
+				   ft_delete_env.c \
+				   env_utils.c
 
 SIGNAL_SRC		:= signal.c
 
@@ -109,6 +116,7 @@ FT_READLINE_SRC := ft_readline.c \
 
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
+	   $(addprefix env/, $(ENV_SRC)) \
 	   $(addprefix signal/, $(SIGNAL_SRC)) \
 	   $(addprefix lexing/, $(LEXING_SRC)) \
 	   $(addprefix parsing/, $(PARSING_SRC)) \

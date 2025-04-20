@@ -6,12 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 13:29:26 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 17:42:48 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
+#include "minishell.h"
+#include "ft_env.h"
 
 int	g_exit;
 
@@ -90,7 +90,7 @@ int	main(int argc, char *argv[], char *argp[])
 	g_exit = 0;
 	main_process(env);
 	rl_clear_history();
-	ft_lstclear(&env, clear_env);
+	ft_clear_env(env);
 	return (WEXITSTATUS(g_exit));
 	(void) argc;
 	(void) argv;
