@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:04:40 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/20 13:21:25 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static int	main_process(t_list *env)
 		status = handle_input(input, env);
 		if (status == 1)
 		{
+			g_exit = 0;
 			free(input);
 			continue ;
 		}
