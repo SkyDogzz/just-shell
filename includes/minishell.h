@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 13:47:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:13:31 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,12 +174,6 @@ typedef struct s_expand
 	int		offset;
 }			t_expand;
 
-typedef struct s_env
-{
-	char	*name;
-	char	*value;
-}	t_env;
-
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
@@ -250,8 +244,6 @@ bool	ft_is_pipe(const t_token *token);
 bool	ft_is_logical(const t_token *token);
 bool	is_operator(const t_token *token, const char *op);
 
-t_list	*ft_init_env(const char **env);
-void	clear_env(void *env);
 char	*ft_gethostname(void);
 char	*get_prompt_main(void);
 #endif

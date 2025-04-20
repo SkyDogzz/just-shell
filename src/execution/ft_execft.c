@@ -6,12 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 15:49:44 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 16:54:56 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "ft_builtins.h"
+#include "ft_env.h"
 #include "includes/libft.h"
 
 static bool	is_builtin(const t_cmd *cmd)
@@ -61,7 +62,7 @@ void	ft_subprocess(const t_cmd *cmd, t_list *env)
 		exit(EXIT_FAILURE);
 	if (is_builtin(cmd))
 		execute_builtin((t_cmd *)cmd);
-	path = ft_get_executable_path(cmd);
+	path = ft_get_executable_path(cmd, env);
 	if (!path)
 	{
 		ft_putstr_fd("ssh-xx: command not found ('", 2);
