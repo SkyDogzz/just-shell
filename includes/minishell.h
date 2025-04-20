@@ -6,24 +6,22 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:31:42 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/20 13:47:31 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/includes/libft.h"
 # include <stdio.h>
-# include <readline/history.h>
 
 # ifdef USE_CUSTOM_RL
 #  include "ft_readline.h"
 # else
+#  include <readline/history.h>
 #  include <readline/readline.h>
 # endif
 
-# include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <sys/ioctl.h>
@@ -33,14 +31,14 @@
 
 # include "../libft/includes/libft.h"
 
-# define NC		"\e[0m"
-# define BOLD	"\e[1m"
-# define RED	"\e[31m"
-# define GREEN	"\e[32m"
-# define YELLOW	"\e[33m"
-# define ORANGE	"\e[34m"
-# define PURPLE	"\e[35m"
-# define CYAN	"\e[36m"
+# define NC		"\1\e[0m\0"
+# define BOLD	"\1\e[1m\0"
+# define RED	"\1\e[31m\0"
+# define GREEN	"\1\e[32m\0"
+# define YELLOW	"\1\e[33m\0"
+# define ORANGE	"\1\e[34m\0"
+# define PURPLE	"\1\e[35m\0"
+# define CYAN	"\1\e[36m\0"
 
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!"
