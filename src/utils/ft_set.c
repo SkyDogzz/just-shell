@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:44:35 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/05 15:37:34 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:41:58 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	free_split(char **split)
 {

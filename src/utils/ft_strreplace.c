@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:30:26 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/04 16:30:26 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:41:53 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	*ft_strreplace(const char *full, const char *old, const char *ne)
 {
