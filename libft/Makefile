@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 21:12:49 by yandry            #+#    #+#              #
-#    Updated: 2025/04/20 21:20:08 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/21 20:13:43 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ FT_MEMORY := ft_bzero.c \
 
 FT_PRINTF := ft_printf.c \
 			 ft_snprintf.c \
+			 ft_dprintf.c \
 			 internal/ft_vsnprintf.c \
 			 internal/format_processor.c \
 			 internal/number_processor.c
