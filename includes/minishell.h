@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:23:15 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:11:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,14 +188,14 @@ void	ft_lstprint_tokens(t_list *lst, const char *s);
 void	ft_lstclear_pipes(void *content);
 void	ft_lstprint_pipes(t_list *lst, const char *s);
 
-int		ft_handle_heredocs(t_list **lst);
+int		ft_handle_heredocs(t_list *env, t_list **lst);
 char	*ft_read_heredoc(const char *delimiter);
 
-t_list	*ft_lex(const char *cmd_line);
+t_list	*ft_lex(t_list *env, const char *cmd_line);
 t_list	*ft_doom_split(const char *input);
 t_list	*ft_remove_whitespace(t_list *lst);
 t_token	*ft_remove_quote(t_token *token);
-t_token	*ft_expand(t_token *token);
+t_token	*ft_expand(t_list *env, t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
 int		ft_exec(t_btree *root, t_list *env);
@@ -224,12 +224,11 @@ void	ft_free_leaf(void *leaf);
 
 char	*ft_handle_multiline_quote(char *input);
 
-bool	ft_findsubshell(t_list **tokens);
+bool	ft_findsubshell(t_list *env, t_list **tokens);
 char	*ft_read_subshell(int level);
 
-t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens);
+t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens);
 
-char	*ft_getenv(const char *name);
 char	*ft_readline(t_prompt id, t_list *env);
 
 bool	ft_is_pipe(const t_token *token);

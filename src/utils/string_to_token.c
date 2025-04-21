@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:40:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:55:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_token_type	ft_gettype(const char *s)
 	return (T_WORD);
 }
 
-t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
+t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens)
 {
 	t_list	*act;
 	t_token	*dup;
@@ -45,7 +45,7 @@ t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens)
 			return (tokens);
 		dup->content = ft_strdup(act->content);
 		dup->token_type = ft_gettype(dup->content);
-		dup = ft_expand(dup);
+		dup = ft_expand(env, dup);
 		dup = ft_remove_quote(dup);
 		if (ft_strcmp(dup->content, "") != 0)
 			ft_lstadd_back(&tokens, ft_lstnew(dup));
