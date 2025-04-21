@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:38:05 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:28:32 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:38:30 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static void	init_prompt_info(t_prompt_info *prompt_info, t_list *env)
 	prompt_info->host = get_prompt_host(env);
 	prompt_info->path = get_prompt_path(env);
 	prompt_info->last_exit = get_prompt_last_exit();
-	if (!prompt_info->last_exit)
-		prompt_info->last_exit = ft_strdup("N/A");
 	prompt_info->prompt_len = get_base_prompt_len(DEFAULT_PROMPT)
 		+ ft_strlen(prompt_info->user) + ft_strlen(prompt_info->host)
 		+ ft_strlen(prompt_info->path) + ft_strlen(prompt_info->last_exit);
