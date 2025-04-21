@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 19:04:26 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 23:10:38 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	show_command_not_found(const char *command)
 	alloc_len = ft_strlen(COMMAND_NOT_FOUND) + ft_strlen(command);
 	error_message = ft_calloc(alloc_len, sizeof(char));
 	if (!error_message)
-		return (130);
+		return (130 | CMD_NOT_FOUND_FLAG);
 	ft_snprintf(error_message, alloc_len, COMMAND_NOT_FOUND, command);
 	ft_putendl_fd(error_message, STDERR_FILENO);
 	free(error_message);
-	return (127);
+	return (127 | CMD_NOT_FOUND_FLAG);
 }
 
 int	ft_exec_simple(const t_btree *root, t_list *env)
@@ -49,6 +49,5 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (pid == 0)
 		ft_subprocess(leaf->cmd, env);
 	waitpid(pid, &status, 0);
-	g_exit = status;
 	return (status);
 }
