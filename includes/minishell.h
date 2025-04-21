@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:36:17 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:25:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
