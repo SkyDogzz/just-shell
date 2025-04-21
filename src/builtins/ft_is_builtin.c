@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins.h                                      :+:      :+:    :+:   */
+/*   ft_is_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 14:35:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 18:45:31 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/21 18:13:04 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/21 18:16:36 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_BUILTINS_H
-# define FT_BUILTINS_H
+#include "ft_execution.h"
+#include "ft_builtins.h"
 
-# include "minishell.h"
-
-typedef struct s_builtin
+bool	ft_is_builtin(const char *name)
 {
-	const char	*name;
-	int			(*func)(const t_cmd*, t_list *env);
-}	t_builtin;
+	size_t	i;
 
-int	ft_echo(const t_cmd *cmd, t_list *env);
-int	ft_cd(const t_cmd *cmd, t_list *env);
-
-static const t_builtin	g_builtins[] = {
-{.name = "echo", .func = ft_echo},
-{.name = "cd", .func = ft_cd},
-{.name = NULL, .func = NULL}
-};
-
-#endif
+	i = 0;
+	while (g_builtins[i].name)
+	{
+		if (ft_strncmp(g_builtins[i].name, name, ft_strlen(name)) == 0)
+			return (true);
+		i++;
+	}
+	return (false);
+}
