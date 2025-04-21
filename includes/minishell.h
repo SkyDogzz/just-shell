@@ -6,24 +6,22 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/17 18:01:01 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:23:15 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/includes/libft.h"
 # include <stdio.h>
-# include <readline/history.h>
 
 # ifdef USE_CUSTOM_RL
 #  include "ft_readline.h"
 # else
+#  include <readline/history.h>
 #  include <readline/readline.h>
 # endif
 
-# include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <sys/ioctl.h>
@@ -33,25 +31,22 @@
 
 # include "../libft/includes/libft.h"
 
-# define NC		"\e[0m"
-# define BOLD	"\e[1m"
-# define RED	"\e[31m"
-# define GREEN	"\e[32m"
-# define YELLOW	"\e[33m"
-# define ORANGE	"\e[34m"
-# define PURPLE	"\e[35m"
-# define CYAN	"\e[36m"
+# define NC		"\1\e[0m\2"
+# define BOLD	"\1\e[1m\2"
+# define RED	"\1\e[31m\2"
+# define GREEN	"\1\e[32m\2"
+# define YELLOW	"\1\e[33m\2"
+# define ORANGE	"\1\e[34m\2"
+# define PURPLE	"\1\e[35m\2"
+# define CYAN	"\1\e[36m\2"
 
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!"
 # define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
-# define RESERVED "if,then,else,elif,fi,done,do,case,esac,while,until,for,in,!!"
+# define RESERVED "if ,then ,else ,elif ,fi ,\
+	done ,do ,case ,esac ,while ,until ,for ,in ,!!"
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,),`"
-
-//# define DEFAULT_PROMPT "$user @ $host in $path [ $last_exit ]\n~> "
-
-# define DEFAULT_PROMPT "%s%s%s @ %s%s in %s%s%s%s [ %s ]\n%s~>%s "
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
@@ -135,12 +130,17 @@ typedef struct s_subshell
 	char	*input;
 }	t_subshell;
 
+typedef struct s_redir
+{
+	char			*file;
+	t_redirect_type	type;
+}	t_redir;
+
 typedef struct s_cmd
 {
-	char				**args;
-	t_redirect_type		redirect_type;
-	int					io[2];
-}						t_cmd;
+	char	**args;
+	t_list	*redir;
+}	t_cmd;
 
 typedef struct s_btree
 {
@@ -166,12 +166,6 @@ typedef struct s_expand
 	int		offset;
 }			t_expand;
 
-typedef struct s_env
-{
-	char	*name;
-	char	*value;
-}	t_env;
-
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
@@ -195,7 +189,7 @@ void	ft_lstclear_pipes(void *content);
 void	ft_lstprint_pipes(t_list *lst, const char *s);
 
 int		ft_handle_heredocs(t_list **lst);
-char	*ft_read_heredoc(char *delimiter);
+char	*ft_read_heredoc(const char *delimiter);
 
 t_list	*ft_lex(const char *cmd_line);
 t_list	*ft_doom_split(const char *input);
@@ -220,6 +214,7 @@ int		ft_btree_size(t_btree *root);
 int		ft_btree_height(t_btree *root);
 void	ft_btree_clear(t_btree **root, void (*del)(void *));
 void	ft_fill_tree(t_btree **root, t_list *pipes);
+t_list	*parse_redir(t_list *tokens);
 
 char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree flag);
 
@@ -234,14 +229,11 @@ char	*ft_read_subshell(int level);
 
 t_list	*ft_string_to_token(t_list *tokens, t_list *pre_tokens);
 
-char	*ft_getenv(char *name);
-char	*ft_readline(t_prompt id);
+char	*ft_getenv(const char *name);
+char	*ft_readline(t_prompt id, t_list *env);
 
-bool	ft_is_pipe(t_token *token);
-bool	ft_is_logical(t_token *token);
+bool	ft_is_pipe(const t_token *token);
+bool	ft_is_logical(const t_token *token);
+bool	is_operator(const t_token *token, const char *op);
 
-t_list	*ft_init_env(const char **env);
-void	clear_env(void *env);
-char	*ft_gethostname(void);
-char	*get_prompt_main(void);
 #endif

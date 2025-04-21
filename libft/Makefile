@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 21:12:49 by yandry            #+#    #+#              #
-#    Updated: 2025/04/13 18:37:20 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/20 21:20:08 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,11 +92,14 @@ FT_STRING := ft_atoi.c \
 			 ft_toupper.c \
 			 ft_strappend.c
 
+FT_UTILS := ft_free_array.c
+
 SRC := $(addprefix ft_file/, $(FT_FILE)) \
 	   $(addprefix ft_list/, $(FT_LIST)) \
 	   $(addprefix ft_memory/, $(FT_MEMORY)) \
 	   $(addprefix ft_printf/, $(FT_PRINTF)) \
-	   $(addprefix ft_string/, $(FT_STRING))
+	   $(addprefix ft_string/, $(FT_STRING)) \
+	   $(addprefix ft_utils/, $(FT_UTILS))
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)

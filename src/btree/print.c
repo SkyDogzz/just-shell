@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:14:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/25 16:48:03 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:59:54 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static char	*g_node_type[] = {
 	"NODE_WORD",
@@ -50,14 +50,38 @@ static void	print_args_line(t_btree *node, int level, int i)
 	print_args_line(node, level, i + 1);
 }
 
-static void	print_cmd_args(t_btree *node, int level)
+static void	print_redir_line(t_btree *node, int level)
 {
 	t_leaf	*leaf;
+	t_list	*redirs;
+	t_redir	*redir;	
+
+	leaf = node->content;
+	if (!leaf->cmd->redir)
+		return ;
+	redirs = leaf->cmd->redir;
+	while (redirs)
+	{
+		redir = (t_redir *)redirs->content;
+		if (!redir)
+			break ;
+		print_indent(level, 0, 0);
+		ft_printf("Redir file: %s\n", redir->file);
+		print_indent(level, 0, 0);
+		ft_printf("Redir type: %d\n", redir->type);
+		redirs = redirs->next;
+	}
+}
+
+static void	print_cmd_args(t_btree *node, int level)
+{
+	const t_leaf	*leaf;
 
 	leaf = node->content;
 	if (!leaf->cmd)
 		return ;
 	print_args_line(node, level + 1, 0);
+	print_redir_line(node, level + 1);
 }
 
 void	ft_print_tree(t_btree *root, int level, int is_last)

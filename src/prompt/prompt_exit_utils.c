@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_builder_utils.c                             :+:      :+:    :+:   */
+/*   prompt_exit_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 15:20:52 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/15 15:49:31 by yandry           ###   ########.fr       */
+/*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
+/*   Updated: 2025/04/20 22:07:36 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_signals.h"
 #include "minishell.h"
+#include "ft_signals.h"
 
 const char	*get_signal_name(int sig_no)
 {
@@ -67,5 +67,18 @@ const char	*get_signaled_status(void)
 	free(exit);
 	last_status = ft_strjoin(temp, NC);
 	free(temp);
+	return (last_status);
+}
+
+const char	*get_prompt_last_exit(void)
+{
+	const char	*last_status;
+
+	if (WIFEXITED(g_exit))
+		last_status = get_exited_status();
+	else if (WIFSIGNALED(g_exit))
+		last_status = get_signaled_status();
+	else
+		last_status = ft_strdup("N/A");
 	return (last_status);
 }

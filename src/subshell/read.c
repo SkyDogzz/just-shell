@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/10 19:05:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:41:46 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	*ft_quit_subshell(char *content)
 {
@@ -33,7 +33,7 @@ static int	get_level(int level, char *input)
 	return (level);
 }
 
-static char	*fuse_content(char *content, char *input)
+static char	*fuse_content(char *content, const char *input)
 {
 	if (content && ft_strlen(content) != 0)
 	{
@@ -60,7 +60,7 @@ char	*ft_read_subshell(int level)
 	{
 		if (handle_sigint())
 			return (ft_quit_subshell(content));
-		input = ft_readline(PROMPT_SUBSHELL);
+		input = ft_readline(PROMPT_SUBSHELL, NULL);
 		if (!input)
 			return (ft_quit_subshell(content));
 		level = get_level(level, input);

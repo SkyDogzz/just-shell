@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:24:03 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:40:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-static t_token_type	ft_gettype(char *s)
+static t_token_type	ft_gettype(const char *s)
 {
 	if (ft_strlen(s) == 1 && ft_isspace(s[0]))
 		return (T_BLANK);

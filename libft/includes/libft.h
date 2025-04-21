@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:25:07 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/13 17:47:43 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/20 21:20:32 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ void	**ft_lsttoarray_c(t_list *lst, void *(*copy_func)(const void *));
 
 int		ft_printf(const char *format, ...);
 int		ft_snprintf(char *str, size_t size, const char *format, ...);
+
+void	ft_free_array(void ***array);
 
 #endif

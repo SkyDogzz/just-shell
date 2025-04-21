@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:07:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:07:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	*cut_and_get_pipe(t_list **tokens)
 {
@@ -52,6 +52,8 @@ static t_list	*parse_pipe(t_list *tokens)
 			pre = last;
 			while (pre && pre->next && pre->next->next)
 				pre = pre->next;
+			if (!pre || !pre->next)
+				break ;
 			ft_lstadd_back(&pipes, ft_lstnew(pre->next));
 			pre->next = NULL;
 		}
