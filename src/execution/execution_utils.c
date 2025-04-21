@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:53:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:33:22 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:27:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ static char	*find_exec_in_path(char *file, char **paths)
 	return (NULL);
 }
 
+static char	*find_exec_relative(char *file, t_list *env)
+{
+	t_env *home;
+
+	home = ft_get_env(env, "PWD");
+	if (!home || !home->value)
+		return (NULL);
+	return (ft_strjoin(home->value, &file[1]));
+}
+
 char	*ft_get_executable_path(const t_cmd *cmd, t_list *env)
 {
 	char		**paths;
@@ -56,6 +66,11 @@ char	*ft_get_executable_path(const t_cmd *cmd, t_list *env)
 		return (NULL);
 	if (cmd->args[0][0] == '/')
 		return (ft_strdup(cmd->args[0]));
+	if (ft_strrchr(cmd->args[0], '/'))
+	{
+		full_exec_path = find_exec_relative(cmd->args[0], env);
+		return (full_exec_path);
+	}
 	path_env = ft_get_env(env, "PATH");
 	if (!path_env)
 		return (NULL);
