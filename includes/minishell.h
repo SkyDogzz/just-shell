@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:36:17 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 23:08:23 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
+
+# define CMD_NOT_FOUND_FLAG 0x10000
 
 # define NC		"\1\e[0m\2"
 # define BOLD	"\1\e[1m\2"
