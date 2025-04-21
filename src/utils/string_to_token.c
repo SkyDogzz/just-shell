@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:12:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:40:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static t_token_type	ft_gettype(const char *s)
 {

@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:50:05 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 22:02:59 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:42:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static bool	ft_quote_ended(const char *input)
 {

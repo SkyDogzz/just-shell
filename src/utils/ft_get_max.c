@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:30:52 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/05 19:31:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:38:30 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_getmax(int a, int b)
 {

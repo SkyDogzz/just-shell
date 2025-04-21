@@ -6,11 +6,11 @@
 /*   By: tstephan <tstephan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:00:01 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/12 16:35:19 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:42:08 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	ft_signal_handler(const int signal)
 {
