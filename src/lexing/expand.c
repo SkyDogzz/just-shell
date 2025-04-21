@@ -6,21 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:31:34 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:11:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_getenv(const char *name)
-{
-	char	*value;
-
-	value = getenv(name);
-	if (!value)
-		return ("");
-	return (value);
-}
+#include "ft_env.h"
 
 static bool	ft_find_expand(t_expand *expand, const t_token *token)
 {
@@ -49,7 +40,7 @@ static bool	ft_find_expand(t_expand *expand, const t_token *token)
 	return (false);
 }
 
-t_token	*ft_expand(t_token *token)
+t_token	*ft_expand(t_list *env, t_token *token)
 {
 	t_expand	expand;
 
@@ -61,11 +52,11 @@ t_token	*ft_expand(t_token *token)
 	expand.mem = token->content;
 	expand.envname = ft_strndup(expand.find, expand.size);
 	expand.envvar = ft_strndup(expand.find + 1, expand.size - 1);
-	expand.envvarr = ft_getenv(expand.envvar);
+	expand.envvarr = ft_get_env(env, expand.envvar)->value;
 	token->content = ft_strreplace(expand.mem, expand.envname, expand.envvarr);
 	free(expand.mem);
 	free(expand.envname);
 	free(expand.envvar);
-	ft_expand(token);
+	ft_expand(env, token);
 	return (token);
 }

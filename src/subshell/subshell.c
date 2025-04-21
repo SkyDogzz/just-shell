@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:40:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:59:15 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static bool	ft_help(t_subshell *help)
 	return (true);
 }
 
-bool	ft_findsubshell(t_list **token)
+bool	ft_findsubshell(t_list *env, t_list **token)
 {
 	t_subshell	help;
 
@@ -101,7 +101,7 @@ bool	ft_findsubshell(t_list **token)
 		help.pre = ft_doom_split(help.input);
 		free(help.input);
 		help.post = NULL;
-		help.post = ft_string_to_token(help.post, help.pre);
+		help.post = ft_string_to_token(env, help.post, help.pre);
 		ft_lstadd_back(token, help.post);
 		ft_lstclear(&help.pre, ft_lstclear_string);
 	}
