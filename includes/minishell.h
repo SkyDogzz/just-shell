@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 22:29:57 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:23:15 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@
 
 # include "../libft/includes/libft.h"
 
-# define NC		"\1\e[0m\0"
-# define BOLD	"\1\e[1m\0"
-# define RED	"\1\e[31m\0"
-# define GREEN	"\1\e[32m\0"
-# define YELLOW	"\1\e[33m\0"
-# define ORANGE	"\1\e[34m\0"
-# define PURPLE	"\1\e[35m\0"
-# define CYAN	"\1\e[36m\0"
+# define NC		"\1\e[0m\2"
+# define BOLD	"\1\e[1m\2"
+# define RED	"\1\e[31m\2"
+# define GREEN	"\1\e[32m\2"
+# define YELLOW	"\1\e[33m\2"
+# define ORANGE	"\1\e[34m\2"
+# define PURPLE	"\1\e[35m\2"
+# define CYAN	"\1\e[36m\2"
 
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!"
