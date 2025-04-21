@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:07:47 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:10:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:40:22 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 bool	ft_is_logical(const t_token *token)
 {
