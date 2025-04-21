@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	ft_btree_insert_in(t_btree **root, t_btree *ne,
 			int (*cmp)(void *, void *))
