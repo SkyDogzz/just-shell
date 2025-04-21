@@ -6,11 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:50:10 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/14 18:43:16 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:36:43 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "libft.h"
 
 static void	flush_list(t_list **list, t_list *clean, char *buffer)
 {

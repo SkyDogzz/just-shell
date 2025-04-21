@@ -6,14 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:03:46 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 18:20:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:10:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-bool	ft_is_pipe(t_token *token)
+bool	ft_is_pipe(const t_token *token)
 {
-	return (ft_strlen(token->content) == 1 && token->token_type == T_OPERATOR
-		&& ft_strcmp(token->content, "|") == 0);
+	return (is_operator(token, "|"));
 }

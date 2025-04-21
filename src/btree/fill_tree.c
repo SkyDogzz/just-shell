@@ -6,16 +6,16 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:14:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:11:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	cmp(void *c1, void *c2)
 {
-	t_leaf	*leaf1;
-	t_leaf	*leaf2;
+	const t_leaf	*leaf1;
+	const t_leaf	*leaf2;
 
 	leaf1 = (t_leaf *)c1;
 	leaf2 = (t_leaf *)c2;
@@ -41,14 +41,20 @@ static char	**args_from_lst(t_list *tokens)
 	while (tokens)
 	{
 		token = (t_token *)tokens->content;
+		if (token->token_type == T_HEREDOC || (is_operator(token, "<"))
+			|| is_operator(token, ">") || is_operator(token, ">>"))
+		{
+			tokens = tokens->next->next;
+			continue ;
+		}
 		content[pos++] = ft_strdup(token->content);
 		tokens = tokens->next;
 	}
-	content[size] = 0;
+	content[pos] = 0;
 	return (content);
 }
 
-static void	ft_choice(t_list *tokens, t_token *token, t_btree **root )
+static void	ft_choice(t_list *tokens, const t_token *token, t_btree **root )
 {
 	t_leaf	*leaf;
 
@@ -68,6 +74,7 @@ static void	ft_choice(t_list *tokens, t_token *token, t_btree **root )
 	else
 	{
 		leaf = ft_create_leaf(NODE_WORD, args_from_lst(tokens));
+		leaf->cmd->redir = parse_redir(tokens);
 		ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
 	}
 }

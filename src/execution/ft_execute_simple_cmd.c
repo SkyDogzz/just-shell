@@ -6,21 +6,25 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/17 16:40:39 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:23:19 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "ft_execution.h"
 
 int	ft_exec_simple(const t_btree *root, t_list *env)
 {
 	int		pid;
 	int		status;
 	t_leaf	*leaf;
+	char	*path;
 
 	if (!root)
 		return (0);
 	leaf = (t_leaf *)root->content;
+	path = ft_get_executable_path(leaf->cmd, env);
+	if (!path || !access(path, X_OK))
+		return (127);
 	pid = fork();
 	if (pid == -1)
 		return (1);

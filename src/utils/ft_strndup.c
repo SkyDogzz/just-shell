@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:43:42 by tstephan          #+#    #+#             */
-/*   Updated: 2025/02/25 19:00:50 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:38:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {

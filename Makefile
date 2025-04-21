@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/17 23:27:44 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/20 22:16:47 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,15 @@ UTILS_SRC		:= ft_set.c \
 				   ft_strcmp.c \
 				   string_to_token.c \
 				   is_logical.c \
-				   init_env.c
+				   is_operator.c 
+
+ENV_SRC			:= ft_init_env.c \
+				   ft_clear_env.c \
+				   ft_new_env.c \
+				   ft_get_env.c \
+				   ft_update_env.c \
+				   ft_delete_env.c \
+				   env_utils.c
 
 SIGNAL_SRC		:= signal.c
 
@@ -79,23 +87,27 @@ BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_size.c \
 				   print.c \
 				   ft_btree_insert_in.c\
-				   fill_tree.c
+				   fill_tree.c \
+				   parse_redir.c
 
 SUBSHELL_SRC 	:= subshell.c \
 				   read.c
 
 PROMPT_SRC		:= shell.c \
 				   prompt_builder.c \
-				   prompt_builder_utils.c
+				   prompt_user_utils.c \
+				   prompt_host_utils.c \
+				   prompt_path_utils.c \
+				   prompt_exit_utils.c
 
 EXEC_SRC		:= ft_exec.c \
 				   ft_execute_simple_cmd.c \
 				   ft_execft.c \
+				   pipeline_utils.c \
 				   execution_utils.c \
 				   ft_execute_pipeline.c
 
-IO_SRC			:= ft_gethostname.c \
-				   ft_tuyau.c
+IO_SRC			:= ft_tuyau.c
 
 BUILTINS_SRC	:= echo.c \
 				   cd.c
@@ -107,6 +119,7 @@ FT_READLINE_SRC := ft_readline.c \
 
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
+	   $(addprefix env/, $(ENV_SRC)) \
 	   $(addprefix signal/, $(SIGNAL_SRC)) \
 	   $(addprefix lexing/, $(LEXING_SRC)) \
 	   $(addprefix parsing/, $(PARSING_SRC)) \
@@ -183,5 +196,6 @@ nm: re
 
 lint:
 	@cppcheck --enable=all --check-level=exhaustive --suppress=variableScope \
-	--suppress=missingIncludeSystem src 1> /dev/null
+	--suppress=missingIncludeSystem --suppress=missingInclude \
+	--suppress=constVariablePointer --suppress=unusedFunction src 1> /dev/null
 
