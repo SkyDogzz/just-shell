@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:41:30 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:29:19 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:46:03 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ const char	*get_prompt_host(t_list *env)
 	else
 		hostname = ft_strdup(host_env->value);
 	host = get_formatted_host(hostname, ft_strncmp(user, "root", 4) == 0);
+	free((void *)user);
+	free(hostname);
 	return (host);
 }
