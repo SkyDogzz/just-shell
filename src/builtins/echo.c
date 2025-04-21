@@ -6,13 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:50:50 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/18 15:50:48 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 18:54:38 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtins.h"
-#include "includes/libft.h"
-#include <unistd.h>
 
 static void	skip_flags(int *index, bool *newline, char **argh)
 {
@@ -30,14 +28,14 @@ static void	skip_flags(int *index, bool *newline, char **argh)
 	}
 }
 
-// TODO: echo
-void	ft_echo(const t_cmd *cmd)
+int	ft_echo(const t_cmd *cmd, t_list *env)
 {
 	bool	has_newline;
 	int		i;
 
+	(void)env;
 	if (!cmd || !cmd->args || !cmd->args[0])
-		return ;
+		return (0);
 	has_newline = true;
 	i = 1;
 	skip_flags(&i, &has_newline, cmd->args);
@@ -50,4 +48,5 @@ void	ft_echo(const t_cmd *cmd)
 	}
 	if (has_newline)
 		ft_putendl_fd("", STDOUT_FILENO);
+	return (0);
 }

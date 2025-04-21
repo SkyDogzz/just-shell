@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:34:19 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 18:40:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 
 # include "minishell.h"
 
+# define COMMAND_NOT_FOUND "ssh-xx: command not found (%s)"
+
 typedef enum e_pipeside
 {
 	PIPE_LEFT,
 	PIPE_RIGHT
 }		t_pipeside;
+
+bool	ft_is_builtin(const char *name);
+int		ft_execute_builtin(const t_cmd *cmd, t_list *env);
 
 int		ft_exec_simple(const t_btree *root, t_list *env);
 int		ft_exec_pipeline(const t_btree *root, t_list *env, int fd_in);

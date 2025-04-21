@@ -6,11 +6,26 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 16:30:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:54:47 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
+
+static int	show_command_not_found(const char *command)
+{
+	char	*error_message;
+	int		alloc_len;
+
+	alloc_len = ft_strlen(COMMAND_NOT_FOUND) + ft_strlen(command);
+	error_message = ft_calloc(alloc_len, sizeof(char));
+	if (!error_message)
+		return (130);
+	ft_snprintf(error_message, alloc_len, COMMAND_NOT_FOUND, command);
+	ft_putendl_fd(error_message, STDERR_FILENO);
+	free(error_message);
+	return (127);
+}
 
 int	ft_exec_simple(const t_btree *root, t_list *env)
 {
@@ -22,16 +37,11 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (!root)
 		return (0);
 	leaf = (t_leaf *)root->content;
+	if (ft_is_builtin(leaf->cmd->args[0]))
+		return (ft_execute_builtin((t_cmd *)leaf->cmd, env));
 	path = ft_get_executable_path(leaf->cmd, env);
 	if (!path || access(path, X_OK) != 0)
-	{
-		if (path)
-			free(path);
-		ft_putstr_fd("ssh-xx: command not found ('", 2);
-		ft_putstr_fd(leaf->cmd->args[0], 2);
-		ft_putendl_fd("')", 2);
-		return (127);
-	}
+		return (free(path), show_command_not_found(leaf->cmd->args[0]));
 	free(path);
 	pid = fork();
 	if (pid == -1)
