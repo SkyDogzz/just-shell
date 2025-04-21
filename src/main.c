@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 22:02:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:01:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static int	handle_input(char *input, t_list *env)
 	if (is_exit(input))
 		return (2);
 	add_history(input);
-	tokens = ft_lex(input);
+	tokens = ft_lex(env, input);
 	if (!tokens)
 		return (0);
-	if (!ft_findsubshell(&tokens))
+	if (!ft_findsubshell(env, &tokens))
 	{
 		printf("Syntax error near unexpected token ')'\n");
 		ft_lstclear(&tokens, ft_lstclear_t_token);
