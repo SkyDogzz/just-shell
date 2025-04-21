@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:11:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:36:17 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <stdbool.h>
 
 # include "../libft/includes/libft.h"
+# include "ft_env.h"
 
 # define NC		"\1\e[0m\2"
 # define BOLD	"\1\e[1m\2"
@@ -162,7 +163,8 @@ typedef struct s_expand
 	int		size;
 	char	*envname;
 	char	*envvar;
-	char	*envvarr;
+	t_env	*envvarr;
+	char	*envvarrr;
 	int		offset;
 }			t_expand;
 
