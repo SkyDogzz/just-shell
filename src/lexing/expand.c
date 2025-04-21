@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:11:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:40:12 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,12 @@ t_token	*ft_expand(t_list *env, t_token *token)
 	expand.mem = token->content;
 	expand.envname = ft_strndup(expand.find, expand.size);
 	expand.envvar = ft_strndup(expand.find + 1, expand.size - 1);
-	expand.envvarr = ft_get_env(env, expand.envvar)->value;
-	token->content = ft_strreplace(expand.mem, expand.envname, expand.envvarr);
+	expand.envvarr = ft_get_env(env, expand.envvar);
+	if (!expand.envvarr)
+		expand.envvarrr = "";
+	else
+		expand.envvarrr = expand.envvarr->value;
+	token->content = ft_strreplace(expand.mem, expand.envname, expand.envvarrr);
 	free(expand.mem);
 	free(expand.envname);
 	free(expand.envvar);
