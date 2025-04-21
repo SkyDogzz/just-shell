@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:28:25 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:57:55 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_list	*ft_replace_heredoc(t_list *lst, char *content)
+static t_list	*ft_replace_heredoc(t_list *env, t_list *lst, char *content)
 {
 	t_list	*act;
 	t_token	*act_t;
@@ -27,7 +27,7 @@ static t_list	*ft_replace_heredoc(t_list *lst, char *content)
 			mem = act_t->content;
 			act_t->content = content;
 			act_t->token_type = T_HEREDOC;
-			act_t = ft_expand(act_t);
+			act_t = ft_expand(env, act_t);
 			act->content = act_t;
 			free(mem);
 			return (lst);
@@ -37,7 +37,7 @@ static t_list	*ft_replace_heredoc(t_list *lst, char *content)
 	return (lst);
 }
 
-static int	ft_handle_heredoc(t_list *act, t_list **lst)
+static int	ft_handle_heredoc(t_list *env, t_list *act, t_list **lst)
 {
 	t_token	*next_t;
 	char	*delimiter;
@@ -58,11 +58,11 @@ static int	ft_handle_heredoc(t_list *act, t_list **lst)
 	content = ft_read_heredoc(delimiter);
 	if (!content)
 		return (HEREDOC_SIGINT);
-	*lst = ft_replace_heredoc(*lst, content);
+	*lst = ft_replace_heredoc(env, *lst, content);
 	return (0);
 }
 
-int	ft_handle_heredocs(t_list **lst)
+int	ft_handle_heredocs(t_list *env, t_list **lst)
 {
 	t_list	*act;
 	t_token	*act_t;
@@ -74,7 +74,7 @@ int	ft_handle_heredocs(t_list **lst)
 		act_t = (t_token *)act->content;
 		if (is_operator(act_t, "<<"))
 		{
-			error = ft_handle_heredoc(act, lst);
+			error = ft_handle_heredoc(env, act, lst);
 			if (error)
 				return (error);
 		}
