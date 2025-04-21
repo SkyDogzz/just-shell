@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 18:26:39 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:27:35 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtins.h"
+#include "includes/libft.h"
 #include <linux/limits.h>
 #include <unistd.h>
 
@@ -26,12 +27,14 @@ static void	get_newpath(t_list *env, char *path, char **args)
 	oldpwd = ft_get_env(env, "OLDPWD");
 	if (!oldpwd || !oldpwd->value)
 		return ;
-	if (args && args[0] && !args[1])
-		ft_memcpy(path, home->value, PATH_MAX);
+	if (!args || !args[0])
+		return ;
+	if (!args[1])
+		ft_strlcpy(path, home->value, PATH_MAX);
 	else if (ft_strncmp(args[1], "-", 1) == 0)
-		ft_memcpy(path, oldpwd->value, PATH_MAX);
+		ft_strlcpy(path, oldpwd->value, PATH_MAX);
 	else
-		ft_memcpy(path, args[1], PATH_MAX);
+		ft_strlcpy(path, args[1], PATH_MAX);
 }
 
 int	ft_cd(const t_cmd *cmd, t_list *env)
@@ -46,6 +49,7 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 	}
 	if (!getcwd(curr_dir, sizeof curr_dir))
 		*curr_dir = '\0';
+	ft_memset(&path, '\0', PATH_MAX);
 	get_newpath(env, &path[0], cmd->args);
 	if (chdir(path))
 	{
