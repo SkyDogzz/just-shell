@@ -6,28 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:32:52 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:04:18 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
-#include "ft_builtins.h"
 #include "ft_env.h"
-
-static bool	is_builtin(const t_cmd *cmd)
-{
-	if (!cmd || !cmd->args)
-		return (false);
-	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
-		return (true);
-	return (false);
-}
-
-static void	execute_builtin(t_cmd *cmd)
-{
-	ft_echo(cmd);
-	exit(0);
-}
 
 static void	*copy_env_to_str(const void *env)
 {
@@ -59,8 +43,6 @@ void	ft_subprocess(const t_cmd *cmd, t_list *env)
 
 	if (!cmd)
 		exit(EXIT_FAILURE);
-	if (is_builtin(cmd))
-		execute_builtin((t_cmd *)cmd);
 	path = ft_get_executable_path(cmd, env);
 	if (!path)
 	{
