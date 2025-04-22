@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 19:27:35 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:11:15 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 
 	if (cmd->args[1] && cmd->args[2])
 	{
-		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
+		ft_dprintf(STDERR_FILENO, "cd: too many arguments\n");
 		return (1);
 	}
 	if (!getcwd(curr_dir, sizeof curr_dir))
@@ -53,8 +53,7 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 	get_newpath(env, &path[0], cmd->args);
 	if (chdir(path))
 	{
-		ft_putstr_fd("cd: not a directory: ", STDERR_FILENO);
-		ft_putendl_fd(cmd->args[1], STDERR_FILENO);
+		ft_dprintf(STDERR_FILENO, "cd: '%s' is not a directory\n", cmd->args[1]);
 		return (1);
 	}
 	ft_update_env(&env, "OLDPWD", curr_dir);

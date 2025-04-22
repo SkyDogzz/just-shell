@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 18:40:05 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:19:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "minishell.h"
 
-# define COMMAND_NOT_FOUND "ssh-xx: command not found (%s)"
+# define COMMAND_NOT_FOUND "ssh-xx: command not found ('%s')\n"
+# define COMMAND_FAILED "ssh-xx: failed to run command: %s\n"
 
 typedef enum e_pipeside
 {
