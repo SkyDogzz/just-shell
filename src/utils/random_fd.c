@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:02:23 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/22 19:20:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:33:47 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*bytes_to_nbr(char *bytes)
 		name[i] = (bytes[i] % 5 + 5) + '0';
 		i++;
 	}
-	printf("toi = %s %d\n", name, (int)ft_strlen(name));
+	free(bytes);
 	return (name);
 }
 
