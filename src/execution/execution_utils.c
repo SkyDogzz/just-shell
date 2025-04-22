@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:53:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 16:27:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:14:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*find_exec_in_path(char *file, char **paths)
 
 static char	*find_exec_relative(char *file, t_list *env)
 {
-	t_env *home;
+	t_env	*home;
 
 	home = ft_get_env(env, "PWD");
 	if (!home || !home->value)

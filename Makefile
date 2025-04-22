@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/20 22:16:47 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/22 17:14:02 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,8 @@ EXEC_SRC		:= ft_exec.c \
 				   execution_utils.c \
 				   ft_execute_pipeline.c
 
-IO_SRC			:= ft_tuyau.c
+IO_SRC			:= ft_tuyau.c \
+				   infile.c
 
 BUILTINS_SRC	:= echo.c
 
