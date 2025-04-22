@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 14:02:19 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 18:06:13 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 18:16:07 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_env
 {
 	char	*name;
 	char	*value;
+	bool	exported;
 }	t_env;
 
 // utils
@@ -31,9 +32,11 @@ t_list	*ft_init_env(const char **env);
 void	ft_clear_env(t_list *env);
 
 // crud moment, yippie (end me)
-void	ft_new_env(t_list **env, const char *name, const char *value);
+void	ft_new_env(t_list **env, const char *name, const char *value,
+			bool exported);
 t_env	*ft_get_env(t_list *env, const char *name);
-void	ft_update_env(t_list **env, const char *name, const char *newval);
+void	ft_update_env(t_list **env, const char *name, const char *newval,
+			bool exported);
 void	ft_delete_env(t_list **env, const char *name);
 
 #endif
