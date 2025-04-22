@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/22 17:13:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:09:33 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,5 +241,7 @@ bool	ft_is_logical(const t_token *token);
 bool	is_operator(const t_token *token, const char *op);
 
 void	ft_infile_exec(t_cmd *cmd);
+
+char	*get_tmp_fd(void);
 
 #endif
