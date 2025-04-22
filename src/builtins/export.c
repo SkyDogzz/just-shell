@@ -12,7 +12,6 @@
 
 #include "ft_builtins.h"
 #include "ft_env.h"
-#include "includes/libft.h"
 
 /**
  * since exported list points to env_nodes that are still meant to be used after
