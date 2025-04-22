@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 23:08:23 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:13:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
@@ -238,5 +239,7 @@ char	*ft_readline(t_prompt id, t_list *env);
 bool	ft_is_pipe(const t_token *token);
 bool	ft_is_logical(const t_token *token);
 bool	is_operator(const t_token *token, const char *op);
+
+void	ft_infile_exec(t_cmd *cmd);
 
 #endif

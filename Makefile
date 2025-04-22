@@ -107,7 +107,8 @@ EXEC_SRC		:= ft_exec.c \
 				   execution_utils.c \
 				   ft_execute_pipeline.c
 
-IO_SRC			:= ft_tuyau.c
+IO_SRC			:= ft_tuyau.c \
+				   infile.c
 
 BUILTINS_SRC	:= ft_is_builtin.c \
 				   ft_execute_builtin.c \
