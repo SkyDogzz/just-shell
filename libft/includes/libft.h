@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:25:07 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 20:12:44 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 18:57:14 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <stdbool.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -83,6 +84,9 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	**ft_lsttoarray_s(t_list *lst, ssize_t elem_size);
 void	**ft_lsttoarray_c(t_list *lst, void *(*copy_func)(const void *));
+t_list	*ft_lstcpy_if(t_list *old_list,
+			bool (*condition)(t_list *),
+			void (*del)(void *));
 
 int		ft_printf(const char *format, ...);
 int		ft_snprintf(char *str, size_t size, const char *format, ...);

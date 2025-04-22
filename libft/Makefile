@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 21:12:49 by yandry            #+#    #+#              #
-#    Updated: 2025/04/21 20:13:43 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/22 18:57:35 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ FT_LIST := ft_lstadd_back.c \
 		   ft_lstmap.c \
 		   ft_lstnew.c \
 		   ft_lstsize.c \
-		   ft_lsttoarray.c
+		   ft_lsttoarray.c \
+		   ft_lstcpy_if.c
 
 FT_MEMORY := ft_bzero.c \
 			 ft_calloc.c \
