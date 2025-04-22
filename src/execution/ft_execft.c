@@ -48,7 +48,7 @@ void	ft_execft(const char *path, char **args, t_list *env)
 	}
 }
 
-void	ft_subprocess(const t_cmd *cmd, t_list *env)
+void	ft_subprocess(t_cmd *cmd, t_list *env)
 {
 	char	*path;
 
@@ -60,6 +60,7 @@ void	ft_subprocess(const t_cmd *cmd, t_list *env)
 		ft_dprintf(STDERR_FILENO, COMMAND_NOT_FOUND, cmd->args[0]);
 		exit(128);
 	}
+	ft_infile_exec(cmd);
 	ft_execft(path, cmd->args, env);
 	exit(0);
 }
