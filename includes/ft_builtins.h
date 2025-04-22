@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 18:45:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:29:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ typedef struct s_builtin
 
 int	ft_echo(const t_cmd *cmd, t_list *env);
 int	ft_cd(const t_cmd *cmd, t_list *env);
+int	ft_pwd(const t_cmd *cmd, t_list *env);
 
 static const t_builtin	g_builtins[] = {
 {.name = "echo", .func = ft_echo},
 {.name = "cd", .func = ft_cd},
+{.name = "pwd", .func = ft_pwd},
 {.name = NULL, .func = NULL}
 };
 
