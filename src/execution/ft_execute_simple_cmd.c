@@ -12,14 +12,19 @@
 
 #include "ft_execution.h"
 
-static int	ft_cant_reach(char *path, t_leaf *leaf)
+static int	show_command_not_found(const char *command)
 {
-	if (path)
-		free(path);
-	ft_putstr_fd("ssh-xx: command not found ('", 2);
-	ft_putstr_fd(leaf->cmd->args[0], 2);
-	ft_putendl_fd("')", 2);
-	return (127);
+	char	*error_message;
+	int		alloc_len;
+
+	alloc_len = ft_strlen(COMMAND_NOT_FOUND) + ft_strlen(command);
+	error_message = ft_calloc(alloc_len, sizeof(char));
+	if (!error_message)
+		return (130 | CMD_NOT_FOUND_FLAG);
+	ft_snprintf(error_message, alloc_len, COMMAND_NOT_FOUND, command);
+	ft_putendl_fd(error_message, STDERR_FILENO);
+	free(error_message);
+	return (127 | CMD_NOT_FOUND_FLAG);
 }
 
 int	ft_exec_simple(const t_btree *root, t_list *env)
@@ -32,9 +37,11 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (!root)
 		return (0);
 	leaf = (t_leaf *)root->content;
+	if (ft_is_builtin(leaf->cmd->args[0]))
+		return (ft_execute_builtin((t_cmd *)leaf->cmd, env));
 	path = ft_get_executable_path(leaf->cmd, env);
 	if (!path || access(path, X_OK) != 0)
-		return (ft_cant_reach(path, leaf));
+		return (free(path), show_command_not_found(leaf->cmd->args[0]));
 	free(path);
 	pid = fork();
 	if (pid == -1)
@@ -42,6 +49,5 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (pid == 0)
 		ft_subprocess(leaf->cmd, env);
 	waitpid(pid, &status, 0);
-	g_exit = status;
 	return (status);
 }

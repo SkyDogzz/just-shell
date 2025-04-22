@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:31:55 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 23:10:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int	ft_exec(t_btree	*root, t_list *env)
 		ret = ft_exec_simple(root, env);
 	else if (((t_leaf *)root->content)->type == NODE_PIPE)
 		ret = ft_exec_pipeline(root, env, STDIN_FILENO);
+	g_exit = ret;
 	return (ret);
 }
