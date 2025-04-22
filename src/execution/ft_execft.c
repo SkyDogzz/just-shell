@@ -6,32 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 19:27:53 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 20:14:50 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "ft_env.h"
-#include "includes/libft.h"
-
-static void	*copy_env_to_str(const void *env)
-{
-	char	*env_str;
-	char	*str;
-
-	str = ft_strjoin(((t_env *)env)->name, "=");
-	env_str = ft_strjoin(str, ((t_env *)env)->value);
-	free(str);
-	return (env_str);
-}
-
-static bool	is_env_exported(t_list *env)
-{
-	t_env	*env_node;
-
-	env_node = (t_env *)env->content;
-	return (env_node && env_node->exported);
-}
 
 void	ft_execft(const char *path, char **args, t_list *env)
 {

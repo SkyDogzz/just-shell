@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 14:02:19 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 18:16:07 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 19:51:13 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_env
 // utils
 void	clear_env(void *env);
 bool	is_env(t_list *node, const char *name);
+bool	is_env_exported(t_list *env);
+void	*copy_env_to_str(const void *env);
 
 // init
 t_list	*ft_init_env(const char **env);
