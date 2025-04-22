@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/22 17:21:00 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:39:13 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ static void	ft_redir_heredoc(t_cmd *cmd, int fd)
 	ft_putstr_fd("\n", fd);
 }
 
-static void	ft_redir_input(t_cmd *cmd, int fd)
+static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 {
 	char	*buffer;
 	int		fd2;
 
 	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
-	if (fd2 <= 0)
+	if (fd2 < 0)
 	{
 		ft_putstr_fd("ssh-xx: can't open file ('", 1);
 		ft_putstr_fd(((t_redir *)cmd->redir->content)->file, 1);
 		ft_putendl_fd("')", 1);
+		unlink(filename);
 		close(fd);
-		exit(127);
+		return (false);
 	}
 	buffer = ft_get_next_line(fd2);
 	while (buffer)
@@ -40,33 +41,49 @@ static void	ft_redir_input(t_cmd *cmd, int fd)
 		free(buffer);
 	}
 	close(fd2);
+	return (true);
+}
+
+static bool	ft_redir_all(t_cmd *cmd, int fd, char *filename)
+{
+	if (((t_redir *)cmd->redir->content)->type != REDIR_INPUT
+		&& ((t_redir *)cmd->redir->content)->type != REDIR_HEREDOC)
+	{
+		cmd->redir = cmd->redir->next;
+		return (true);
+	}
+	if (((t_redir *)cmd->redir->content)->type == REDIR_INPUT)
+	{
+		if (!ft_redir_input(cmd, fd, filename))
+			return (false);
+	}
+	else
+		ft_redir_heredoc(cmd, fd);
+	cmd->redir = cmd->redir->next;
+	return (true);
 }
 
 void	ft_infile_exec(t_cmd *cmd)
 {
-	int	fd;
+	int		fd;
+	char	*filename;
 
 	if (cmd->redir)
 	{
-		fd = open("./a", O_CREAT | O_WRONLY, 0644);
+		filename = get_tmp_fd();
+		fd = open(filename, O_CREAT | O_WRONLY, 0644);
+		if (fd < 0)
+			return ;
 		while (cmd->redir)
-		{
-			if (((t_redir *)cmd->redir->content)->type != REDIR_INPUT
-				&& ((t_redir *)cmd->redir->content)->type != REDIR_HEREDOC)
-			{
-				cmd->redir = cmd->redir->next;
-				continue ;
-			}
-			if (((t_redir *)cmd->redir->content)->type == REDIR_INPUT)
-				ft_redir_input(cmd, fd);
-			else
-				ft_redir_heredoc(cmd, fd);
-			cmd->redir = cmd->redir->next;
-		}
+			if (!ft_redir_all(cmd, fd, filename))
+				exit(127);
 		close(fd);
-		fd = open("./a", O_RDONLY);
+		fd = open(filename, O_RDONLY);
+		if (fd < 0)
+			return ;
 		dup2(fd, STDIN_FILENO);
 		close(fd);
-		unlink("./a");
+		unlink(filename);
+		free(filename);
 	}
 }
