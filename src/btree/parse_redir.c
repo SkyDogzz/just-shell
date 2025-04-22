@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:34:33 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:01:24 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:41:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 static t_list	*parse_infile(t_list *tokens, t_list *redirs)
 {
-	const t_token	*next;
-	t_token			*act;
-	t_redir			*redir;
+	t_token	*next;
+	t_token	*act;
+	t_redir	*redir;
 
-	while (tokens && tokens->next)
+	if (!tokens || !tokens->next)
+		return (redirs);
+	act = tokens->content;
+	next = tokens->next->content;
+	if (!act || !next)
+		return (redirs);
+	if (is_operator(act, "<"))
 	{
-		act = tokens->content;
-		next = tokens->next->content;
-		if (!act || !next)
-			return (redirs);
-		if (is_operator(act, "<"))
-		{
-			redir = (t_redir *)malloc(sizeof(t_redir));
-			redir->file = ft_strdup(next->content);
-			redir->type = REDIR_INPUT;
-			ft_lstadd_back(&redirs, ft_lstnew(redir));
-			tokens = tokens->next;
-		}
+		redir = (t_redir *)malloc(sizeof(t_redir));
+		redir->file = ft_strdup(next->content);
+		redir->type = REDIR_INPUT;
+		ft_lstadd_back(&redirs, ft_lstnew(redir));
 		tokens = tokens->next;
 	}
 	return (redirs);
@@ -39,19 +37,26 @@ static t_list	*parse_infile(t_list *tokens, t_list *redirs)
 
 static t_list	*parse_heredoc(t_list *tokens, t_list *redirs)
 {
-	const t_token	*token;
-	t_redir			*redir;
+	t_token	*token;
+	t_redir	*redir;
 
+	token = tokens->content;
+	if (token->token_type == T_HEREDOC)
+	{
+		redir = (t_redir *)malloc(sizeof(t_redir));
+		redir->file = ft_strdup(token->content);
+		redir->type = REDIR_HEREDOC;
+		ft_lstadd_back(&redirs, ft_lstnew(redir));
+	}
+	return (redirs);
+}
+
+static t_list	*parse_input(t_list *tokens, t_list *redirs)
+{
 	while (tokens)
 	{
-		token = tokens->content;
-		if (token->token_type == T_HEREDOC)
-		{
-			redir = (t_redir *)malloc(sizeof(t_redir));
-			redir->file = ft_strdup(token->content);
-			redir->type = REDIR_HEREDOC;
-			ft_lstadd_back(&redirs, ft_lstnew(redir));
-		}
+		redirs = parse_infile(tokens, redirs);
+		redirs = parse_heredoc(tokens, redirs);
 		tokens = tokens->next;
 	}
 	return (redirs);
@@ -90,8 +95,7 @@ t_list	*parse_redir(t_list *tokens)
 	t_list	*redirs;
 
 	redirs = NULL;
-	redirs = parse_infile(tokens, redirs);
-	redirs = parse_heredoc(tokens, redirs);
+	redirs = parse_input(tokens, redirs);
 	redirs = parse_outilfe(tokens, redirs);
 	return (redirs);
 }
