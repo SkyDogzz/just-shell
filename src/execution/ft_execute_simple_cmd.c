@@ -6,11 +6,21 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 16:30:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:44:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
+
+static int	ft_cant_reach(char *path, t_leaf *leaf)
+{
+	if (path)
+		free(path);
+	ft_putstr_fd("ssh-xx: command not found ('", 2);
+	ft_putstr_fd(leaf->cmd->args[0], 2);
+	ft_putendl_fd("')", 2);
+	return (127);
+}
 
 int	ft_exec_simple(const t_btree *root, t_list *env)
 {
@@ -24,14 +34,7 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	leaf = (t_leaf *)root->content;
 	path = ft_get_executable_path(leaf->cmd, env);
 	if (!path || access(path, X_OK) != 0)
-	{
-		if (path)
-			free(path);
-		ft_putstr_fd("ssh-xx: command not found ('", 2);
-		ft_putstr_fd(leaf->cmd->args[0], 2);
-		ft_putendl_fd("')", 2);
-		return (127);
-	}
+		return (ft_cant_reach(path, leaf));
 	free(path);
 	pid = fork();
 	if (pid == -1)
