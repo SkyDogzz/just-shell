@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:07:36 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/21 23:24:01 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ const char	*get_prompt_last_exit(void)
 		last_status = get_exited_status();
 	else if (WIFSIGNALED(g_exit))
 		last_status = get_signaled_status();
+	else if (g_exit & CMD_NOT_FOUND_FLAG)
+		last_status = ft_strdup(RED"✗ - not found"NC);
 	else
 		last_status = ft_strdup("N/A");
 	return (last_status);

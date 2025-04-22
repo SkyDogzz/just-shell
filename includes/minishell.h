@@ -33,6 +33,8 @@
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
 
+# define CMD_NOT_FOUND_FLAG 0x10000
+
 # define NC		"\1\e[0m\2"
 # define BOLD	"\1\e[1m\2"
 # define RED	"\1\e[31m\2"
