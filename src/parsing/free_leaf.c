@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:12:04 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/16 19:05:19 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:23:35 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ static void	del(void *content)
 	t_redir	*redir;
 
 	redir = (t_redir *)content;
+	if (!redir)
+		return ;
+	if (!redir->file)
+	{
+		free(redir);
+		return ;
+	}
 	free(redir->file);
 	free(redir);
 }
