@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 19:40:11 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/23 13:33:23 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	ft_echo(const t_cmd *cmd, t_list *env);
 int	ft_cd(const t_cmd *cmd, t_list *env);
 int	ft_pwd(const t_cmd *cmd, t_list *env);
 int	ft_export(const t_cmd *cmd, t_list *env);
+int	ft_unset(const t_cmd *cmd, t_list *env);
 
 static const t_builtin	g_builtins[] = {
 {.name = "echo", .func = ft_echo},
 {.name = "cd", .func = ft_cd},
 {.name = "pwd", .func = ft_pwd},
 {.name = "export", .func = ft_export},
+{.name = "unset", .func = ft_unset},
 {.name = NULL, .func = NULL}
 };
 
