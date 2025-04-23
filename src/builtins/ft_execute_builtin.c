@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:19:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 18:29:10 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:35:48 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,22 @@ static const t_builtin	*get_builtin(const char *name)
 int	ft_execute_builtin(const t_cmd *cmd, t_list *env)
 {
 	const t_builtin	*builtin;
+	int				ret;
+	int				fd[2];
 
 	builtin = get_builtin(cmd->args[0]);
 	if (!builtin)
 		return (1);
-	return (builtin->func(cmd, env));
+	store_fd(fd);
+	fd[1] = open_outfile((t_cmd *)cmd);
+	if (fd[1] <= 0)
+	{
+		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
+			strerror(errno), ((t_redir *)cmd->redir->content)->file);
+		restore_fd(fd);
+		exit(1);
+	}
+	ret = builtin->func(cmd, env);
+	restore_fd(fd);
+	return (ret);
 }
