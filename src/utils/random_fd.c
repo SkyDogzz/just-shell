@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:02:23 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/22 19:33:47 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 03:47:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	*get_tmp_fd(void)
 	if (fd < 0)
 		return (NULL);
 	read(fd, bytes, 127);
+	close(fd);
 	if (!bytes)
-		close(fd);
+		return (NULL);
 	return (bytes_to_nbr(bytes));
 }
