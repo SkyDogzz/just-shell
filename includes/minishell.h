@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 03:26:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 07:49:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@
 # include <stdlib.h>
 # include <sys/ioctl.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
@@ -243,6 +245,8 @@ bool	is_operator(const t_token *token, const char *op);
 void	ft_infile_exec(t_cmd *cmd);
 
 char	*get_tmp_fd(void);
+
+int		get_shell_pid(void);
 
 void	store_fd(int *fd);
 void	restore_fd(int *fd);
