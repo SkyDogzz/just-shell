@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/22 19:39:13 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 02:42:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ void	ft_infile_exec(t_cmd *cmd)
 {
 	int		fd;
 	char	*filename;
+	t_list	*redir;
 
+	redir = cmd->redir;
 	if (cmd->redir)
 	{
 		filename = get_tmp_fd();
@@ -86,4 +88,5 @@ void	ft_infile_exec(t_cmd *cmd)
 		unlink(filename);
 		free(filename);
 	}
+	cmd->redir = redir;
 }
