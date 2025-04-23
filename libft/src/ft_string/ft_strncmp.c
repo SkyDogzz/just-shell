@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 17:34:24 by yandry            #+#    #+#             */
-/*   Updated: 2025/02/01 14:55:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:15:51 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
+	if (!s1 || !s2)
+		return (-1);
 	while (n > 0 && *s1 && *s1 == *s2)
 	{
 		s1++;
