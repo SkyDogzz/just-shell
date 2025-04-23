@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 02:42:00 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 07:52:04 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,23 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	char	*buffer;
 	int		fd2;
 
+	printf("fd2 = \n");
 	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
+	printf("fd2 = %d\n", fd2);
 	if (fd2 < 0)
 	{
-		ft_putstr_fd("ssh-xx: can't open file ('", 1);
+		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
+			 strerror(errno), ((t_redir *)cmd->redir->content)->file);
+		unlink(filename);
+		close(fd);
+		return (false);
+	}
+	struct stat sb;
+	if (fstat(fd2, &sb) != 0 || S_ISDIR(sb.st_mode))
+	{        
+		ft_putstr_fd("ssh-xx: ('", 1);
 		ft_putstr_fd(((t_redir *)cmd->redir->content)->file, 1);
-		ft_putendl_fd("')", 1);
+		ft_putendl_fd("') is a directory", 1);
 		unlink(filename);
 		close(fd);
 		return (false);
@@ -78,7 +89,7 @@ void	ft_infile_exec(t_cmd *cmd)
 			return ;
 		while (cmd->redir)
 			if (!ft_redir_all(cmd, fd, filename))
-				exit(127);
+				exit(1);
 		close(fd);
 		fd = open(filename, O_RDONLY);
 		if (fd < 0)
