@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 05:56:34 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 06:45:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:00:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	get_shell_pid(void)
 		return (0);
 	buffer = (char *)malloc(sizeof(char) * 64);
 	buffer = ft_get_next_line(fd);
+	close(fd);
 	return (ft_atoi(buffer));
 }
