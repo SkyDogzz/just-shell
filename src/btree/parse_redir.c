@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:34:33 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/22 17:41:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:35:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ static t_list	*parse_infile(t_list *tokens, t_list *redirs)
 		redir->file = ft_strdup(next->content);
 		redir->type = REDIR_INPUT;
 		ft_lstadd_back(&redirs, ft_lstnew(redir));
-		tokens = tokens->next;
 	}
 	return (redirs);
 }
 
-static t_list	*parse_heredoc(t_list *tokens, t_list *redirs)
+static t_list	*parse_heredoc(const t_list *tokens, t_list *redirs)
 {
 	t_token	*token;
 	t_redir	*redir;
