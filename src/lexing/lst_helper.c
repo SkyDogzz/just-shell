@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:38:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/14 13:56:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:39:55 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_lstclear_string(void *content)
 	free(ccontent);
 }
 
-void	ft_lstprint_string(t_list *lst, const char *s)
+void	ft_lstprint_string(const t_list *lst, const char *s)
 {
 	printf("%s\n", s);
 	while (lst)
