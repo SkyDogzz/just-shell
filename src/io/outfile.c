@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 03:21:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 07:17:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ int	open_outfile(t_cmd *cmd)
 			fd = open(((t_redir *)cmd->redir->content)->file, O_WRONLY
 					| O_CREAT | O_TRUNC, 0644);
 			if (fd < 0)
-				perror("here");
+				return (0);
 		}
 		if (((t_redir *)cmd->redir->content)->type == REDIR_APPEND)
 		{
 			fd = open(((t_redir *)cmd->redir->content)->file, O_WRONLY
 					| O_CREAT | O_APPEND, 0644);
 			if (fd < 0)
-				perror("here");
+				return (0);
 		}
 		cmd->redir = cmd->redir->next;
 	}
 	if (fd < 0)
-		return (false);
+		return (fd);
 	dup2(fd, STDOUT_FILENO);
 	return (fd);
 }

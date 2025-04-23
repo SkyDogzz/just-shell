@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 16:40:12 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 07:05:46 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static bool	ft_find_expand(t_expand *expand, const t_token *token)
 		if (!expand->find)
 			return (true);
 		expand->size = 1;
-		if (expand->find[expand->size] == '$')
+		if (expand->find[expand->size] == '$' || expand->find[expand->size]
+			== '?')
 		{
 			expand->size++;
 			break ;
@@ -40,6 +41,27 @@ static bool	ft_find_expand(t_expand *expand, const t_token *token)
 	return (false);
 }
 
+t_token	*particular_expand(t_token *token, t_expand *expand)
+{
+	int	exit;
+
+	if (ft_strcmp(expand->envvar, "?"))
+		expand->envvarrr = ft_itoa(get_shell_pid());
+	else
+	{
+		if (WIFEXITED(g_exit))
+			exit = WEXITSTATUS(g_exit);
+		else if (WIFSIGNALED(g_exit))
+			exit = WTERMSIG(g_exit);
+		else if(g_exit & CMD_NOT_FOUND_FLAG)
+			exit = 127;
+		else
+			exit = 11111;
+		expand->envvarrr = ft_itoa(exit);
+	}
+	return (token);
+}
+
 t_token	*ft_expand(t_list *env, t_token *token)
 {
 	t_expand	expand;
@@ -52,11 +74,17 @@ t_token	*ft_expand(t_list *env, t_token *token)
 	expand.mem = token->content;
 	expand.envname = ft_strndup(expand.find, expand.size);
 	expand.envvar = ft_strndup(expand.find + 1, expand.size - 1);
-	expand.envvarr = ft_get_env(env, expand.envvar);
-	if (!expand.envvarr)
-		expand.envvarrr = "";
+	if (ft_strcmp(expand.envvar, "?") == 0
+		|| ft_strcmp(expand.envvar, "$") == 0)
+		particular_expand(token, &expand);
 	else
-		expand.envvarrr = expand.envvarr->value;
+	{
+		expand.envvarr = ft_get_env(env, expand.envvar);
+		if (!expand.envvarr)
+			expand.envvarrr = "";
+		else
+			expand.envvarrr = expand.envvarr->value;
+	}
 	token->content = ft_strreplace(expand.mem, expand.envname, expand.envvarrr);
 	free(expand.mem);
 	free(expand.envname);
