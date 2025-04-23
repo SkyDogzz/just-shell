@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:38:37 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 11:40:06 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:06:37 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * we can't just free those
  * this is 100% a bad design but you gotta understand me
 */
-void	fake_delete(void *env_node)
+static void	fake_delete(void *env_node)
 {
 	(void)env_node;
 }
