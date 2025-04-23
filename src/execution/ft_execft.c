@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 07:54:12 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:04:50 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_subprocess(t_cmd *cmd, t_list *env)
 	if (fd[1] == 0)
 	{
 		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
-			 strerror(errno), ((t_redir *)cmd->redir->content)->file);
+			strerror(errno), ((t_redir *)cmd->redir->content)->file);
 		restore_fd(fd);
 		exit(1);
 	}

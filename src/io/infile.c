@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 07:52:04 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:08:12 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,34 @@ static void	ft_redir_heredoc(t_cmd *cmd, int fd)
 	ft_putstr_fd("\n", fd);
 }
 
-static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
+static bool	ft_check_fd(int fd, t_cmd *cmd)
 {
-	char	*buffer;
-	int		fd2;
+	struct stat	sb;
 
-	printf("fd2 = \n");
-	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
-	printf("fd2 = %d\n", fd2);
-	if (fd2 < 0)
+	if (fd < 0)
 	{
 		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
-			 strerror(errno), ((t_redir *)cmd->redir->content)->file);
-		unlink(filename);
-		close(fd);
+			strerror(errno), ((t_redir *)cmd->redir->content)->file);
 		return (false);
 	}
-	struct stat sb;
-	if (fstat(fd2, &sb) != 0 || S_ISDIR(sb.st_mode))
-	{        
+	if (fstat(fd, &sb) != 0 || S_ISDIR(sb.st_mode))
+	{
 		ft_putstr_fd("ssh-xx: ('", 1);
 		ft_putstr_fd(((t_redir *)cmd->redir->content)->file, 1);
 		ft_putendl_fd("') is a directory", 1);
+		return (false);
+	}
+	return (true);
+}
+
+static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
+{
+	char		*buffer;
+	int			fd2;
+
+	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
+	if (!ft_check_fd(fd2, cmd))
+	{
 		unlink(filename);
 		close(fd);
 		return (false);
