@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 07:49:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:38:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int		ft_isin_stringset(const char *input, const char *stringset, char delim);
 bool	ft_isin_charset(char c, const char *charset);
 
 void	ft_lstclear_string(void *content);
-void	ft_lstprint_string(t_list *lst, const char *s);
+void	ft_lstprint_string(const t_list *lst, const char *s);
 void	ft_lstclear_t_token(void *content);
 void	ft_lstprint_tokens(t_list *lst, const char *s);
 void	ft_lstclear_pipes(void *content);
