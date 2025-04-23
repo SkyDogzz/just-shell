@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 06:48:56 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:47:22 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
+#include <stdlib.h>
 
 static int	show_command_not_found(const char *command)
 {
@@ -49,5 +50,5 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (pid == 0)
 		ft_subprocess(leaf->cmd, env);
 	waitpid(pid, &status, 0);
-	return (status);
+	return (WEXITSTATUS(status));
 }

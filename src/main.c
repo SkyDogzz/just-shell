@@ -6,12 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 06:04:47 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:52:09 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_env.h"
+#include <stdlib.h>
 
 int	g_exit;
 
@@ -24,20 +25,14 @@ static bool	is_comment(char *input)
 	return (false);
 }
 
-static bool	is_exit(const char *input)
-{
-	return (ft_strlen(input) == 4 && ft_strcmp(input, "exit") == 0);
-}
-
 static int	handle_input(char *input, t_list *env)
 {
 	t_list	*tokens;
 	t_btree	*tree;
+	int		ret;
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (1);
-	if (is_exit(input))
-		return (2);
 	add_history(input);
 	tokens = ft_lex(env, input);
 	if (!tokens)
@@ -49,8 +44,11 @@ static int	handle_input(char *input, t_list *env)
 		return (0);
 	}
 	tree = ft_parse(tokens);
-	ft_exec(tree, env);
+	ret = ft_exec(tree, env);
 	ft_btree_clear(&tree, ft_free_leaf);
+	if (ret == 238)
+		return (2);
+	g_exit = ret << 8;
 	return (0);
 }
 
@@ -68,15 +66,14 @@ static int	main_process(t_list *env)
 		if (!input)
 			continue ;
 		status = handle_input(input, env);
+		free(input);
 		if (status == 1)
 		{
 			g_exit = 0;
-			free(input);
 			continue ;
 		}
 		else if (status == 2)
-			return (free(input), 0);
-		free(input);
+			return (0);
 	}
 	return (0);
 }
@@ -84,6 +81,7 @@ static int	main_process(t_list *env)
 int	main(int argc, char *argv[], char *argp[])
 {
 	t_list	*env;
+	int		final_ret;
 
 	env = ft_init_env((const char **)argp);
 	ft_set_sigaction();
@@ -91,7 +89,8 @@ int	main(int argc, char *argv[], char *argp[])
 	main_process(env);
 	rl_clear_history();
 	ft_clear_env(env);
-	return (WEXITSTATUS(g_exit));
+	final_ret = WEXITSTATUS(g_exit);
+	exit(final_ret);
 	(void) argc;
 	(void) argv;
 }
