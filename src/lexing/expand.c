@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 07:05:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:10:05 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	ft_find_expand(t_expand *expand, const t_token *token)
 	return (false);
 }
 
-t_token	*particular_expand(t_token *token, t_expand *expand)
+static t_token	*particular_expand(t_token *token, t_expand *expand)
 {
 	int	exit;
 
@@ -53,13 +53,22 @@ t_token	*particular_expand(t_token *token, t_expand *expand)
 			exit = WEXITSTATUS(g_exit);
 		else if (WIFSIGNALED(g_exit))
 			exit = WTERMSIG(g_exit);
-		else if(g_exit & CMD_NOT_FOUND_FLAG)
+		else if (g_exit & CMD_NOT_FOUND_FLAG)
 			exit = 127;
 		else
 			exit = 11111;
 		expand->envvarrr = ft_itoa(exit);
 	}
 	return (token);
+}
+
+static void	expand_exist(t_list *env, t_expand *expand)
+{
+	expand->envvarr = ft_get_env(env, expand->envvar);
+	if (!expand->envvarr)
+		expand->envvarrr = "";
+	else
+		expand->envvarrr = expand->envvarr->value;
 }
 
 t_token	*ft_expand(t_list *env, t_token *token)
@@ -78,13 +87,7 @@ t_token	*ft_expand(t_list *env, t_token *token)
 		|| ft_strcmp(expand.envvar, "$") == 0)
 		particular_expand(token, &expand);
 	else
-	{
-		expand.envvarr = ft_get_env(env, expand.envvar);
-		if (!expand.envvarr)
-			expand.envvarrr = "";
-		else
-			expand.envvarrr = expand.envvarr->value;
-	}
+		expand_exist(env, &expand);
 	token->content = ft_strreplace(expand.mem, expand.envname, expand.envvarrr);
 	free(expand.mem);
 	free(expand.envname);
