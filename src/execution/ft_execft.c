@@ -13,21 +13,15 @@
 #include "ft_execution.h"
 #include "ft_env.h"
 
-static void	*copy_env_to_str(const void *env)
-{
-	char	*env_str;
-	char	*str;
-
-	str = ft_strjoin(((t_env *)env)->name, "=");
-	env_str = ft_strjoin(str, ((t_env *)env)->value);
-	free(str);
-	return (env_str);
-}
-
 void	ft_execft(const char *path, char **args, t_list *env)
 {
-	if (execve(path, args,
-			(char *const *)ft_lsttoarray_c(env, copy_env_to_str)) == -1)
+	t_list		*exported_env;
+	char *const	*env_arr;
+
+	exported_env = ft_lstcpy_if(env, is_env_exported, clear_env);
+	env_arr = (char *const *)ft_lsttoarray_c(exported_env, copy_env_to_str);
+	ft_lstclear(&exported_env, clear_env);
+	if (execve(path, args, env_arr) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, COMMAND_FAILED, args[0]);
 		exit(127);

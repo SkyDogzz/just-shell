@@ -117,7 +117,8 @@ BUILTINS_SRC	:= ft_is_builtin.c \
 				   ft_execute_builtin.c \
 				   echo.c \
 				   cd.c \
-				   pwd.c
+				   pwd.c \
+				   export.c
 
 FT_READLINE_SRC := ft_readline.c \
 				   handle_chars.c \

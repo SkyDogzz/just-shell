@@ -6,13 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 17:23:58 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 17:29:57 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 18:16:59 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 
-void	ft_update_env(t_list **env, const char *name, const char *newval)
+void	ft_update_env(t_list **env, const char *name, const char *newval,
+				bool exported)
 {
 	t_env	*to_update;
 
@@ -23,5 +24,5 @@ void	ft_update_env(t_list **env, const char *name, const char *newval)
 		to_update->value = ft_strdup(newval);
 		return ;
 	}
-	ft_new_env(env, name, newval);
+	ft_new_env(env, name, newval, exported);
 }
