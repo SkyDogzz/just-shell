@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/23 03:23:49 by tstephan         ###   ########.fr        #
+#    Updated: 2025/04/23 06:01:56 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,8 @@ LEXING_SRC		:= lex.c \
 				   expand.c \
 				   split.c \
 				   lst_helper2.c \
-				   is.c
+				   is.c \
+				   pid.c
 
 PARSING_SRC		:= parse.c \
 				   free_leaf.c \
