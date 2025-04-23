@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 17:44:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/23 06:48:56 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	show_command_not_found(const char *command)
 	alloc_len = ft_strlen(COMMAND_NOT_FOUND) + ft_strlen(command);
 	error_message = ft_calloc(alloc_len, sizeof(char));
 	if (!error_message)
-		return (130 | CMD_NOT_FOUND_FLAG);
+		return (127 | CMD_NOT_FOUND_FLAG);
 	ft_snprintf(error_message, alloc_len, COMMAND_NOT_FOUND, command);
 	ft_putendl_fd(error_message, STDERR_FILENO);
 	free(error_message);
