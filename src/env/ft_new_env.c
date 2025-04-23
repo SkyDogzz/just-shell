@@ -6,13 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:08:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 16:57:50 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/22 18:27:08 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 
-static t_env	*create_node(char *name, char *value)
+static t_env	*create_node(char *name, char *value, bool exported)
 {
 	t_env	*env_node;
 
@@ -21,10 +21,12 @@ static t_env	*create_node(char *name, char *value)
 		return (NULL);
 	env_node->name = name;
 	env_node->value = value;
+	env_node->exported = exported;
 	return (env_node);
 }
 
-static t_list	*spawn_env_node(const char *name, const char *value)
+static t_list	*spawn_env_node(const char *name, const char *value,
+						bool exported)
 {
 	t_env	*env_node;
 	t_list	*node;
@@ -37,9 +39,9 @@ static t_list	*spawn_env_node(const char *name, const char *value)
 	env_value = ft_strdup(value);
 	if (!env_name || !env_value)
 		return (free(env_name), free(env_value), NULL);
-	env_node = create_node(env_name, env_value);
+	env_node = create_node(env_name, env_value, exported);
 	if (!env_node)
-		return (NULL);
+		return (free(env_name), free(env_value), NULL);
 	node = ft_lstnew(env_node);
 	if (!node)
 		return (free(env_node->name),
@@ -47,11 +49,12 @@ static t_list	*spawn_env_node(const char *name, const char *value)
 	return (node);
 }
 
-void	ft_new_env(t_list **env, const char *name, const char *value)
+void	ft_new_env(t_list **env, const char *name, const char *value,
+				bool exported)
 {
 	t_list	*new_node;
 
-	new_node = spawn_env_node(name, value);
+	new_node = spawn_env_node(name, value, exported);
 	if (!new_node)
 		return ;
 	ft_lstadd_back(env, new_node);
