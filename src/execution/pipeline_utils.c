@@ -6,13 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:28:10 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:33:06 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/24 20:44:24 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 
-int	exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2])
+int	exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2], t_btree *root)
 {
 	pid_t	left_pid;
 
@@ -23,7 +23,7 @@ int	exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2])
 	{
 		close(pipe_fds[PIPE_LEFT]);
 		ft_exec_with_redirects(((t_leaf *)node->left->content)->cmd, env, fd_in,
-			pipe_fds[PIPE_RIGHT]);
+			pipe_fds[PIPE_RIGHT], root);
 		close(pipe_fds[PIPE_RIGHT]);
 		exit(EXIT_SUCCESS);
 	}
@@ -33,7 +33,7 @@ int	exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2])
 }
 
 int	handle_right_word_node(t_btree *node, t_list *env, int pipe_fd,
-		pid_t left_pid)
+		pid_t left_pid, t_btree *root)
 {
 	pid_t	right_pid;
 	int		status;
@@ -41,7 +41,7 @@ int	handle_right_word_node(t_btree *node, t_list *env, int pipe_fd,
 	right_pid = fork();
 	if (right_pid == 0)
 		ft_exec_with_redirects(((t_leaf *)node->right->content)->cmd, env,
-			pipe_fd, STDOUT_FILENO);
+			pipe_fd, STDOUT_FILENO, root);
 	if (right_pid < 0)
 	{
 		close(pipe_fd);

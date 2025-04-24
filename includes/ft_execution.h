@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 11:27:21 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:52:51 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,20 @@ int		ft_execute_builtin(const t_cmd *cmd, t_list *env);
 int		ft_exec_simple(const t_btree *root, t_list *env);
 int		ft_exec_pipeline(const t_btree *root, t_list *env, int fd_in);
 int		ft_exec_logical(const t_btree *root, t_list *env);
-void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out);
+void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out, t_btree *root);
 
-void	ft_subprocess(t_cmd *cmd, t_list *env);
-void	ft_execft(const char *path, char *args[], t_list *env);
+void	ft_subprocess(t_cmd *cmd, t_list *env, t_btree *root);
+void	ft_execft(const char *path, char *args[], t_list *env, t_btree *root);
 char	*ft_get_executable_path(const t_cmd *cmd, t_list *env);
 
 int		setup_pipe(int pipe_fds[2]);
 void	destop_turbo(int pipe_fds[2]);
 
-int		exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2]);
+int		exec_left_child(t_btree *node, t_list *env, int fd_in, int pipe_fds[2], t_btree *root);
 int		handle_right_word_node(t_btree *node, t_list *env, int pipe_fd,
-			pid_t left_pid);
-int		handle_right_node(t_btree *node, t_list *env, int pipe_fd,
-			pid_t left_pid);
+			pid_t left_pid, t_btree *root);
+int		handle_right_node(t_btree *node, t_list *env, int pipe_fd, pid_t left_pid);
+
+void	ft_cleanup(t_list *env, t_btree *root);
+
 #endif

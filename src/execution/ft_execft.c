@@ -6,14 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 15:03:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:51:37 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "ft_env.h"
 
-void	ft_execft(const char *path, char **args, t_list *env)
+void	ft_execft(const char *path, char **args, t_list *env, t_btree *root)
 {
 	t_list		*exported_env;
 	char *const	*env_arr;
@@ -24,11 +24,12 @@ void	ft_execft(const char *path, char **args, t_list *env)
 	if (execve(path, args, env_arr) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, COMMAND_FAILED, args[0]);
+		ft_cleanup(env, root);
 		exit(127);
 	}
 }
 
-void	ft_subprocess(t_cmd *cmd, t_list *env)
+void	ft_subprocess(t_cmd *cmd, t_list *env, t_btree *root)
 {
 	char	*path;
 	int		fd[2];
@@ -39,6 +40,7 @@ void	ft_subprocess(t_cmd *cmd, t_list *env)
 	if (!path)
 	{
 		ft_dprintf(STDERR_FILENO, COMMAND_NOT_FOUND, cmd->args[0]);
+		ft_cleanup(env, root);
 		exit(128);
 	}
 	ft_infile_exec(cmd);
@@ -49,9 +51,10 @@ void	ft_subprocess(t_cmd *cmd, t_list *env)
 		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
 			strerror(errno), ((t_redir *)cmd->redir->content)->file);
 		restore_fd(fd);
+		ft_cleanup(env, root);
 		exit(1);
 	}
-	ft_execft(path, cmd->args, env);
+	ft_execft(path, cmd->args, env, root);
 	restore_fd(fd);
 	exit(0);
 }

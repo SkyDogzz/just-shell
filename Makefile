@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/23 14:24:32 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/24 19:30:11 by skydogzz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ UTILS_SRC		:= ft_set.c \
 				   ft_get_max.c \
 				   ft_strjoin_free.c \
 				   ft_strcmp.c \
-				   string_to_token.c \
+string_to_token.c \
 				   is_logical.c \
 				   is_operator.c \
 				   random_fd.c \
@@ -109,7 +109,8 @@ EXEC_SRC		:= ft_exec.c \
 				   pipeline_utils.c \
 				   execution_utils.c \
 				   ft_execute_pipeline.c \
-				   ft_execute_logical.c
+				   ft_execute_logical.c \
+				   ft_cleanup.c
 
 IO_SRC			:= ft_tuyau.c \
 				   infile.c \
