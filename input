@@ -1,9 +1,0 @@
-echo 'e'x'p'o'r't
-echo $HOME $HOME
-echo "$HOME $$ $HOME"
-echo '$HOME'
-echo 'HOME'
-cat << EOF
-test heredoc
-$HOME
-EOF

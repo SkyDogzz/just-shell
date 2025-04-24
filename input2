@@ -1,4 +1,0 @@
-cat << EOF | awk '{ print $1, $2 }' | wc; echo "$HOME"; echo $(echo $HOME)
-here is some content
-some content
-EOF
