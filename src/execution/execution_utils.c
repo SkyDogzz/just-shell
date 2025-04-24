@@ -6,12 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:53:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 17:14:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:37:28 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "ft_env.h"
+#include <unistd.h>
 
 static void	free_array(char **array)
 {
@@ -48,12 +49,16 @@ static char	*find_exec_in_path(char *file, char **paths)
 
 static char	*find_exec_relative(char *file, t_list *env)
 {
-	t_env	*home;
+	t_env	*pwd;
+	char	*rel_path;
 
-	home = ft_get_env(env, "PWD");
-	if (!home || !home->value)
+	pwd = ft_get_env(env, "PWD");
+	if (!pwd || !pwd->value)
 		return (NULL);
-	return (ft_strjoin(home->value, &file[1]));
+	rel_path = ft_strjoin(pwd->value, &file[1]);
+	if (rel_path && access(rel_path, F_OK | X_OK) == 0)
+		return (rel_path);
+	return (NULL);
 }
 
 char	*ft_get_executable_path(const t_cmd *cmd, t_list *env)

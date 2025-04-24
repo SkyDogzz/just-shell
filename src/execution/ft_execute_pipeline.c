@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 14:25:29 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:54:05 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
+int	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 {
 	int	ret;
 
@@ -33,7 +33,7 @@ void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 	if (ft_is_builtin(cmd->args[0]))
 	{
 		ret = ft_execute_builtin(cmd, env);
-		exit(ret);
+		return (ret);
 	}
 	ft_subprocess(cmd, env);
 	exit(EXIT_FAILURE);
@@ -64,6 +64,6 @@ int	ft_exec_pipeline(const t_btree *root, t_list *env, int fd_in)
 	if (!root)
 		return (0);
 	if (((t_leaf *)root->content)->type == NODE_PIPE)
-		return (WEXITSTATUS(exec_pipe_node((t_btree *)root, env, fd_in)));
+		return (exec_pipe_node((t_btree *)root, env, fd_in));
 	return (-1);
 }
