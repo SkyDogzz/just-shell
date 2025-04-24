@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 11:27:21 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:24:23 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_execute_builtin(const t_cmd *cmd, t_list *env);
 int		ft_exec_simple(const t_btree *root, t_list *env);
 int		ft_exec_pipeline(const t_btree *root, t_list *env, int fd_in);
 int		ft_exec_logical(const t_btree *root, t_list *env);
-void	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out);
+int		ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out);
 
 void	ft_subprocess(t_cmd *cmd, t_list *env);
 void	ft_execft(const char *path, char *args[], t_list *env);

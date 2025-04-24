@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 15:47:22 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/24 16:17:01 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (pid == 0)
 		ft_subprocess(leaf->cmd, env);
 	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	return (status);
 }
