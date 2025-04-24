@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 19:24:46 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/24 14:08:00 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 		return (1);
 	}
 	ft_update_env(&env, "OLDPWD", curr_dir, true);
+	ft_update_env(&env, "PWD", getcwd(curr_dir, sizeof curr_dir), true);
 	return (0);
 }
