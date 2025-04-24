@@ -1,0 +1,156 @@
+#!/bin/bash
+# -*- ENCODING: UTF-8 -*-
+
+#####################################
+# TESTS REDIRECTIONS SUR BUILT-INS
+#####################################
+
+# redir stdout et stderr de echo
+echo "stdout via echo" > out1.txt
+echo "stderr via echo" 1>&2 2> err1.txt
+cat out1.txt; cat err1.txt; rm out1.txt err1.txt
+
+# redir builtin pwd
+pwd > out2.txt
+cat out2.txt; rm out2.txt
+
+# redir d’un unset (nul part où écrire) ➡️ erreur ?
+unset VAR1 > out3.txt 2>&1
+cat out3.txt; rm out3.txt
+
+# redir here-doc sur builtin read
+read VAR2 <<EOF
+input_data
+EOF
+echo "VAR2=$VAR2"
+
+#################################
+# COMMANDES INEXISTANTES & ERREURS
+#################################
+
+# simple non-existent
+foobarbaz
+# redir d’une cmd invalide
+foobarbaz > /dev/null 2>&1
+
+# pipe vers cmd invalide
+echo "test" | foobarbaz | wc -l
+ca | ca
+
+# redir input cmd inexistante
+foobarbaz < in.txt
+
+# mauvaise redirection
+echo "oops" >| out.txt   # bash accepte >| mais check ton comportement
+rm out.txt
+
+#################################
+# CHAÎNAGES BIZARRES & SYNTAXE TORDUE
+#################################
+
+# enchaînements vides et séparateurs multiples
+;;;; echo "after empty cmds"
+|| echo "OR at start"
+&&& echo "triple &"
+|;| ls
+
+# parenthèses non fermées
+((((
+echo "après (((("
+
+# mix bizarre
+echo hello ;;; ||| && echo world
+
+#################################
+# REDIRS + PIPES + LOGICAL OPS
+#################################
+
+# redir dans un pipe
+echo "abc" > f1.txt | tr a-z A-Z
+rm f1.txt
+
+# pipe multiple et redir finale
+echo "1\n2\n3" | grep 2 | wc -c > cnt.txt
+cat cnt.txt; rm cnt.txt
+
+# && avec redirections
+false && echo "nope" > out && echo "still nope"
+true || echo "skip" > out2.txt; rm -f out2.txt
+
+#################################
+# CAS FOUS ET STRESS TEST
+#################################
+
+# très long pipeline
+seq 1 1000 | rev | sort -r | head -n 5 | tail -n 3
+
+# wildcards extrêmes
+mkdir -p tdir && cd tdir && touch a b c d && echo * && cd .. && rm -rf tdir
+
+# huge here-doc avec expansions et quotes
+cat <<END >> big.txt
+Line 1: $HOME
+Line 2: `date +%Y`
+Unquoted: $PWD
+'Single $HOME'
+"Double $HOME"
+END
+rm big.txt
+
+#################################
+# TESTS DE VARIABLES & EXPANSIONS
+#################################
+
+# unset variable dans quotes
+unset X; echo "X=$X"
+
+# var non initialisée + default
+echo "${Y:-default}"
+
+# var dans var
+A="X"; B="A"; echo "indirect: ${!B}"
+
+#################################
+# SIGNALS & JOBS
+#################################
+
+# SIGINT et SIGQUIT
+( sleep 1; kill -SIGINT $$ ) & sleep 2; echo "caught SIGINT?"
+( sleep 1; kill -SIGQUIT $$ ) & sleep 2; echo "caught SIGQUIT?"
+
+# job control
+sleep 10 & jobs; kill %1
+
+#################################
+# CAS LIMITE SUPPLÉMENTAIRES
+#################################
+
+# redir to directory
+echo "test" > .
+echo "test" > . | echo "test" > .
+echo "test" > . | echo "test" > . | echo "test" > . | echo "test" > .
+
+# append to readonly file
+touch r.txt; chmod 444 r.txt; echo "x" >> r.txt 2> err.txt; cat err.txt; rm r.txt err.txt
+
+# pipe with no cmd before
+| wc -l
+
+# multiple heredocs
+cat << A << B
+foo
+A
+B
+
+# nested subshells
+((echo nested) | (echo subshell)) > nest.txt; cat nest.txt; rm nest.txt
+
+# test exit statuses
+false; echo "status_false=$?"; true; echo "status_true=$?"
+
+$($$($($($(($($($$$($)))))))))
+
+#################################
+# EXIT
+#################################
+exit 0

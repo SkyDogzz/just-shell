@@ -1,2 +1,0 @@
-# echo here | cat > txt && echo we >> txt && < txt cat
-echo here | cat > txt && echo we >> txt && cat txt
