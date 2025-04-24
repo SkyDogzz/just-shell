@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/24 21:48:47 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:55:18 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	restore_fd(int *fd)
 {
 	dup2(*fd, STDOUT_FILENO);
 	close(*fd);
-	/*close(*fd+1);*/
+	close(*fd+1);
 }
 
 int	open_outfile(t_cmd *cmd)
