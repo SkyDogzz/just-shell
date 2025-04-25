@@ -6,12 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 16:17:01 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:14:08 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
-#include <stdlib.h>
 
 static int	show_command_not_found(const char *command)
 {

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 14:02:19 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 19:51:13 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 18:45:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_ENV_H
 
 # include "../libft/includes/libft.h"
-# include "stdbool.h"
+# include <linux/limits.h>
 
 typedef struct s_env
 {

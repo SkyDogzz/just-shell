@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 18:08:38 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:41:24 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:59:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_btree.h"
 
 t_btree	*ft_btree_new(void *content)
 {

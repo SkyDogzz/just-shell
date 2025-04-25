@@ -6,15 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 16:54:05 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:13:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "ft_execution.h"
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 int	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 {

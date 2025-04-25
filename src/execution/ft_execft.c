@@ -6,12 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 15:03:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:13:48 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
-#include "ft_env.h"
 
 void	ft_execft(const char *path, char **args, t_list *env)
 {

@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:29:05 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:40:35 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:06:43 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_utils.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

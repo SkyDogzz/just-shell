@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:17:56 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:41:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:06:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_utils.h"
 
 char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree jfree)
 {

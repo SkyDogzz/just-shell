@@ -6,11 +6,10 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 12:03:38 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:06:36 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "ft_execution.h"
 
 static int	exec_logical_node(t_btree *node, t_list *env)

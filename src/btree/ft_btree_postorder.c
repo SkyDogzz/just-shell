@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 18:52:32 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/06 14:46:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:00:04 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_btree.h"
 
 void	ft_btree_postorder(t_btree *root, void (*f)(void *))
 {

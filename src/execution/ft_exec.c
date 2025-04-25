@@ -6,13 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 15:39:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:04:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
-#include "minishell.h"
-#include <unistd.h>
 
 int	ft_exec(t_btree	*root, t_list *env)
 {

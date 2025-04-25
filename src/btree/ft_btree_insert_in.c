@@ -6,11 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:37:56 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/25 17:52:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:59:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_btree.h"
 
 void	ft_btree_insert_in(t_btree **root, t_btree *ne,
 			int (*cmp)(void *, void *))

@@ -6,14 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 16:24:23 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:00:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_EXECUTION_H
 # define FT_EXECUTION_H
 
-# include "minishell.h"
+# include "ft_btree.h"
 
 # define COMMAND_NOT_FOUND "ssh-xx: command not found ('%s')\n"
 # define COMMAND_FAILED "ssh-xx: failed to run command: %s\n"

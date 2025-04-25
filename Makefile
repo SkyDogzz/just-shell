@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/23 14:24:32 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/25 19:45:28 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,14 +42,14 @@ OBJ_PATH := obj/
 UTILS_SRC		:= ft_set.c \
 				   ft_strndup.c \
 				   ft_strreplace.c \
-				   ft_get_max.c \
 				   ft_strjoin_free.c \
 				   ft_strcmp.c \
-				   string_to_token.c \
-				   is_logical.c \
-				   is_operator.c \
-				   random_fd.c \
-				   cleanup.c
+				   ft_string_to_token.c \
+				   ft_is_pipe.c \
+				   ft_is_logical.c \
+				   ft_is_operator.c \
+				   ft_random_filename.c \
+				   ft_getmax.c
 
 ENV_SRC			:= ft_init_env.c \
 				   ft_clear_env.c \
@@ -57,28 +57,27 @@ ENV_SRC			:= ft_init_env.c \
 				   ft_get_env.c \
 				   ft_update_env.c \
 				   ft_delete_env.c \
-				   env_utils.c
+				   ft_env_utils.c
 
-SIGNAL_SRC		:= signal.c
+SIGNAL_SRC		:= ft_signal.c
 
-LEXING_SRC		:= lex.c \
-				   lst_helper.c \
-				   space.c \
-				   clear.c \
-				   expand.c \
-				   split.c \
-				   lst_helper2.c \
-				   is.c \
-				   pid.c
+LEXING_SRC		:= ft_lex.c \
+				   ft_space.c \
+				   ft_clear.c \
+				   ft_expand.c \
+				   ft_split.c \
+				   ft_pid.c \
+				   ft_fill_tree.c
 
-PARSING_SRC		:= parse.c \
-				   free_leaf.c \
-				   create_leaf.c
-
-HEREDOC_SRC		:= read.c \
-				   handle.c
-
-QUOTE_SRC		:= read.c
+PARSING_SRC		:= ft_parse.c \
+				   ft_free_leaf.c \
+				   ft_create_leaf.c \
+				   ft_parse_redir.c \
+				   ft_read_quote.c \
+				   ft_read_heredoc.c \
+				   ft_read_subshell.c \
+				   ft_subshell.c \
+				   ft_handle_heredoc.c
 
 BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_height.c \
@@ -88,47 +87,45 @@ BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_postorder.c \
 				   ft_btree_preorder.c \
 				   ft_btree_size.c \
-				   print.c \
-				   ft_btree_insert_in.c\
-				   fill_tree.c \
-				   parse_redir.c
+				   ft_print.c \
+				   ft_btree_insert_in.c
 
-SUBSHELL_SRC 	:= subshell.c \
-				   read.c
-
-PROMPT_SRC		:= shell.c \
-				   prompt_builder.c \
-				   prompt_user_utils.c \
-				   prompt_host_utils.c \
-				   prompt_path_utils.c \
-				   prompt_exit_utils.c
+PROMPT_SRC		:= ft_shell.c \
+				   ft_prompt_builder.c \
+				   ft_prompt_user_utils.c \
+				   ft_prompt_host_utils.c \
+				   ft_prompt_path_utils.c \
+				   ft_prompt_exit_utils.c
 
 EXEC_SRC		:= ft_exec.c \
 				   ft_execute_simple_cmd.c \
 				   ft_execft.c \
-				   pipeline_utils.c \
-				   execution_utils.c \
+				   ft_pipeline_utils.c \
+				   ft_execution_utils.c \
 				   ft_execute_pipeline.c \
 				   ft_execute_logical.c
 
 IO_SRC			:= ft_tuyau.c \
-				   infile.c \
-				   outfile.c
+				   ft_infile.c \
+				   ft_outfile.c
 
 BUILTINS_SRC	:= ft_is_builtin.c \
 				   ft_execute_builtin.c \
-				   echo.c \
-				   cd.c \
-				   pwd.c \
-				   export.c \
-				   unset.c \
-				   env.c \
-				   exit.c
+				   ft_echo.c \
+				   ft_cd.c \
+				   ft_pwd.c \
+				   ft_export.c \
+				   ft_unset.c \
+				   ft_env.c \
+				   ft_exit.c
 
 FT_READLINE_SRC := ft_readline.c \
-				   handle_chars.c \
-				   init.c \
-				   terminal.c
+				   ft_handle_chars.c \
+				   ft_init.c \
+				   ft_terminal.c
+				   
+LST_HELPER_SRC	:= ft_lst_helper.c \
+				   ft_lst_helper2.c
 
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
@@ -143,7 +140,8 @@ SRC := main.c \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix execution/, $(EXEC_SRC)) \
 	   $(addprefix io/, $(IO_SRC)) \
-	   $(addprefix builtins/, $(BUILTINS_SRC))
+	   $(addprefix builtins/, $(BUILTINS_SRC)) \
+	   $(addprefix lst_helper/, $(LST_HELPER_SRC))
 
 ifdef CUSTOM_RL
 SRC += $(addprefix io/ft_readline/, $(FT_READLINE_SRC))

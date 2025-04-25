@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 17:39:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:39:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,6 @@ typedef enum e_joinfree
 	SECOND,
 	BOTH
 }	t_joinfree;
-
-typedef enum e_prompt
-{
-	PROMPT_MAIN,
-	PROMPT_HEREDOC,
-	PROMPT_QUOTE,
-	PROMPT_SUBSHELL
-}	t_prompt;
 
 typedef enum e_quote
 {
@@ -148,13 +140,6 @@ typedef struct s_cmd
 	t_list	*redir;
 }	t_cmd;
 
-typedef struct s_btree
-{
-	void			*content;
-	struct s_btree	*left;
-	struct s_btree	*right;
-}	t_btree;
-
 typedef struct s_leaf
 {
 	t_node_type		type;
@@ -178,74 +163,9 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	ft_set_sigaction(void);
 bool	handle_sigint(void);
 
-char	*ft_strndup(const char *s, size_t n);
-char	*ft_strreplace(const char *full, const char *old, const char *ne);
-
-bool	ft_isspace(char c);
-
-int		ft_getmax(int a, int b);
-
-int		ft_isin_stringset(const char *input, const char *stringset, char delim);
-bool	ft_isin_charset(char c, const char *charset);
-
-void	ft_lstclear_string(void *content);
-void	ft_lstprint_string(const t_list *lst, const char *s);
-void	ft_lstclear_t_token(void *content);
-void	ft_lstprint_tokens(t_list *lst, const char *s);
-void	ft_lstclear_pipes(void *content);
-void	ft_lstprint_pipes(t_list *lst, const char *s);
-
-int		ft_handle_heredocs(t_list *env, t_list **lst);
-char	*ft_read_heredoc(const char *delimiter);
-
-t_list	*ft_lex(t_list *env, const char *cmd_line);
-t_list	*ft_doom_split(const char *input);
-t_list	*ft_remove_whitespace(t_list *lst);
-t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_list *env, t_token *token);
-t_list	*ft_fuse_word(t_list *lst);
-t_btree	*ft_parse(t_list *tokens);
-int		ft_exec(t_btree *root, t_list *env);
-
-// tree related functions
-void	ft_print_tree(t_btree *root, int level, int is_last);
-t_btree	*ft_btree_new(void *content);
-void	ft_btree_insert(t_btree **root, t_btree *ne,
-			int (*cmp)(void *, void *));
-void	ft_btree_insert_in(t_btree **root, t_btree *ne,
-			int (*cmp)(void *, void *));
-void	ft_btree_inorder(t_btree *root, void (*f)(void *));
-void	ft_btree_preorder(t_btree *root, void (*f)(void *));
-void	ft_btree_postorder(t_btree *root, void (*f)(void *));
-int		ft_btree_size(t_btree *root);
-int		ft_btree_height(t_btree *root);
-void	ft_btree_clear(t_btree **root, void (*del)(void *));
-void	ft_fill_tree(t_btree **root, t_list *pipes);
-t_list	*parse_redir(t_list *tokens);
-
-char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree flag);
-
-t_leaf	*ft_create_leaf(t_node_type type, char	**args);
-int		ft_cmp_leaf(void *s1, void *s2);
-void	ft_free_leaf(void *leaf);
-
-char	*ft_handle_multiline_quote(char *input);
-
-bool	ft_findsubshell(t_list *env, t_list **tokens);
-char	*ft_read_subshell(int level);
-
-t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens);
-
-char	*ft_readline(t_prompt id, t_list *env);
-
-bool	ft_is_pipe(const t_token *token);
-bool	ft_is_logical(const t_token *token);
-bool	is_operator(const t_token *token, const char *op);
 
 void	ft_infile_exec(t_cmd *cmd);
-
-char	*get_tmp_fd(void);
-
 int		get_shell_pid(void);
 
 void	store_fd(int *fd);

@@ -6,11 +6,10 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:13:04 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 10:16:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:12:12 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_execution.h"
 #include "ft_builtins.h"
 
 bool	ft_is_builtin(const char *name)
