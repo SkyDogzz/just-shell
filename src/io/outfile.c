@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 07:17:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:34:39 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	store_fd(int *fd)
 	*fd = dup(STDOUT_FILENO);
 }
 
-void	restore_fd(int *fd)
+void	restore_fd(int fd[2])
 {
-	dup2(*fd, STDOUT_FILENO);
-	close(*fd);
+	dup2(fd[0], STDOUT_FILENO);
+	close(fd[0]);
+	if (fd[1] > 0)
+		close(fd[1]);
 }
 
 int	open_outfile(t_cmd *cmd)
