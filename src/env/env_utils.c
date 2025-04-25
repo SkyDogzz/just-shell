@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 18:03:39 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 19:50:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:46:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ inline bool	is_env(t_list *node, const char *name)
 {
 	return (ft_strncmp(((t_env *)node->content)->name,
 			name,
-			ft_strlen(name)) == 0);
+			ft_strlen(name) + 1) == 0);
 }
 
 bool	is_env_exported(t_list *env)
