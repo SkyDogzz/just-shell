@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:54:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:07:59 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,5 @@ typedef struct s_cmd
 	char	**args;
 	t_list	*redir;
 }	t_cmd;
-
-typedef struct s_leaf
-{
-	t_node_type		type;
-	t_cmd			*cmd;
-}	t_leaf;
 
 #endif

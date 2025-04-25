@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:53:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:55:25 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:08:07 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ typedef struct s_btree
 	struct s_btree	*left;
 	struct s_btree	*right;
 }	t_btree;
+
+typedef struct s_leaf
+{
+	t_node_type		type;
+	t_cmd			*cmd;
+}	t_leaf;
 
 // tree related functions
 void	ft_print_tree(t_btree *root, int level, int is_last);
