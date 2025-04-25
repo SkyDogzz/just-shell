@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:17:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:00:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_token	*particular_expand(t_token *token, t_expand *expand)
 
 	if (ft_strcmp(expand->envvar, "?"))
 	{
-		expand->envvarrr = ft_itoa(get_shell_pid());
+		expand->envvarrr = ft_itoa(ft_get_shell_pid());
 	}
 	else
 	{

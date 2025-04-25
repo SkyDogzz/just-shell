@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   random_filename.c                                  :+:      :+:    :+:   */
+/*   ft_random_filename.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:02:23 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 18:20:01 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:00:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*bytes_to_nbr(char *bytes)
 	return (name);
 }
 
-char	*random_filename(void)
+char	*ft_random_filename(void)
 {
 	char	*bytes;
 	int		fd;

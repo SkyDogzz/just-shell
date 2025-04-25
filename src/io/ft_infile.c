@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:38:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:04:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_infile_exec(t_cmd *cmd)
 	redir = cmd->redir;
 	if (cmd->redir)
 	{
-		filename = random_filename();
+		filename = ft_random_filename();
 		fd = open(filename, O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 			return ;

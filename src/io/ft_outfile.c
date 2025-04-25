@@ -6,18 +6,18 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 17:34:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:03:39 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_utils.h"
 
-void	store_fd(int *fd)
+void	ft_store_fd(int *fd)
 {
 	*fd = dup(STDOUT_FILENO);
 }
 
-void	restore_fd(int fd[2])
+void	ft_restore_fd(int fd[2])
 {
 	dup2(fd[0], STDOUT_FILENO);
 	close(fd[0]);
@@ -25,7 +25,7 @@ void	restore_fd(int fd[2])
 		close(fd[1]);
 }
 
-int	open_outfile(t_cmd *cmd)
+int	ft_open_outfile(t_cmd *cmd)
 {
 	int	fd;
 

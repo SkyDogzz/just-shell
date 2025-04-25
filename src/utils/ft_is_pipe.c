@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:03:46 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 18:22:40 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:00:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 bool	ft_is_pipe(const t_token *token)
 {
-	return (is_operator(token, "|"));
+	return (ft_is_operator(token, "|"));
 }

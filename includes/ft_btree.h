@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:53:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:13:05 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:55:25 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_btree_size(t_btree *root);
 int		ft_btree_height(t_btree *root);
 void	ft_btree_clear(t_btree **root, void (*del)(void *));
 void	ft_fill_tree(t_btree **root, t_list *pipes);
-t_list	*parse_redir(t_list *tokens);
+t_list	*ft_parse_redir(t_list *tokens);
 
 int		ft_exec(t_btree *root, t_list *env);
 

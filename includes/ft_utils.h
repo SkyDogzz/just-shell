@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:05:13 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:38:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:59:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,14 @@ char	*ft_strndup(const char *s, size_t n);
 char	*ft_strreplace(const char *full, const char *old, const char *ne);
 bool	ft_is_pipe(const t_token *token);
 bool	ft_is_logical(const t_token *token);
-bool	is_operator(const t_token *token, const char *op);
-char	*random_filename(void);
+bool	ft_is_operator(const t_token *token, const char *op);
+char	*ft_random_filename(void);
+int		ft_strcmp(const char *s1, const char *s2);
+t_token	*ft_expand(t_list *env, t_token *token);
+int		ft_get_shell_pid(void);
+void	ft_store_fd(int *fd);
+void	ft_restore_fd(int fd[2]);
+int		ft_open_outfile(t_cmd *cmd);
+void	ft_infile_exec(t_cmd *cmd);
 
 #endif

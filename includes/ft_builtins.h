@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 14:18:02 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:49:35 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_BUILTINS_H
 
 # include "minishell.h"
+# include "ft_utils.h"
 
 typedef struct s_builtin
 {

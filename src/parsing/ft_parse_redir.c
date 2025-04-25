@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:34:33 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 18:24:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:02:10 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_list	*parse_infile(t_list *tokens, t_list *redirs)
 	next = tokens->next->content;
 	if (!act || !next)
 		return (redirs);
-	if (is_operator(act, "<"))
+	if (ft_is_operator(act, "<"))
 	{
 		redir = (t_redir *)malloc(sizeof(t_redir));
 		redir->file = ft_strdup(next->content);
@@ -73,11 +73,11 @@ static t_list	*parse_outilfe(t_list *tokens, t_list *redirs)
 		next = tokens->next->content;
 		if (!act || !next)
 			return (redirs);
-		if (is_operator(act, ">") || is_operator(act, ">>"))
+		if (ft_is_operator(act, ">") || ft_is_operator(act, ">>"))
 		{
 			redir = (t_redir *)malloc(sizeof(t_redir));
 			redir->file = ft_strdup(next->content);
-			if (is_operator(act, ">"))
+			if (ft_is_operator(act, ">"))
 				redir->type = REDIR_TRUNC;
 			else
 				redir->type = REDIR_APPEND;
@@ -89,7 +89,7 @@ static t_list	*parse_outilfe(t_list *tokens, t_list *redirs)
 	return (redirs);
 }
 
-t_list	*parse_redir(t_list *tokens)
+t_list	*ft_parse_redir(t_list *tokens)
 {
 	t_list	*redirs;
 

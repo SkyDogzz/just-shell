@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/25 19:42:08 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:51:19 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ft_lst_helper.h"
 #include "ft_utils.h"
 #include "ft_prompt.h"
+#include "ft_signals.h"
 
 int	g_exit;
 
