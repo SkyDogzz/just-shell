@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 12:11:46 by yandry            #+#    #+#              #
-#    Updated: 2025/04/26 14:59:19 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/26 15:25:29 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ FT_UTILS_SRC		:= pipeline_utils.c \
 FT_CORE_SRC			:= ft_execute_simple.c \
 					   ft_execute_pipeline.c \
 					   ft_execute_logical.c \
-					   ft_execft.c
+					   ft_execft.c \
+					   ft_execution_context.c
 
 FT_EXEC_SRC			:= ft_exec.c \
 					   $(addprefix core/, $(FT_CORE_SRC)) \

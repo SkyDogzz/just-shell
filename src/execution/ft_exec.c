@@ -6,19 +6,23 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 15:39:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/26 17:03:21 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
-#include "minishell.h"
-#include <unistd.h>
 
-int	ft_exec(t_btree	*root, t_list *env)
+int	ft_exec(t_context *context)
 {
-	int	ret;
+	int		ret;
+	t_btree	*root;
+	t_list	*env;
 
+	if (!context)
+		return (1);
 	ret = 0;
+	root = context->root;
+	env = context->env;
 	if (!root || !root->content)
 		return (1);
 	if (((t_leaf *)root->content)->type == NODE_WORD)

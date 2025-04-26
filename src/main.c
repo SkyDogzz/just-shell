@@ -6,10 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/24 16:20:33 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/26 17:03:37 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_execution.h"
 #include "minishell.h"
 #include "ft_env.h"
 #include <stdlib.h>
@@ -27,9 +28,9 @@ static bool	is_comment(char *input)
 
 static int	handle_input(char *input, t_list *env)
 {
-	t_list	*tokens;
-	t_btree	*tree;
-	int		ret;
+	t_list		*tokens;
+	t_context	*context;
+	int			ret;
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (1);
@@ -43,9 +44,10 @@ static int	handle_input(char *input, t_list *env)
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (0);
 	}
-	tree = ft_parse(tokens);
-	ret = ft_exec(tree, env);
-	ft_btree_clear(&tree, ft_free_leaf);
+	context = ft_get_execution_context(ft_parse(tokens), env);
+	ret = ft_exec(context);
+	ft_btree_clear(&context->root, ft_free_leaf);
+	free(context);
 	if (ret == 238)
 		return (2);
 	g_exit = ret;
