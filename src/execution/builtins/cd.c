@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 14:08:00 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/26 18:48:27 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 	get_newpath(env, &path[0], cmd->args);
 	if (chdir(path))
 	{
-		ft_dprintf(STDERR_FILENO, "cd: '%s' is not a directory\n", cmd->args[1]);
+		ft_dprintf(STDERR_FILENO,
+			"cd: '%s' is not a directory\n", cmd->args[1]);
 		return (1);
 	}
 	ft_update_env(&env, "OLDPWD", curr_dir, true);
