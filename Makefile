@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/23 14:24:32 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/26 14:55:40 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,13 @@ LIBFT_PATH := libft/
 INCLUDES = -I ./includes -I $(LIBFT_PATH)
 LDFLAGS := -lreadline
 
+.PHONY: all vibe_check
+
+vibe_check:
+	@$(MAKE) --question $(NAME) 2>/dev/null && echo "$(Color_Off)[Announcer] $(Purple)Everything is up to date, nothing to do here. Zzz...$(Color_Off)" || $(MAKE) $(NAME)
+
+all: vibe_check $(NAME)
+
 ifdef DEBUG
 CFLAGS += -g3
 CFLAGS += -D DEBUG=TRUE
@@ -38,6 +45,8 @@ endif
 
 SRC_PATH := src/
 OBJ_PATH := obj/
+
+include src/execution/ft_execution.mk
 
 UTILS_SRC		:= ft_set.c \
 				   ft_strndup.c \
@@ -103,27 +112,9 @@ PROMPT_SRC		:= shell.c \
 				   prompt_path_utils.c \
 				   prompt_exit_utils.c
 
-EXEC_SRC		:= ft_exec.c \
-				   ft_execute_simple_cmd.c \
-				   ft_execft.c \
-				   pipeline_utils.c \
-				   execution_utils.c \
-				   ft_execute_pipeline.c \
-				   ft_execute_logical.c
-
 IO_SRC			:= ft_tuyau.c \
 				   infile.c \
 				   outfile.c
-
-BUILTINS_SRC	:= ft_is_builtin.c \
-				   ft_execute_builtin.c \
-				   echo.c \
-				   cd.c \
-				   pwd.c \
-				   export.c \
-				   unset.c \
-				   env.c \
-				   exit.c
 
 FT_READLINE_SRC := ft_readline.c \
 				   handle_chars.c \
@@ -141,9 +132,7 @@ SRC := main.c \
 	   $(addprefix btree/, $(BTREE_SRC)) \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
-	   $(addprefix execution/, $(EXEC_SRC)) \
 	   $(addprefix io/, $(IO_SRC)) \
-	   $(addprefix builtins/, $(BUILTINS_SRC))
 
 ifdef CUSTOM_RL
 SRC += $(addprefix io/ft_readline/, $(FT_READLINE_SRC))
@@ -151,23 +140,19 @@ endif
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
-OBJS := $(addprefix $(OBJ_PATH), $(OBJ))
+OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS)
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
 LIBFT := $(LIBFT_PATH)libft.a
 
-.PHONY: all clean fclean re norm nm lint
-
-all: $(NAME)
+.PHONY: clean fclean re norm nm lint
 
 -include $(OBJS:.o=.d)
 
-$(OBJ_DIRS):
-	@$(foreach dir,$(OBJ_DIRS),mkdir -p $(dir);)
-	@echo "$(Blue)Created $(Purple)objects $(Blue)directory$(Color_Off)"
-
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_DIRS)
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(dir $@)
+	@echo "$(Blue)Created $(Purple)object $(Blue)directory for $(Cyan)$@$(Color_Off)"
 	@echo -n "$(Cyan)"
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo -n "$(Color_Off)"
@@ -185,7 +170,7 @@ else
 	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled :D! Happy hacking!$(Color_Off)"
 endif
 
-clean:
+clean: clean_ft_execution
 	@echo "$(Color_Off)[Announcer] $(Purple)Let's clean up libft first :D$(Color_Off)"
 	$(MAKE) clean -C $(LIBFT_PATH)
 	@echo -n "$(Blue)"
