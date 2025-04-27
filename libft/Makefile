@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 21:12:49 by yandry            #+#    #+#              #
-#    Updated: 2025/04/27 11:06:34 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/27 12:11:48 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -138,7 +138,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(Color_Off)[Announcer] Removed$(Purple)$(NAME)$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] Removed $(Purple)$(NAME)$(Color_Off)"
 
 norm:
 	@norminette | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer] $(Green)All files follow the Norm$(Color_Off)!!! (that was painful though)"
