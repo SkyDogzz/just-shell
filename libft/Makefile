@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 21:12:49 by yandry            #+#    #+#              #
-#    Updated: 2025/04/22 18:57:35 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/27 11:06:34 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,42 +109,39 @@ OBJS := $(addprefix $(OBJ_PATH), $(OBJ))
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
-.PHONY: all clean fclean re norm help
+.PHONY: all clean fclean re norm help .build_msg
 
 all: $(NAME)
 
 -include $(OBJS:.o=.d)
 
-$(OBJ_DIRS):
+.build_msg:
+	@echo "$(Color_Off)[Announcer] Building $(Purple)$(NAME)$(Color_Off)"
+
+$(OBJ_DIRS): | .build_msg
 	@$(foreach dir,$(OBJ_DIRS),mkdir -p $(dir);)
-	@echo "$(Blue)Created directories $(Purple)$@$(Color_Off)"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_DIRS)
-	@echo -n "$(Cyan)"
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ 
-	@echo -n "$(Color_Off)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(NAME)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 $(NAME): $(OBJS)
-	@echo -n "$(Green)"
-	ar -rsc $@ $^
+	@ar -rsc $@ $^
 ifeq ($(DEBUG), 1)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled in $(Red)DEBUG$(Purple) mode!$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME)$(Color_Off) has been compiled in $(Red)DEBUG$(Color_Off) mode!"
 else
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled :D! Happy sufferi- I mean coding... hahaha... yeah...$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME)$(Color_Off) has been compiled :D! Happy sufferi- I mean coding... hahaha... yeah..."
 endif
 
 clean:
-	@echo -n "$(Blue)"
-	rm -rf $(OBJ_PATH)
-	@echo "$(Color_Off)[Announcer] $(Purple)Removed object and dependency files of $(NAME)$(Color_Off)"
+	@rm -rf $(OBJ_PATH)
+	@echo "$(Color_Off)[Announcer] Removed object and dependency files for $(Purple)$(NAME)$(Color_Off)"
 
 fclean: clean
-	@echo -n "$(Blue)"
-	rm -f $(NAME)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) is GONE!!$(Color_Off)"
+	@rm -f $(NAME)
+	@echo "$(Color_Off)[Announcer] Removed$(Purple)$(NAME)$(Color_Off)"
 
 norm:
-	@norminette | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer]$(Purple) All files follow the $(Green)Norm$(Purple)!!! (that was painful though)$(Color_Off)"
+	@norminette | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer] $(Green)All files follow the Norm$(Color_Off)!!! (that was painful though)"
 
 re: fclean all
 

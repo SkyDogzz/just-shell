@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/26 14:55:40 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/27 11:06:17 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ Blue=$(shell tput setaf 4)
 Yellow=$(shell tput setaf 3)
 Green=$(shell tput setaf 2)
 Color_Off=$(shell tput sgr0)
+
+MAKEFLAGS += --no-print-directory
 
 NAME := minishell
 CC := cc
@@ -47,6 +49,7 @@ SRC_PATH := src/
 OBJ_PATH := obj/
 
 include src/execution/ft_execution.mk
+include src/io/ft_io.mk
 
 UTILS_SRC		:= ft_set.c \
 				   ft_strndup.c \
@@ -112,15 +115,6 @@ PROMPT_SRC		:= shell.c \
 				   prompt_path_utils.c \
 				   prompt_exit_utils.c
 
-IO_SRC			:= ft_tuyau.c \
-				   infile.c \
-				   outfile.c
-
-FT_READLINE_SRC := ft_readline.c \
-				   handle_chars.c \
-				   init.c \
-				   terminal.c
-
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
 	   $(addprefix env/, $(ENV_SRC)) \
@@ -132,15 +126,11 @@ SRC := main.c \
 	   $(addprefix btree/, $(BTREE_SRC)) \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
-	   $(addprefix io/, $(IO_SRC)) \
 
-ifdef CUSTOM_RL
-SRC += $(addprefix io/ft_readline/, $(FT_READLINE_SRC))
-endif
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
-OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS)
+OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS) $(FT_IO_OBJS)
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
@@ -152,42 +142,34 @@ LIBFT := $(LIBFT_PATH)libft.a
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
-	@echo "$(Blue)Created $(Purple)object $(Blue)directory for $(Cyan)$@$(Color_Off)"
-	@echo -n "$(Cyan)"
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	@echo -n "$(Color_Off)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(NAME)$(Color_Off)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 $(LIBFT):
-	@echo "$(Color_Off)[Announcer] $(Purple)Oh so they wanted to use their libft huh? Guess we're compiling that too now$(Color_Off)"
-	$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo -n "$(Green)"
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT) -o $(NAME)
+	@echo "$(Color_Off)[Announcer] Linking $(Purple)$(NAME)$(Color_Off)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT) -o $(NAME)
 ifeq ($(DEBUG), 1)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled in $(Red)DEBUG$(Purple) mode!$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled in $(Red)DEBUG$(Color_Off) mode!"
 else
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) has been compiled :D! Happy hacking!$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled :D! Happy hacking!"
 endif
 
-clean: clean_ft_execution
-	@echo "$(Color_Off)[Announcer] $(Purple)Let's clean up libft first :D$(Color_Off)"
-	$(MAKE) clean -C $(LIBFT_PATH)
-	@echo -n "$(Blue)"
-	rm -rf $(OBJ_PATH)
-	@echo "$(Color_Off)[Announcer] $(Purple)Removed object files of $(NAME)$(Color_Off)"
+clean: clean_ft_execution clean_ft_io
+	@$(MAKE) clean -C $(LIBFT_PATH)
+	@rm -rf $(OBJ_PATH)
+	@echo "$(Color_Off)[Announcer] Removed object files of $(Purple)$(NAME)$(Color_Off)"
 
 fclean: clean
-	@echo "$(Color_Off)[Announcer] $(Purple)Now let's clean up libft completely :D$(Color_Off)"
-	$(MAKE) fclean -C $(LIBFT_PATH)
-	@echo -n "$(Blue)"
-	rm -f $(NAME)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) is GONE!!$(Color_Off)"
+	@$(MAKE) fclean -C $(LIBFT_PATH)
+	@rm -f $(NAME)
+	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)is GONE!!"
 		
 re: fclean all
 
 norm:
-	@norminette src/ includes/ libft/ | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer]$(Purple) All files follow the $(Green)Norm$(Purple)!!! (that was painful though)$(Color_Off)"
+	@norminette src/ includes/ libft/ | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer] $(Green)All files follow the Norm$(Color_Off)!!! (that was painful though)"
 
 nm: re
 	nm $(NAME) | grep GLIBC
