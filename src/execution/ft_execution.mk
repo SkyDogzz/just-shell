@@ -6,11 +6,11 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 12:11:46 by yandry            #+#    #+#              #
-#    Updated: 2025/04/26 15:25:29 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/27 10:50:36 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MODULE_NAME			:= ft_execution
+FT_EXEC_MODULE_NAME	:= ft_execution
 
 
 FT_BUILTINS_SRC		:= cd.c \
@@ -45,20 +45,19 @@ FT_EXEC_DEPS		:= $(FT_EXEC_OBJS:.o=.d)
 
 FT_EXEC_OBJ_DIR		:= $(sort $(dir $(FT_EXEC_OBJS)))
 
+.PHONY: clean_ft_execution
+
 -include $(FT_EXEC_DEPS)
 
 $(FT_EXEC_OBJ_DIR):
+	@echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module"
 	@$(foreach dir, $(FT_EXEC_OBJ_DIR), mkdir -p $(dir);)
-	@echo "$(Color_Off)[Announcer] $(Purple)Created $(Cyan)$(MODULE_NAME) $(Purple)module's objects directory!$(Color_Off)"
 
 $(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c | $(FT_EXEC_OBJ_DIR)
-	@echo -n "$(Cyan)"
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	@echo -n "$(Color_Off)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(FT_EXEC_MODULE_NAME)$(Purple)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 
 clean_ft_execution:
 	@rm -rf $(FT_EXEC_OBJS) $(FT_EXEC_DEPS)
-	@echo "$(Color_Off)[Announcer] $(Purple)Removed $(Cyan)$(MODULE_NAME) $(Purple)module's object files$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] Removed $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module's object files"
 
-.PHONY: clean_ft_execution
