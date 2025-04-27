@@ -6,12 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 18:48:27 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/27 11:48:41 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtins.h"
-#include "includes/libft.h"
 #include <linux/limits.h>
 #include <unistd.h>
 

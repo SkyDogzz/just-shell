@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/27 11:06:17 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/27 12:12:58 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -159,12 +159,12 @@ endif
 clean: clean_ft_execution clean_ft_io
 	@$(MAKE) clean -C $(LIBFT_PATH)
 	@rm -rf $(OBJ_PATH)
-	@echo "$(Color_Off)[Announcer] Removed object files of $(Purple)$(NAME)$(Color_Off)"
+	@echo "$(Color_Off)[Announcer] Removed object and dependency files for $(Purple)$(NAME)$(Color_Off)"
 
 fclean: clean
 	@$(MAKE) fclean -C $(LIBFT_PATH)
 	@rm -f $(NAME)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)is GONE!!"
+	@echo "$(Color_Off)[Announcer] Removed $(Purple)$(NAME)$(Color_Off)"
 		
 re: fclean all
 
