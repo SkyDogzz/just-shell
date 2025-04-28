@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/28 07:21:16 by skydogzz         ###   ########.fr        #
+#    Updated: 2025/04/28 17:54:49 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,6 +117,8 @@ PROMPT_SRC		:= shell.c \
 
 HISTORY_SRC		:= history.c
 
+WILDCARD_SRC	:= wildcard.c
+
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
 	   $(addprefix env/, $(ENV_SRC)) \
@@ -129,6 +131,7 @@ SRC := main.c \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix history/, $(HISTORY_SRC)) \
+	   $(addprefix wildcard/, $(WILDCARD_SRC)) \
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
