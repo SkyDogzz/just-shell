@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 09:52:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/28 08:01:22 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,20 @@ static void	expand_exist(t_list *env, t_expand *expand)
 		expand->envvarrr = ft_strdup(expand->envvarr->value);
 }
 
+void	ft_expand_tilde(t_list *env, t_token *token)
+{
+	char	*find;
+	char	*new;
+
+	find = ft_strchr(token->content, '~');
+	if (!find)
+		return ;
+	new = ft_strreplace(token->content, "~", ft_get_env(env, "HOME")->value);
+	free(token->content);
+	token->content = new;
+	ft_expand_tilde(env, token);
+}
+
 t_token	*ft_expand(t_list *env, t_token *token)
 {
 	t_expand	expand;
@@ -80,6 +94,7 @@ t_token	*ft_expand(t_list *env, t_token *token)
 	if (token->token_type != T_EXPANSION && token->token_type != T_WORD
 		&& token->token_type != T_HEREDOC)
 		return (token);
+	ft_expand_tilde(env, token);
 	if (ft_find_expand(&expand, token))
 		return (token);
 	expand.mem = token->content;
