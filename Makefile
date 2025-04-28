@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/27 12:12:58 by yandry           ###   ########.fr        #
+#    Updated: 2025/04/28 07:21:16 by skydogzz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,6 +115,8 @@ PROMPT_SRC		:= shell.c \
 				   prompt_path_utils.c \
 				   prompt_exit_utils.c
 
+HISTORY_SRC		:= history.c
+
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
 	   $(addprefix env/, $(ENV_SRC)) \
@@ -126,7 +128,7 @@ SRC := main.c \
 	   $(addprefix btree/, $(BTREE_SRC)) \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
-
+	   $(addprefix history/, $(HISTORY_SRC)) \
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
