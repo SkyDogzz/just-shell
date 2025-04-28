@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:55:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:04:02 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,45 @@ static t_token_type	ft_gettype(const char *s)
 	return (T_WORD);
 }
 
+bool	ft_expand_wildcard(t_list **tokens, t_token *dup)
+{
+	DIR				*dir;
+	struct dirent	*file;
+	t_token			*new;
+	t_token			*new_space;
+
+	if (dup->token_type != T_WORD || strcmp(dup->content, "*") != 0)
+		return (false);
+	dir = opendir(".");
+	if (!dir)
+		return (false);
+	file = readdir(dir);
+	while (file)
+	{
+		if (strcmp(file->d_name, ".") == 0 || strcmp(file->d_name, "..") == 0)
+		{
+			file = readdir(dir);
+			continue ;
+		}
+		new = (t_token *)malloc(sizeof(t_token));
+		new_space = (t_token *)malloc(sizeof(t_token));
+		if (!new || !new_space)
+		{
+			closedir(dir);
+			return (false);
+		}
+		new->content = ft_strdup(file->d_name);
+		new->token_type = T_WORD;
+		ft_lstadd_back(tokens, ft_lstnew(new));
+		new_space->content = ft_strdup(" ");
+		new_space->token_type = T_BLANK;
+		ft_lstadd_back(tokens, ft_lstnew(new_space));
+		file = readdir(dir);
+	}
+	closedir(dir);
+	return (true);
+}
+
 t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens)
 {
 	t_list	*act;
@@ -39,12 +78,18 @@ t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens)
 	act = pre_tokens;
 	while (act)
 	{
-		dup = NULL;
 		dup = malloc(sizeof(t_token));
 		if (!dup)
 			return (tokens);
 		dup->content = ft_strdup(act->content);
 		dup->token_type = ft_gettype(dup->content);
+		if (ft_expand_wildcard(&tokens, dup))
+		{
+			free(dup->content);
+			free(dup);
+			act = act->next;
+			continue ;
+		}
 		dup = ft_expand(env, dup);
 		dup = ft_remove_quote(dup);
 		if (ft_strcmp(dup->content, "") != 0)
