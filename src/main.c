@@ -6,13 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/26 17:03:37 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/28 07:13:31 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "minishell.h"
 #include "ft_env.h"
+#include "ft_history.h"
 #include <stdlib.h>
 
 int	g_exit;
@@ -34,7 +35,7 @@ static int	handle_input(char *input, t_list *env)
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (1);
-	add_history(input);
+	store_history(input, env);
 	tokens = ft_lex(env, input);
 	if (!tokens)
 		return (0);
@@ -88,6 +89,7 @@ int	main(int argc, char *argv[], char *argp[])
 	env = ft_init_env((const char **)argp);
 	ft_set_sigaction();
 	g_exit = 0;
+	retreive_history(env);
 	main_process(env);
 	rl_clear_history();
 	ft_clear_env(env);
