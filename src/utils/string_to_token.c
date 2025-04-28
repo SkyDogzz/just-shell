@@ -6,11 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/28 16:15:47 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:33:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_wildcard.h"
 
 static t_token_type	ft_gettype(const char *s)
 {
@@ -31,53 +32,6 @@ static t_token_type	ft_gettype(const char *s)
 	return (T_WORD);
 }
 
-static bool	create_token(t_list **tokens, struct dirent *file)
-{
-	t_token			*new;
-	t_token			*new_space;
-
-	new = (t_token *)malloc(sizeof(t_token));
-	new_space = (t_token *)malloc(sizeof(t_token));
-	if (!new || !new_space)
-		return (false);
-	new->content = ft_strdup(file->d_name);
-	new->token_type = T_WORD;
-	ft_lstadd_back(tokens, ft_lstnew(new));
-	new_space->content = ft_strdup(" ");
-	new_space->token_type = T_BLANK;
-	ft_lstadd_back(tokens, ft_lstnew(new_space));
-	return (true);
-}
-
-bool	ft_expand_wildcard(t_list **tokens, t_token *dup)
-{
-	DIR				*dir;
-	struct dirent	*file;
-
-	if (dup->token_type != T_WORD || strcmp(dup->content, "*") != 0)
-		return (false);
-	dir = opendir(".");
-	if (!dir)
-		return (false);
-	file = readdir(dir);
-	while (file)
-	{
-		if (strcmp(file->d_name, ".") == 0 || strcmp(file->d_name, "..") == 0)
-		{
-			file = readdir(dir);
-			continue ;
-		}
-		if (!create_token(tokens, file))
-		{
-			closedir(dir);
-			return (false);
-		}
-		file = readdir(dir);
-	}
-	closedir(dir);
-	return (true);
-}
-
 static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
 {
 	t_token	*dup;
@@ -87,14 +41,14 @@ static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
 		return ;
 	dup->content = ft_strdup(act->content);
 	dup->token_type = ft_gettype(dup->content);
+	dup = ft_expand(env, dup);
+	dup = ft_remove_quote(dup);
 	if (ft_expand_wildcard(tokens, dup))
 	{
 		free(dup->content);
 		free(dup);
 		return ;
 	}
-	dup = ft_expand(env, dup);
-	dup = ft_remove_quote(dup);
 	if (ft_strcmp(dup->content, "") != 0)
 		ft_lstadd_back(tokens, ft_lstnew(dup));
 	else
