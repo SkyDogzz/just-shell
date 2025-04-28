@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/26 15:19:55 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/28 13:48:13 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <dirent.h>
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
