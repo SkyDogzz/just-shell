@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:44:25 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:53:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static bool	open_append(t_redir *redir, int fd[4])
 	return (true);
 }
 
-void	open_outfile(t_cmd *cmd, int fd[4])
+bool	open_outfile(t_cmd *cmd, int fd[4])
 {
 	t_redir	*redir;
 
@@ -96,9 +96,18 @@ void	open_outfile(t_cmd *cmd, int fd[4])
 	{
 		redir = (t_redir *)cmd->redir->content;
 		if (!open_trunc(redir, fd) || !open_append(redir, fd))
-			return ;
+			return (false);
 		cmd->redir = cmd->redir->next;
 	}
 	dup2(fd[2], STDOUT_FILENO);
 	dup2(fd[3], STDERR_FILENO);
+	if (fd[2] == 0 || fd[2] == -1 || fd[3] == 0 || fd[3] == -1
+		|| fd[1] == 0 || fd[0] == 0)
+	{
+		ft_dprintf(fd[1], "ssh-xx: %s ('%s')\n",
+			strerror(errno), ((t_redir *)cmd->redir->content)->file);
+		restore_fd(fd);
+		return (false);
+	}
+	return (true);
 }
