@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_redir.c                                      :+:      :+:    :+:   */
+/*   ft_isoutfile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 17:34:33 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:14:51 by tstephan         ###   ########.fr       */
+/*   Created: 2025/04/29 14:37:08 by tstephan          #+#    #+#             */
+/*   Updated: 2025/04/29 14:40:04 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*parse_redir(t_list *tokens)
+bool	ft_is_outfile(t_token *token)
 {
-	t_list	*redirs;
-
-	redirs = NULL;
-	redirs = parse_input(tokens, redirs);
-	redirs = parse_outilfe(tokens, redirs);
-	return (redirs);
+	return (is_operator(token, ">") || is_operator(token, ">>")
+		|| is_operator(token, "2>") || is_operator(token, ">2")
+		|| is_operator(token, "&>") || is_operator(token, ">&")
+		|| is_operator(token, "2>>") || is_operator(token, ">>2")
+		|| is_operator(token, "&>>") || is_operator(token, ">>&"));
 }

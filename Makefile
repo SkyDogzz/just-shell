@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/28 17:54:49 by tstephan         ###   ########.fr        #
+#    Updated: 2025/04/29 15:14:35 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ UTILS_SRC		:= ft_set.c \
 				   is_logical.c \
 				   is_operator.c \
 				   random_fd.c \
-				   cleanup.c
+				   cleanup.c \
+				   ft_isoutfile.c
 
 ENV_SRC			:= ft_init_env.c \
 				   ft_clear_env.c \
@@ -103,7 +104,9 @@ BTREE_SRC 		:= ft_btree_clear.c \
 				   print.c \
 				   ft_btree_insert_in.c\
 				   fill_tree.c \
-				   parse_redir.c
+				   parse_redir.c \
+				   parse_input.c \
+				   parse_outfile.c
 
 SUBSHELL_SRC 	:= subshell.c \
 				   read.c
