@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:30:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/28 18:37:30 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:24:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ bool	ft_expand_wildcard(t_list **tokens, t_token *dup)
 	base[ft_strlen(dup->content) - 1] = 0;
 	dir = open_directory(base);
 	if (!dir)
+	{
+		free(base);
 		return (false);
+	}
 	success = process_files(dir, tokens, base, dup->content);
 	free(base);
 	closedir(dir);
