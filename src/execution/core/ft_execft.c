@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:13:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 19:50:39 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:40:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_execft(const char *path, char **args, t_list *env)
 void	ft_subprocess(t_cmd *cmd, t_list *env)
 {
 	char	*path;
-	int		fd[2];
+	int		fd[4];
 
 	if (!cmd)
 		exit(EXIT_FAILURE);
@@ -43,10 +43,11 @@ void	ft_subprocess(t_cmd *cmd, t_list *env)
 	}
 	ft_infile_exec(cmd);
 	store_fd(fd);
-	fd[1] = open_outfile(cmd);
-	if (fd[1] == 0)
+	open_outfile(cmd, fd);
+	if (fd[2] == 0 || fd[2] == -1 || fd[3] == 0 || fd[3] == -1
+		|| fd[1] == 0 || fd[0] == 0)
 	{
-		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
+		ft_dprintf(fd[1], "ssh-xx: %s ('%s')\n",
 			strerror(errno), ((t_redir *)cmd->redir->content)->file);
 		restore_fd(fd);
 		exit(1);

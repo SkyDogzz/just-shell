@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/28 13:48:13 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:14:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!"
-# define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
+# define OPERATOR_M "<<-,&&,||,;;,2>>,>>2,&>>,>>&,<<,>>,2>,>2,&>,>&,<>,>|"
 # define RESERVED "if ,then ,else ,elif ,fi ,\
 	done ,do ,case ,esac ,while ,until ,for ,in ,!!"
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
@@ -107,8 +107,12 @@ typedef enum e_node_type
 typedef enum e_redirect_type
 {
 	REDIR_INPUT,
-	REDIR_TRUNC,
-	REDIR_APPEND,
+	REDIR_TRUNC_STDOUT,
+	REDIR_TRUNC_STDERR,
+	REDIR_TRUNC_STDALL,
+	REDIR_APPEND_STDOUT,
+	REDIR_APPEND_STDERR,
+	REDIR_APPEND_STDALL,
 	REDIR_HEREDOC
 }						t_redirect_type;
 
@@ -222,6 +226,8 @@ int		ft_btree_height(t_btree *root);
 void	ft_btree_clear(t_btree **root, void (*del)(void *));
 void	ft_fill_tree(t_btree **root, t_list *pipes);
 t_list	*parse_redir(t_list *tokens);
+t_list	*parse_outilfe(t_list *tokens, t_list *redirs);
+t_list	*parse_input(t_list *tokens, t_list *redirs);
 
 char	*ft_strjoin_free(const char *s1, const char *s2, t_joinfree flag);
 
@@ -248,8 +254,10 @@ char	*get_tmp_fd(void);
 
 int		get_shell_pid(void);
 
-void	store_fd(int *fd);
-void	restore_fd(int fd[2]);
-int		open_outfile(t_cmd *cmd);
+void	store_fd(int fd[2]);
+void	restore_fd(int fd[4]);
+void	open_outfile(t_cmd *cmd, int fd[4]);
+
+bool	ft_is_outfile(t_token *token);
 
 #endif
