@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 10:07:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:42:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	**args_from_lst(t_list *tokens)
 	{
 		token = (t_token *)tokens->content;
 		if (token->token_type == T_HEREDOC || (is_operator(token, "<"))
-			|| is_operator(token, ">") || is_operator(token, ">>"))
+			|| ft_is_outfile(token))
 		{
 			tokens = tokens->next->next;
 			continue ;
