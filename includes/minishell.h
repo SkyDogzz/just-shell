@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:14:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:53:26 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ int		get_shell_pid(void);
 
 void	store_fd(int fd[2]);
 void	restore_fd(int fd[4]);
-void	open_outfile(t_cmd *cmd, int fd[4]);
+bool	open_outfile(t_cmd *cmd, int fd[4]);
 
 bool	ft_is_outfile(t_token *token);
 
