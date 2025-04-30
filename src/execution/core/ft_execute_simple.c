@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 14:25:46 by yandry           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:31:26 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,58 @@ static int	show_command_not_found(const char *command)
 	return (127 | CMD_NOT_FOUND_FLAG);
 }
 
-int	ft_exec_simple(const t_btree *root, t_list *env)
+static int	test_path(t_leaf *leaf, t_list *env, int fd[4])
+{
+	char	*path;
+	int		ret;
+
+	path = ft_get_executable_path(leaf->cmd, env);
+	if (!path || access(path, X_OK) != 0)
+	{
+		free(path);
+		ret = show_command_not_found(leaf->cmd->args[0]);
+		restore_fd(fd);
+		return (ret);
+	}
+	free(path);
+	return (0);
+}
+
+static bool	ft_fork(int fd[4], t_leaf *leaf, t_list *env, int *status)
 {
 	int		pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		restore_fd(fd);
+		return (false);
+	}
+	if (pid == 0)
+		ft_subprocess(leaf->cmd, env);
+	waitpid(pid, status, 0);
+	return (true);
+}
+
+int	ft_exec_simple(const t_btree *root, t_list *env)
+{
 	int		status;
 	t_leaf	*leaf;
-	char	*path;
+	int		fd[4];
 
 	if (!root)
 		return (0);
 	leaf = (t_leaf *)root->content;
+	store_fd(fd);
+	if (!open_outfile((t_cmd *)leaf->cmd, fd))
+		return (1);
 	if (ft_is_builtin(leaf->cmd->args[0]))
 		return (ft_execute_builtin((t_cmd *)leaf->cmd, env));
-	path = ft_get_executable_path(leaf->cmd, env);
-	if (!path || access(path, X_OK) != 0)
-		return (free(path), show_command_not_found(leaf->cmd->args[0]));
-	free(path);
-	pid = fork();
-	if (pid == -1)
+	status = test_path(leaf, env, fd);
+	if (status != 0)
+		return (status);
+	if (!ft_fork(fd, leaf, env, &status))
 		return (1);
-	if (pid == 0)
-		ft_subprocess(leaf->cmd, env);
-	waitpid(pid, &status, 0);
+	restore_fd(fd);
 	return (status);
 }
