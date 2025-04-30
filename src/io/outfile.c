@@ -6,29 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:53:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:21:56 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	store_fd(int fd[2])
-{
-	fd[0] = dup(STDOUT_FILENO);
-	fd[1] = dup(STDERR_FILENO);
-}
-
-void	restore_fd(int fd[4])
-{
-	dup2(fd[0], STDOUT_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
-	if (fd[2] > 0)
-		close(fd[2]);
-	if (fd[3] > 0)
-		close(fd[3]);
-}
 
 static bool	open_trunc(t_redir *redir, int fd[4])
 {
@@ -86,28 +68,42 @@ static bool	open_append(t_redir *redir, int fd[4])
 	return (true);
 }
 
-bool	open_outfile(t_cmd *cmd, int fd[4])
+static bool	ft_ft(int fd[4], t_cmd *cmd, t_list *mem)
 {
-	t_redir	*redir;
-
-	fd[2] = -2;
-	fd[3] = -2;
-	while (cmd->redir)
-	{
-		redir = (t_redir *)cmd->redir->content;
-		if (!open_trunc(redir, fd) || !open_append(redir, fd))
-			return (false);
-		cmd->redir = cmd->redir->next;
-	}
-	dup2(fd[2], STDOUT_FILENO);
-	dup2(fd[3], STDERR_FILENO);
 	if (fd[2] == 0 || fd[2] == -1 || fd[3] == 0 || fd[3] == -1
 		|| fd[1] == 0 || fd[0] == 0)
 	{
 		ft_dprintf(fd[1], "ssh-xx: %s ('%s')\n",
 			strerror(errno), ((t_redir *)cmd->redir->content)->file);
 		restore_fd(fd);
+		cmd->redir = mem;
 		return (false);
 	}
+	return (true);
+}
+
+bool	open_outfile(t_cmd *cmd, int fd[4])
+{
+	t_redir	*redir;
+	t_list	*mem;
+
+	fd[2] = -2;
+	fd[3] = -2;
+	mem = cmd->redir;
+	while (cmd->redir)
+	{
+		redir = (t_redir *)cmd->redir->content;
+		if (!open_trunc(redir, fd) || !open_append(redir, fd))
+		{
+			cmd->redir = mem;
+			return (false);
+		}
+		cmd->redir = cmd->redir->next;
+	}
+	dup2(fd[2], STDOUT_FILENO);
+	dup2(fd[3], STDERR_FILENO);
+	if (!ft_ft(fd, cmd, mem))
+		return (false);
+	cmd->redir = mem;
 	return (true);
 }
