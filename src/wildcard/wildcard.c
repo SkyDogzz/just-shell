@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:30:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/28 20:24:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 03:08:05 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ static bool	create_token(t_list **tokens, struct dirent *file, char *base)
 	t_token			*new_space;
 
 	new = (t_token *)malloc(sizeof(t_token));
-	new_space = (t_token *)malloc(sizeof(t_token));
-	if (!new || !new_space)
+	if (!new)
 		return (false);
+	new_space = (t_token *)malloc(sizeof(t_token));
+	if (!new_space)
+	{
+		free(new);
+		return (false);
+	}
 	if (ft_strlen(base) > 1 && base[ft_strlen(base) - 1] == '.')
 		base[ft_strlen(base) - 1] = 0;
 	new->content = ft_strjoin(base, file->d_name);
