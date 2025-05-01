@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/30 18:31:26 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 03:25:23 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (!open_outfile((t_cmd *)leaf->cmd, fd))
 		return (1);
 	if (ft_is_builtin(leaf->cmd->args[0]))
-		return (ft_execute_builtin((t_cmd *)leaf->cmd, env));
+	{
+		status = ft_execute_builtin((t_cmd *)leaf->cmd, env);
+		restore_fd(fd);
+		return (status);
+	}
 	status = test_path(leaf, env, fd);
 	if (status != 0)
 		return (status);
