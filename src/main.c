@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/28 07:13:31 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:53:24 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	handle_input(char *input, t_list *env)
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (1);
-	store_history(input, env);
+	ft_add_history(input, false, env);
 	tokens = ft_lex(env, input);
 	if (!tokens)
 		return (0);
@@ -69,6 +69,7 @@ static int	main_process(t_list *env)
 		if (!input)
 			continue ;
 		status = handle_input(input, env);
+		ft_add_history(NULL, true, env);
 		free(input);
 		if (status == 1)
 		{

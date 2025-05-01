@@ -6,7 +6,7 @@
 /*   By: skydogzz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 06:42:44 by skydogzz          #+#    #+#             */
-/*   Updated: 2025/04/28 07:17:14 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:11:53 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define HISTORY_FILE "~/.sshxx_history"
 
+void	ft_add_history(char *input, bool store, t_list *env);
 void	retreive_history(t_list *env);
 void	store_history(char *input, t_list *env);
 

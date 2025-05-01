@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/30 18:22:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:14:58 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void	ft_lstclear_pipes(void *content);
 void	ft_lstprint_pipes(t_list *lst, const char *s);
 
 int		ft_handle_heredocs(t_list *env, t_list **lst);
-char	*ft_read_heredoc(const char *delimiter);
+char	*ft_read_heredoc(const char *delimiter, t_list *env);
 
 t_list	*ft_lex(t_list *env, const char *cmd_line);
 t_list	*ft_doom_split(const char *input);
@@ -238,7 +238,7 @@ void	ft_free_leaf(void *leaf);
 char	*ft_handle_multiline_quote(char *input);
 
 bool	ft_findsubshell(t_list *env, t_list **tokens);
-char	*ft_read_subshell(int level);
+char	*ft_read_subshell(int level, t_list *env);
 
 t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens);
 

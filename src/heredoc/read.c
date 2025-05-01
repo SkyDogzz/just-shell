@@ -6,11 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 22:02:46 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/01 20:13:59 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_history.h"
 
 static void	*ft_quit_heredoc(char *content)
 {
@@ -38,7 +39,7 @@ static char	*fuse_content(char *content, char *input)
 	return (content);
 }
 
-char	*ft_read_heredoc(const char *delimiter)
+char	*ft_read_heredoc(const char *delimiter, t_list *env)
 {
 	char	*content;
 	char	*input;
@@ -51,6 +52,8 @@ char	*ft_read_heredoc(const char *delimiter)
 		input = ft_readline(PROMPT_HEREDOC, NULL);
 		if (!input)
 			return (ft_quit_heredoc(content));
+		ft_add_history("\n", false, env);
+		ft_add_history(input, false, env);
 		if (ft_strcmp(input, delimiter) == 0)
 		{
 			free(input);

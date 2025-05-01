@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:59:15 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:15:27 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool	ft_findsubshell(t_list *env, t_list **token)
 	}
 	if (help.level != 0)
 	{
-		help.input = ft_read_subshell(help.level);
+		help.input = ft_read_subshell(help.level, env);
 		help.pre = ft_doom_split(help.input);
 		free(help.input);
 		help.post = NULL;

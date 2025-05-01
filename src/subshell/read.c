@@ -6,11 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:41:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:25:25 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_history.h"
 
 static void	*ft_quit_subshell(char *content)
 {
@@ -50,7 +51,7 @@ static char	*fuse_content(char *content, const char *input)
 	return (content);
 }
 
-char	*ft_read_subshell(int level)
+char	*ft_read_subshell(int level, t_list *env)
 {
 	char	*content;
 	char	*input;
@@ -63,6 +64,8 @@ char	*ft_read_subshell(int level)
 		input = ft_readline(PROMPT_SUBSHELL, NULL);
 		if (!input)
 			return (ft_quit_subshell(content));
+		ft_add_history("\n", false, env);
+		ft_add_history(input, false, env);
 		level = get_level(level, input);
 		if (level == 0)
 		{
@@ -73,6 +76,5 @@ char	*ft_read_subshell(int level)
 		content = fuse_content(content, input);
 		free(input);
 	}
-	printf("content %s\n", content);
 	return (content);
 }

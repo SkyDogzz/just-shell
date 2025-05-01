@@ -6,11 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:57:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:15:08 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_history.h"
 
 static t_list	*ft_replace_heredoc(t_list *env, t_list *lst, char *content)
 {
@@ -55,7 +56,7 @@ static int	ft_handle_heredoc(t_list *env, t_list *act, t_list **lst)
 	if (next_t->token_type != T_WORD)
 		return (HEREDOC_PARSE_ERROR);
 	delimiter = next_t->content;
-	content = ft_read_heredoc(delimiter);
+	content = ft_read_heredoc(delimiter, env);
 	if (!content)
 		return (HEREDOC_SIGINT);
 	*lst = ft_replace_heredoc(env, *lst, content);
