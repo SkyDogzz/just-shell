@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/30 18:21:56 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/01 03:12:25 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static bool	open_append(t_redir *redir, int fd[4])
 
 static bool	ft_ft(int fd[4], t_cmd *cmd, t_list *mem)
 {
+	if (!cmd->redir || !cmd->redir->content)
+		return (true);
 	if (fd[2] == 0 || fd[2] == -1 || fd[3] == 0 || fd[3] == -1
 		|| fd[1] == 0 || fd[0] == 0)
 	{
