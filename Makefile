@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/30 18:22:55 by tstephan         ###   ########.fr        #
+#    Updated: 2025/05/09 22:41:30 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,8 @@ UTILS_SRC		:= ft_set.c \
 				   random_fd.c \
 				   cleanup.c \
 				   ft_isoutfile.c \
-				   fd.c
+				   fd.c \
+				   logger.c
 
 ENV_SRC			:= ft_init_env.c \
 				   ft_clear_env.c \
