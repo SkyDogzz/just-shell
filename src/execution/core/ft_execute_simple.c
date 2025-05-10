@@ -6,44 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/01 03:25:23 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:43:02 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
-#include <stdlib.h>
-
-static int	show_command_not_found(const char *command)
-{
-	char	*error_message;
-	int		alloc_len;
-
-	alloc_len = ft_strlen(COMMAND_NOT_FOUND) + ft_strlen(command);
-	error_message = ft_calloc(alloc_len, sizeof(char));
-	if (!error_message)
-		return (127 | CMD_NOT_FOUND_FLAG);
-	ft_snprintf(error_message, alloc_len, COMMAND_NOT_FOUND, command);
-	ft_putendl_fd(error_message, STDERR_FILENO);
-	free(error_message);
-	return (127 | CMD_NOT_FOUND_FLAG);
-}
-
-static int	test_path(t_leaf *leaf, t_list *env, int fd[4])
-{
-	char	*path;
-	int		ret;
-
-	path = ft_get_executable_path(leaf->cmd, env);
-	if (!path || access(path, X_OK) != 0)
-	{
-		free(path);
-		ret = show_command_not_found(leaf->cmd->args[0]);
-		restore_fd(fd);
-		return (ret);
-	}
-	free(path);
-	return (0);
-}
 
 static bool	ft_fork(int fd[4], t_leaf *leaf, t_list *env, int *status)
 {
@@ -70,6 +37,9 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (!root)
 		return (0);
 	leaf = (t_leaf *)root->content;
+	if (!ft_cmd_exists(leaf->cmd, env))
+		return (ft_show_error_message(COMMAND_NOT_FOUND, leaf->cmd->args[0],
+				127, CMD_NOT_FOUND_FLAG));
 	store_fd(fd);
 	if (!open_outfile((t_cmd *)leaf->cmd, fd))
 		return (1);
@@ -79,9 +49,7 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 		restore_fd(fd);
 		return (status);
 	}
-	status = test_path(leaf, env, fd);
-	if (status != 0)
-		return (status);
+	return (ft_exec_with_redirects(leaf->cmd, env, fd[0], fd[1]));
 	if (!ft_fork(fd, leaf, env, &status))
 		return (1);
 	restore_fd(fd);

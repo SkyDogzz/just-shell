@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/30 18:22:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/09 22:43:47 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,5 +261,8 @@ bool	open_outfile(t_cmd *cmd, int fd[4]);
 bool	ft_is_outfile(t_token *token);
 void	store_fd(int fd[2]);
 void	restore_fd(int fd[4]);
+
+int		ft_show_error_message(const char *message_format, const char *context,
+			int exit_code, int flag);
 
 #endif
