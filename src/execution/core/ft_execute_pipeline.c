@@ -6,10 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 16:54:05 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:21:27 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_env.h"
 #include "minishell.h"
 #include "ft_execution.h"
 #include <stdlib.h>
@@ -61,9 +62,12 @@ static int	exec_pipe_node(t_btree *node, t_list *env, int fd_in)
 
 int	ft_exec_pipeline(const t_btree *root, t_list *env, int fd_in)
 {
+	int	ret;
+
+	ret = -1;
 	if (!root)
 		return (0);
 	if (((t_leaf *)root->content)->type == NODE_PIPE)
-		return (exec_pipe_node((t_btree *)root, env, fd_in));
-	return (-1);
+		ret = exec_pipe_node((t_btree *)root, env, fd_in);
+	return (ret);
 }
