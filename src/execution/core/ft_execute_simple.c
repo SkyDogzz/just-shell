@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/09 22:43:02 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/14 15:44:11 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 		restore_fd(fd);
 		return (status);
 	}
-	return (ft_exec_with_redirects(leaf->cmd, env, fd[0], fd[1]));
 	if (!ft_fork(fd, leaf, env, &status))
 		return (1);
 	restore_fd(fd);
