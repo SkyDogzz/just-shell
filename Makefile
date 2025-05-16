@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/05/16 14:01:35 by yandry           ###   ########.fr        #
+#    Updated: 2025/05/16 20:21:08 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,8 @@ OBJ_PATH := obj/
 
 include src/execution/ft_execution.mk
 include src/io/ft_io.mk
+include src/parsing/ft_parsing.mk
+include src/env/ft_env.mk
 
 UTILS_SRC		:= ft_set.c \
 				   ft_strndup.c \
@@ -66,34 +68,7 @@ UTILS_SRC		:= ft_set.c \
 				   fd.c \
 				   logger.c
 
-ENV_SRC			:= ft_init_env.c \
-				   ft_clear_env.c \
-				   ft_new_env.c \
-				   ft_get_env.c \
-				   ft_update_env.c \
-				   ft_delete_env.c \
-				   env_utils.c
-
 SIGNAL_SRC		:= signal.c
-
-LEXING_SRC		:= lex.c \
-				   lst_helper.c \
-				   space.c \
-				   clear.c \
-				   expand.c \
-				   split.c \
-				   lst_helper2.c \
-				   is.c \
-				   pid.c
-
-PARSING_SRC		:= parse.c \
-				   free_leaf.c \
-				   create_leaf.c
-
-HEREDOC_SRC		:= read.c \
-				   handle.c
-
-QUOTE_SRC		:= read.c
 
 BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_height.c \
@@ -122,25 +97,18 @@ PROMPT_SRC		:= shell.c \
 
 HISTORY_SRC		:= history.c
 
-WILDCARD_SRC	:= wildcard.c
 
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
-	   $(addprefix env/, $(ENV_SRC)) \
 	   $(addprefix signal/, $(SIGNAL_SRC)) \
-	   $(addprefix lexing/, $(LEXING_SRC)) \
-	   $(addprefix parsing/, $(PARSING_SRC)) \
-	   $(addprefix heredoc/, $(HEREDOC_SRC)) \
-	   $(addprefix quote/, $(QUOTE_SRC)) \
 	   $(addprefix btree/, $(BTREE_SRC)) \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix history/, $(HISTORY_SRC)) \
-	   $(addprefix wildcard/, $(WILDCARD_SRC)) \
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
-OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS) $(FT_IO_OBJS)
+OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS) $(FT_IO_OBJS) $(FT_PARSING_OBJS) $(FT_ENV_OBJS)
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
@@ -166,7 +134,7 @@ else
 	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled :D! Happy hacking!"
 endif
 
-clean: clean_ft_execution clean_ft_io
+clean: clean_ft_execution clean_ft_io clean_ft_parsing clean_ft_env
 	@$(MAKE) clean -C $(LIBFT_PATH)
 	@rm -rf $(OBJ_PATH)
 	@echo "$(Color_Off)[Announcer] Removed object and dependency files for $(Purple)$(NAME)$(Color_Off)"
