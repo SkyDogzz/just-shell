@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tuyau.c                                         :+:      :+:    :+:   */
+/*   file_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:09:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/16 12:54:52 by yandry           ###   ########.fr       */
+/*   Created: 2025/05/16 12:47:20 by yandry            #+#    #+#             */
+/*   Updated: 2025/05/16 13:32:57 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_execution.h"
 #include "ft_io.h"
+#include <unistd.h>
 
-int	setup_pipe(int pipe_fds[2])
+bool	ft_close(int *fd)
 {
-	if (pipe(pipe_fds) == -1)
-		return (-1);
-	return (0);
-}
-
-void	destop_turbo(int pipe_fds[2])
-{
-	if (pipe_fds[0] >= 0)
-		ft_close(&pipe_fds[PIPE_LEFT]);
-	if (pipe_fds[1] >= 0)
-		ft_close(&pipe_fds[PIPE_RIGHT]);
+	if (*fd < 0)
+		return (false);
+	if (close(*fd) == -1)
+		return (false);
+	*fd = -1;
+	return (true);
 }

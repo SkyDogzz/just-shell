@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/05/09 22:41:30 by yandry           ###   ########.fr        #
+#    Updated: 2025/05/16 14:01:35 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ Yellow=$(shell tput setaf 3)
 Green=$(shell tput setaf 2)
 Color_Off=$(shell tput sgr0)
 
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS += --no-print-directory -j $(shell nproc)
 
 NAME := minishell
 CC := cc
