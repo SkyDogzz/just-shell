@@ -6,25 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:53:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/24 16:37:28 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/09 13:18:20 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "ft_env.h"
-#include <unistd.h>
-
-static void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	if (!array)
-		return ;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
 
 static char	*find_exec_in_path(char *file, char **paths)
 {
@@ -81,6 +68,6 @@ char	*ft_get_executable_path(const t_cmd *cmd, t_list *env)
 		return (NULL);
 	paths = ft_split(path_env->value, ':');
 	full_exec_path = find_exec_in_path(cmd->args[0], paths);
-	free_array(paths);
+	ft_free_array((void ***)&paths);
 	return (full_exec_path);
 }

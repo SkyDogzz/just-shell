@@ -6,34 +6,45 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/01 03:12:25 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:45:41 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	close_open(const char *pathname, int flags, mode_t mode, int fd)
+{
+	if (fd != -1 && fd != -2)
+		close(fd);
+	fd = open(pathname, flags, mode);
+	if (fd == -1)
+		return (-1);
+	return (fd);
+}
+
 static bool	open_trunc(t_redir *redir, int fd[4])
 {
 	if (redir->type == REDIR_TRUNC_STDOUT)
 	{
-		fd[2] = open(redir->file, O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
+		fd[2] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644, fd[2]);
 		if (fd[2] == -1)
 			return (false);
 	}
 	else if (redir->type == REDIR_TRUNC_STDERR)
 	{
-		fd[3] = open(redir->file, O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
+		close(fd[3]);
+		fd[3] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644, fd[3]);
 		if (fd[3] == -1)
 			return (false);
 	}
 	else if (redir->type == REDIR_TRUNC_STDALL)
 	{
-		fd[2] = open(redir->file, O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
-		fd[3] = open(redir->file, O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
+		fd[2] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644, fd[2]);
+		fd[3] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644, fd[3]);
 		if (fd[2] == -1 || fd[3] == -1)
 			return (false);
 	}
@@ -44,24 +55,25 @@ static bool	open_append(t_redir *redir, int fd[4])
 {
 	if (redir->type == REDIR_APPEND_STDOUT)
 	{
-		fd[2] = open(redir->file, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
+		fd[2] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_APPEND, 0644, fd[2]);
 		if (fd[2] == -1)
 			return (false);
 	}
 	else if (redir->type == REDIR_APPEND_STDERR)
 	{
-		fd[3] = open(redir->file, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
+		close(fd[3]);
+		fd[3] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_APPEND, 0644, fd[3]);
 		if (fd[3] == -1)
 			return (false);
 	}
 	else if (redir->type == REDIR_APPEND_STDALL)
 	{
-		fd[2] = open(redir->file, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
-		fd[3] = open(redir->file, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
+		fd[2] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_APPEND, 0644, fd[2]);
+		fd[3] = close_open(redir->file, O_WRONLY
+				| O_CREAT | O_APPEND, 0644, fd[3]);
 		if (fd[2] == -1 || fd[3] == -1)
 			return (false);
 	}

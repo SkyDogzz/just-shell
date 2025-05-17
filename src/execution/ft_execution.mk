@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 12:11:46 by yandry            #+#    #+#              #
-#    Updated: 2025/04/27 10:50:36 by yandry           ###   ########.fr        #
+#    Updated: 2025/05/09 13:20:21 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ FT_CORE_SRC			:= ft_execute_simple.c \
 					   ft_execute_pipeline.c \
 					   ft_execute_logical.c \
 					   ft_execft.c \
-					   ft_execution_context.c
+					   ft_execution_context.c \
+					   ft_cmd_exists.c
 
 FT_EXEC_SRC			:= ft_exec.c \
 					   $(addprefix core/, $(FT_CORE_SRC)) \
@@ -45,19 +46,25 @@ FT_EXEC_DEPS		:= $(FT_EXEC_OBJS:.o=.d)
 
 FT_EXEC_OBJ_DIR		:= $(sort $(dir $(FT_EXEC_OBJS)))
 
-.PHONY: clean_ft_execution
+.PHONY: clean_ft_execution create_ft_exec_dirs ft_exec_announce
 
 -include $(FT_EXEC_DEPS)
 
-$(FT_EXEC_OBJ_DIR):
-	@echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module"
-	@$(foreach dir, $(FT_EXEC_OBJ_DIR), mkdir -p $(dir);)
+ft_exec_announce:
+	@if [ ! -f .ft_execution_announced ]; then \
+		echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module"; \
+		touch .ft_execution_announced; \
+	fi
 
-$(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c | $(FT_EXEC_OBJ_DIR)
+create_ft_exec_dirs:
+	@mkdir -p $(FT_EXEC_OBJ_DIR)
+
+$(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c ft_exec_announce create_ft_exec_dirs
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(FT_EXEC_MODULE_NAME)$(Purple)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 
 clean_ft_execution:
 	@rm -rf $(FT_EXEC_OBJS) $(FT_EXEC_DEPS)
+	@rm -f .ft_execution_announced
 	@echo "$(Color_Off)[Announcer] Removed $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module's object files"
 
