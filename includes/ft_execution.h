@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/09 12:53:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:01:33 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_context
 }	t_context;
 
 t_context	*ft_get_execution_context(t_btree *tree, t_list *env);
+void		ft_free_context(t_context *context);
 
 int			ft_exec(t_context *context);
 

@@ -6,11 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/14 15:42:47 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/18 20:55:57 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
+#include "minishell.h"
+#include <unistd.h>
 
 int	ft_exec(t_context *context)
 {
