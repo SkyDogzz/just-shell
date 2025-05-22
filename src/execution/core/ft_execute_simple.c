@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/17 15:12:27 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:07:34 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	int		status;
 	t_leaf	*leaf;
 	int		fd[4];
+	bool	has_redir;
 
 	status = 0;
 	if (!root)
@@ -41,17 +42,21 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	if (!ft_cmd_exists(leaf->cmd, env))
 		return (ft_show_error_message(COMMAND_NOT_FOUND, leaf->cmd->args[0],
 				127, CMD_NOT_FOUND_FLAG));
-	store_fd(fd);
+	has_redir = leaf->cmd->redir != NULL;
+	if (has_redir)
+		store_fd(fd);
 	if (!open_outfile((t_cmd *)leaf->cmd, fd))
 		return (1);
 	if (ft_is_builtin(leaf->cmd->args[0]))
 	{
 		status = ft_execute_builtin((t_cmd *)leaf->cmd, env);
-		restore_fd(fd);
+		if (has_redir)
+			restore_fd(fd);
 		return (status);
 	}
 	if (!ft_fork(fd, leaf, env, &status))
 		return (1);
-	restore_fd(fd);
+	if (has_redir)
+		restore_fd(fd);
 	return (status);
 }
