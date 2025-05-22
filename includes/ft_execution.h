@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 18:48:04 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:01:33 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ typedef struct s_context
 }	t_context;
 
 t_context	*ft_get_execution_context(t_btree *tree, t_list *env);
+void		ft_free_context(t_context *context);
 
 int			ft_exec(t_context *context);
 
 bool		ft_is_builtin(const char *name);
+bool		ft_cmd_exists(t_cmd *cmd, t_list *env);
 int			ft_execute_builtin(const t_cmd *cmd, t_list *env);
 
 int			ft_exec_simple(const t_btree *root, t_list *env);

@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/30 18:22:55 by tstephan         ###   ########.fr        #
+#    Updated: 2025/05/17 12:29:16 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ Yellow=$(shell tput setaf 3)
 Green=$(shell tput setaf 2)
 Color_Off=$(shell tput sgr0)
 
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS += --no-print-directory -j $(shell nproc)
 
 NAME := minishell
 CC := cc
@@ -30,7 +30,11 @@ LDFLAGS := -lreadline
 .PHONY: all vibe_check
 
 vibe_check:
-	@$(MAKE) --question $(NAME) 2>/dev/null && echo "$(Color_Off)[Announcer] $(Purple)Everything is up to date, nothing to do here. Zzz...$(Color_Off)" || $(MAKE) $(NAME)
+	@if [ -f $(NAME) ] && ! find src includes -type f -newer $(NAME) 2>/dev/null | grep -q .; then \
+		printf "$(Color_Off)[Announcer] Everything is up to date, nothing to do here. $(Purple)Zzz...$(Color_Off)\n"; \
+	else \
+		$(MAKE) $(NAME); \
+	fi
 
 all: vibe_check $(NAME)
 
@@ -50,6 +54,8 @@ OBJ_PATH := obj/
 
 include src/execution/ft_execution.mk
 include src/io/ft_io.mk
+include src/parsing/ft_parsing.mk
+include src/env/ft_env.mk
 
 UTILS_SRC		:= ft_set.c \
 				   ft_strndup.c \
@@ -63,36 +69,10 @@ UTILS_SRC		:= ft_set.c \
 				   random_fd.c \
 				   cleanup.c \
 				   ft_isoutfile.c \
-				   fd.c
-
-ENV_SRC			:= ft_init_env.c \
-				   ft_clear_env.c \
-				   ft_new_env.c \
-				   ft_get_env.c \
-				   ft_update_env.c \
-				   ft_delete_env.c \
-				   env_utils.c
+				   fd.c \
+				   logger.c
 
 SIGNAL_SRC		:= signal.c
-
-LEXING_SRC		:= lex.c \
-				   lst_helper.c \
-				   space.c \
-				   clear.c \
-				   expand.c \
-				   split.c \
-				   lst_helper2.c \
-				   is.c \
-				   pid.c
-
-PARSING_SRC		:= parse.c \
-				   free_leaf.c \
-				   create_leaf.c
-
-HEREDOC_SRC		:= read.c \
-				   handle.c
-
-QUOTE_SRC		:= read.c
 
 BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_height.c \
@@ -121,25 +101,18 @@ PROMPT_SRC		:= shell.c \
 
 HISTORY_SRC		:= history.c
 
-WILDCARD_SRC	:= wildcard.c
 
 SRC := main.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
-	   $(addprefix env/, $(ENV_SRC)) \
 	   $(addprefix signal/, $(SIGNAL_SRC)) \
-	   $(addprefix lexing/, $(LEXING_SRC)) \
-	   $(addprefix parsing/, $(PARSING_SRC)) \
-	   $(addprefix heredoc/, $(HEREDOC_SRC)) \
-	   $(addprefix quote/, $(QUOTE_SRC)) \
 	   $(addprefix btree/, $(BTREE_SRC)) \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix history/, $(HISTORY_SRC)) \
-	   $(addprefix wildcard/, $(WILDCARD_SRC)) \
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
-OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS) $(FT_IO_OBJS)
+OBJS := $(addprefix $(OBJ_PATH), $(OBJ)) $(FT_EXEC_OBJS) $(FT_IO_OBJS) $(FT_PARSING_OBJS) $(FT_ENV_OBJS)
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
@@ -157,17 +130,27 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo "$(Color_Off)[Announcer] Linking $(Purple)$(NAME)$(Color_Off)"
+	@if [ ! -f .linking_announced ]; then \
+		echo "$(Color_Off)[Announcer] Linking $(Purple)$(NAME)$(Color_Off)"; \
+		touch .linking_announced; \
+	fi
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT) -o $(NAME)
 ifeq ($(DEBUG), 1)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled in $(Red)DEBUG$(Color_Off) mode!"
+	@if [ ! -f .finish_announced ]; then \
+		echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled in $(Red)DEBUG$(Color_Off) mode!"; \
+		touch .finish_announced; \
+	fi
 else
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled :D! Happy hacking!"
+	@if [ ! -f .finish_announced ]; then \
+		echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled :D! Happy hacking!"; \
+		touch .finish_announced; \
+	fi
 endif
 
-clean: clean_ft_execution clean_ft_io
+clean: clean_ft_execution clean_ft_io clean_ft_parsing clean_ft_env
 	@$(MAKE) clean -C $(LIBFT_PATH)
 	@rm -rf $(OBJ_PATH)
+	@rm -f .linking_announced .finish_announced
 	@echo "$(Color_Off)[Announcer] Removed object and dependency files for $(Purple)$(NAME)$(Color_Off)"
 
 fclean: clean
@@ -175,7 +158,9 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "$(Color_Off)[Announcer] Removed $(Purple)$(NAME)$(Color_Off)"
 		
-re: fclean all
+re:
+	@$(MAKE) --no-print-directory -j1 fclean
+	@$(MAKE) --no-print-directory all
 
 norm:
 	@norminette src/ includes/ libft/ | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer] $(Green)All files follow the Norm$(Color_Off)!!! (that was painful though)"

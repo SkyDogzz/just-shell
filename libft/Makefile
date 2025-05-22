@@ -109,31 +109,41 @@ OBJS := $(addprefix $(OBJ_PATH), $(OBJ))
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
-.PHONY: all clean fclean re norm help .build_msg
+.PHONY: all clean fclean re norm help .build_msg create_dirs
 
 all: $(NAME)
 
 -include $(OBJS:.o=.d)
 
 .build_msg:
-	@echo "$(Color_Off)[Announcer] Building $(Purple)$(NAME)$(Color_Off)"
+	@if [ ! -f .libft_building_announced ]; then \
+		echo "$(Color_Off)[Announcer] Building $(Purple)$(NAME)$(Color_Off)"; \
+		touch .libft_building_announced; \
+	fi
 
-$(OBJ_DIRS): | .build_msg
-	@$(foreach dir,$(OBJ_DIRS),mkdir -p $(dir);)
+create_dirs:
+	@mkdir -p $(OBJ_DIRS)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_DIRS)
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(NAME)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
-$(NAME): $(OBJS)
-	@ar -rsc $@ $^
+$(NAME): .build_msg create_dirs $(OBJS)
+	@ar -rsc $@ $(OBJS)
 ifeq ($(DEBUG), 1)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME)$(Color_Off) has been compiled in $(Red)DEBUG$(Color_Off) mode!"
+	@if [ ! -f .libft_compiled_announced ]; then \
+		echo "$(Color_Off)[Announcer] $(Purple)$(NAME)$(Color_Off) has been compiled in $(Red)DEBUG$(Color_Off) mode!"; \
+		touch .libft_compiled_announced; \
+	fi
 else
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME)$(Color_Off) has been compiled :D! Happy sufferi- I mean coding... hahaha... yeah..."
+	@if [ ! -f .libft_compiled_announced ]; then \
+		echo "$(Color_Off)[Announcer] $(Purple)$(NAME)$(Color_Off) has been compiled :D! Happy sufferi- I mean coding... hahaha... yeah..."; \
+		touch .libft_compiled_announced; \
+	fi
 endif
 
 clean:
 	@rm -rf $(OBJ_PATH)
+	@rm -f .libft_building_announced .libft_compiled_announced
 	@echo "$(Color_Off)[Announcer] Removed object and dependency files for $(Purple)$(NAME)$(Color_Off)"
 
 fclean: clean

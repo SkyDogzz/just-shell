@@ -6,11 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 18:56:15 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/18 20:55:57 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
+#include "minishell.h"
+#include <unistd.h>
 
 int	ft_exec(t_context *context)
 {
@@ -27,5 +29,9 @@ int	ft_exec(t_context *context)
 		return (1);
 	if (((t_leaf *)root->content)->type == NODE_WORD)
 		ret = ft_exec_simple(root, env);
+	else if (((t_leaf *)root->content)->type == NODE_PIPE)
+		ret = ft_exec_pipeline(root, env, STDIN_FILENO);
+	else if (((t_leaf *)root->content)->type == NODE_LOGICAL)
+		ret = ft_exec_logical(root, env);
 	return (ret);
 }
