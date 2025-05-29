@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:59:15 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:20:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static bool	ft_leveling(t_list *act, const t_token *act_t, int *level)
 	act_t = act->next->content;
 	if (ft_strcmp(act_t->content, ")") == 0)
 		(*level)--;
+	else if (ft_strcmp(act_t->content, "(") == 0)
+		(*level)++;
 	else if (ft_strcmp(act_t->content, "$(") == 0)
 		(*level)++;
 	ft_fuse_token(&act);
@@ -57,7 +59,7 @@ static void	ft_group_subshell(t_list **token)
 	while (act)
 	{
 		act_t = act->content;
-		if (ft_strcmp(act_t->content, "$(") == 0)
+		if (ft_strcmp(act_t->content, "$(") == 0 || ft_strcmp(act_t->content, "(") == 0)
 		{
 			level++;
 			while (level)
@@ -75,7 +77,9 @@ static bool	ft_help(t_subshell *help)
 	{
 		if (ft_strcmp(help->act_t->content, "$(") == 0)
 			help->level++;
-		if (ft_strcmp(help->act_t->content, ")") == 0)
+		else if (ft_strcmp(help->act_t->content, "(") == 0)
+			help->level++;
+		else if (ft_strcmp(help->act_t->content, ")") == 0)
 			help->level--;
 	}
 	if (help->level < 0)
