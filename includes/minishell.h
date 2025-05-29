@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/30 18:22:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:18:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef enum e_token_type
 	T_WORD,
 	T_QUOTE,
 	T_EXPANSION,
+	T_POSTEXPANSION,
 	T_COMMENT,
 	T_HEREDOC,
 	T_BLANK,
