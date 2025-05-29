@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/28 18:33:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:22:55 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,27 @@ static t_token_type	ft_gettype(const char *s)
 	return (T_WORD);
 }
 
+static void	ft_post_expand(t_token *dup, t_list **tokens)
+{
+	t_list	*mem;
+	t_list	*token;
+
+	token = ft_doom_split(dup->content);
+	free(dup->content);
+	free(dup);
+	while (token)
+	{
+		dup = malloc(sizeof(t_token));
+		dup->content = ft_strdup(token->content);
+		dup->token_type = ft_gettype(dup->content);
+		ft_lstadd_back(tokens, ft_lstnew(dup));
+		mem = token;
+		token = token->next;
+		free(mem->content);
+		free(mem);
+	}
+}
+
 static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
 {
 	t_token	*dup;
@@ -49,7 +70,9 @@ static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
 		free(dup);
 		return ;
 	}
-	if (ft_strcmp(dup->content, "") != 0)
+	if (dup->token_type == T_POSTEXPANSION && ft_strchr(dup->content, ' '))
+		ft_post_expand(dup, tokens);
+	else if (ft_strcmp(dup->content, "") != 0)
 		ft_lstadd_back(tokens, ft_lstnew(dup));
 	else
 	{
