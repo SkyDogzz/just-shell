@@ -29,6 +29,7 @@ void	ft_set_sigaction(void)
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGPIPE, SIG_IGN);  /* Ignore SIGPIPE to prevent broken pipe errors */
 }
 
 bool	handle_sigint(void)

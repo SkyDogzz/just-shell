@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/27 14:52:55 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/29 12:41:40 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <unistd.h>
 
-int	ft_exec(t_context *context)
+int	ft_exec(const t_context *const context)
 {
 	int		ret;
 	t_btree	*root;
@@ -25,10 +25,13 @@ int	ft_exec(t_context *context)
 	root = context->root;
 	if (!root || !root->content)
 		return (1);
+	#ifdef DEBUG
+	ft_print_tree(context->root, 0, 0);
+	#endif
 	if (((t_leaf *)root->content)->type == NODE_WORD)
 		ret = ft_exec_simple(context);
 	else if (((t_leaf *)root->content)->type == NODE_PIPE)
-		ret = ft_exec_pipeline(context, STDIN_FILENO);
+		ret = ft_exec_pipeline(context);
 	else if (((t_leaf *)root->content)->type == NODE_LOGICAL)
 		ret = ft_exec_logical(context);
 	return (ret);

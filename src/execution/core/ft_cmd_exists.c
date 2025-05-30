@@ -31,7 +31,7 @@ static bool	cmd_exists_in_path(t_cmd *cmd, t_list *env)
 
 static bool	cmd_is_builtin(t_cmd *cmd)
 {
-	return (ft_is_builtin(cmd->args[0]));
+	return (cmd->args && ft_is_builtin(cmd->args[0]));
 }
 
 bool	ft_cmd_exists(t_cmd *cmd, t_list *env)
