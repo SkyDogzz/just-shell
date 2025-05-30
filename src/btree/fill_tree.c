@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/29 14:42:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:11:10 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	cmp(void *c1, void *c2)
 	leaf1 = (t_leaf *)c1;
 	leaf2 = (t_leaf *)c2;
 	if (leaf1->type == NODE_PIPE)
-        return (0);
+		return (0);
 	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_WORD)
 		return (0);
 	if (leaf1->type == NODE_LOGICAL)

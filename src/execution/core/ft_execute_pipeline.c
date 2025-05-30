@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/27 17:27:44 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/30 14:45:47 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,22 @@ static int	exec_pipe_node(t_context *context, int fd_in)
 
 	if (setup_pipe(pipe_fds) == -1)
 		return (-1);
-	left_pid = exec_left_child(context, fd_in, pipe_fds);
+	if (((t_leaf *)context->root->content)->type != NODE_PIPE)
+	{
+		ft_printf("Error: expected a pipe node, got %d\n",
+			((t_leaf *)context->root->content)->type);
+		return (-1);
+	}
+	if (context->root->left == NULL || context->root->right == NULL)
+	{
+		ft_printf("Error: pipe node has no left or right child\n");
+		return (-1);
+	}
+	if (((t_leaf *)context->root->left->content)->type == NODE_WORD)
+		ft_printf("executing %s %s\n", ((t_leaf *)context->root->left->content)->cmd->args[0], ((t_leaf *)context->root->left->content)->cmd->args[1]);
+	if (((t_leaf *)context->root->right->content)->type == NODE_WORD)
+		ft_printf("executing %s %s\n", ((t_leaf *)context->root->right->content)->cmd->args[0], ((t_leaf *)context->root->right->content)->cmd->args[1]);
+	left_pid = exec_left_child(context->root->left, context, fd_in, pipe_fds);
 	if (left_pid < 0)
 		return (-1);
 	if (fd_in != STDIN_FILENO)
@@ -64,17 +79,17 @@ static int	exec_pipe_node(t_context *context, int fd_in)
 		return (handle_right_node(context, pipe_fds[PIPE_LEFT], left_pid));
 }
 
-int	ft_exec_pipeline(const t_context *context, int fd_in)
+int	ft_exec_pipeline(const t_context *const context)
 {
-	int	ret;
+	int						ret;
+	const t_context *const	new_context =  ft_get_execution_context(context->root->left, context->env);
 
 	ret = 0;
 	if (!context || !context->root)
 		return (0);
-	#ifdef DEBUG
-	ft_print_tree(context->root, 0, 0);
-	#endif
-	if (((t_leaf *)context->root->content)->type == NODE_PIPE)
-		ret = exec_pipe_node((t_context *)context, fd_in);
+	if (new_context && ((t_leaf *)new_context->root->content)->type == NODE_PIPE)
+		ft_exec_pipeline(new_context);
+	ret = exec_pipe_node((t_context *)context, STDIN_FILENO);
+	free((t_context *)new_context);
 	return (ret);
 }
