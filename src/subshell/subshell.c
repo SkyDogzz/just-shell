@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 09:27:07 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:09:17 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,24 +86,6 @@ static bool	ft_help(t_subshell *help)
 	if (help->level < 0)
 		return (false);
 	help->act = help->act->next;
-	return (true);
-}
-
-static bool ft_verif_after_paren(t_list *tokens)
-{
-	t_token	*token;
-	bool	iscloser;
-
-	iscloser = false;
-	while (tokens)
-	{
-		token = tokens->content;
-		if (iscloser && token->token_type == T_WORD)
-			return (false);
-		if (token->token_type == T_SUBSTITUTE && token->content[0] == ')')
-			iscloser = true;
-		tokens = tokens->next;
-	}
 	return (true);
 }
 
