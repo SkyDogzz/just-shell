@@ -1,3 +1,7 @@
+# Build announcement sentinel files
+.ft_execution_announced
+.ft_io_announced
+
 minishell
 
 obj/

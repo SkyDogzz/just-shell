@@ -18,7 +18,7 @@ Yellow=$(shell tput setaf 3)
 Green=$(shell tput setaf 2)
 Color_Off=$(shell tput sgr0)
 
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS += --no-print-directory -j $(shell nproc)
 
 NAME := minishell
 CC := cc
