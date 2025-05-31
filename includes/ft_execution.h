@@ -27,6 +27,8 @@ typedef enum e_pipeside
 typedef struct s_context
 {
 	int		last_exit_code;
+	int		fdin;
+	int		fdout;
 	t_btree	*root;
 	t_list	*env;
 }	t_context;
@@ -34,15 +36,15 @@ typedef struct s_context
 t_context	*ft_get_execution_context(t_btree *tree, t_list *env);
 void		ft_free_context(t_context *context, bool clear_env);
 
-int			ft_exec(const t_context *const context);
+int			ft_exec(t_context * context);
 
 bool		ft_is_builtin(const char *name);
 bool		ft_cmd_exists(t_cmd *cmd, t_list *env);
 int			ft_execute_builtin(const t_cmd *cmd, t_list *env);
 
-int			ft_exec_simple(const t_context *const context);
-int			ft_exec_pipeline(const t_context *const context);
-int			ft_exec_logical(const t_context *const context);
+int			ft_exec_simple(t_context * context);
+int			ft_exec_pipeline(t_context *context);
+int			ft_exec_logical(t_context *context);
 int			ft_exec_with_redirects(t_cmd *cmd,
 				t_list *env,
 				int fd_in,

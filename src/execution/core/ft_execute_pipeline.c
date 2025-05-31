@@ -20,9 +20,7 @@
 int	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 {
 	int	ret;
-	int	saved_fds[4];
 
-	store_fd(saved_fds);
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -36,11 +34,9 @@ int	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 	if (ft_is_builtin(cmd->args[0]))
 	{
 		ret = ft_execute_builtin(cmd, env);
-		restore_fd(saved_fds);
 		return (ret);
 	}
 	ft_subprocess(cmd, env);
-	restore_fd(saved_fds);
 	exit(EXIT_FAILURE);
 }
 
@@ -75,7 +71,7 @@ static int	exec_pipe_node(t_context *context, int fd_in)
 		return (handle_right_node(context, pipe_fds[PIPE_LEFT], left_pid));
 }
 
-int	ft_exec_pipeline(const t_context *const context)
+int	ft_exec_pipeline(t_context * context)
 {
 	int						ret;
 	t_context *new_context; 

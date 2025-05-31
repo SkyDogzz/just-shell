@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <unistd.h>
 
-int	ft_exec(const t_context *const context)
+int	ft_exec(t_context * context)
 {
 	int		ret;
 	t_btree	*root;

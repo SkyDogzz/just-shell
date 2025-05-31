@@ -89,7 +89,6 @@ static bool	ft_ft(int fd[4], t_cmd *cmd, t_list *mem)
 	{
 		ft_dprintf(fd[1], "ssh-xx: %s ('%s')\n",
 			strerror(errno), ((t_redir *)cmd->redir->content)->file);
-		restore_fd(fd);
 		cmd->redir = mem;
 		return (false);
 	}

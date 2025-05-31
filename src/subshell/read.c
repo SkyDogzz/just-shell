@@ -54,8 +54,8 @@ char	*ft_read_subshell(int level)
 {
 	char	*content;
 	char	*input;
-
 	content = ft_strdup("");
+
 	while (true)
 	{
 		if (handle_sigint())

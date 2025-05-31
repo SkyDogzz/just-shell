@@ -37,6 +37,8 @@ int	exec_left_child(t_btree *root, t_context *context,
 	left_pid = fork();
 	if (left_pid == 0)
 	{
+		close(context->fdin);
+		close(context->fdout);
 		ft_close(&pipe_fds[PIPE_LEFT]);
 		ft_exec_with_redirects(((t_leaf *)root->content)->cmd,
 			context->env, fd_in, pipe_fds[PIPE_RIGHT]);
@@ -54,52 +56,39 @@ int	handle_right_word_node(t_context *context, int pipe_fd,
 {
 	pid_t	right_pid;
 	int		status;
-	int		saved_fds[4];
 	t_leaf	*leaf;
 
 	status = 0;
-	store_fd(saved_fds);
 	if (!context || !context->root)
-	{
-		restore_fd(saved_fds);
 		return (close_wait_and_die(pipe_fd, &status, left_pid));
-	}
 	leaf = context->root->right->content;
 	if (!ft_cmd_exists(leaf->cmd, context->env))
-	{
-		restore_fd(saved_fds);
 		return (close_wait_and_die(pipe_fd, &status, left_pid));
-	}
 	right_pid = fork();
 	if (right_pid == 0)
 	{
+		close(context->fdin);
+		close(context->fdout);
 		ft_exec_with_redirects(((t_leaf *)context->root->right->content)->cmd,
 			context->env, pipe_fd, STDOUT_FILENO);
 		ft_free_context(context, true);
 		exit(EXIT_SUCCESS);
 	}
 	if (right_pid < 0)
-	{
-		restore_fd(saved_fds);
 		return (close_wait_and_die(pipe_fd, &status, left_pid));
-	}
 	ft_close(&pipe_fd);
 	waitpid(right_pid, &status, 0);
 	waitpid(left_pid, NULL, 0);
-	restore_fd(saved_fds);
 	return (status);
 }
 
 int	handle_right_node(t_context *context, int pipe_fd, pid_t left_pid)
 {
 	int	status;
-	int	saved_fds[4];
 
-	store_fd(saved_fds);
 	status = ft_exec_pipeline(context);
 	free(context);
 	ft_close(&pipe_fd);
 	waitpid(left_pid, &status, 0);
-	restore_fd(saved_fds);
 	return (status);
 }
