@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:09:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/16 12:54:52 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:27:42 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	setup_pipe(int pipe_fds[2])
 {
-	if (pipe(pipe_fds) == -1) 
+	if (pipe(pipe_fds) == -1)
 	{
 		perror("pipe creation failed");
 		return (-1);

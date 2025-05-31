@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:22:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/17 16:07:10 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:31:41 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,11 @@ void	store_fd(int fd[4])
 
 void	restore_fd(int fd[4])
 {
-	if (fd[0] >= 0)
-	{
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-			perror("dup2 failed for STDIN");
-		if (!ft_close(&fd[0]))
-			perror("close failed for stored STDIN");
-	}
-	if (fd[1] >= 0)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			perror("dup2 failed for STDOUT");
-		if (!ft_close(&fd[1]))
-			perror("close failed for stored STDOUT");
-	}
-	if (fd[2] >= 0)
-	{
-		if (dup2(fd[2], STDERR_FILENO) == -1)
-			perror("dup2 failed for STDERR");
-		if (!ft_close(&fd[2]))
-			perror("close failed for stored STDERR");
-	}
-	if (fd[3] > 0)
-	{
-		if (!ft_close(&fd[3]))
-			perror("close failed for fd[3]");
-	}
+	dup2(fd[0], STDIN_FILENO);
+	ft_close(&fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	ft_close(&fd[1]);
+	dup2(fd[2], STDERR_FILENO);
+	ft_close(&fd[2]);
+	ft_close(&fd[3]);
 }

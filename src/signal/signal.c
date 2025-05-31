@@ -6,7 +6,7 @@
 /*   By: tstephan <tstephan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:00:01 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:42:08 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 06:17:02 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_set_sigaction(void)
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);  /* Ignore SIGPIPE to prevent broken pipe errors */
 }
 
 bool	handle_sigint(void)

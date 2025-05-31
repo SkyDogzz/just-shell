@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/27 16:27:06 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:32:53 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static int	main_process_tty(t_list *env)
 int	tty_shell(t_list *env)
 {
 	int	ret;
+
 	ft_set_sigaction();
 	retreive_history(env);
 	ret = main_process_tty(env);

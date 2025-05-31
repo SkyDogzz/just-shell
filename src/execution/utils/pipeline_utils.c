@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:28:10 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/30 14:46:07 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 06:35:12 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	close_wait_and_die(int pipe_fd, int *status, pid_t pid)
 	return (-1);
 }
 
-int	exec_left_child(t_btree *root, t_context *context, int fd_in, int pipe_fds[2])
+int	exec_left_child(t_btree *root, t_context *context,
+					int fd_in, int pipe_fds[2])
 {
 	pid_t	left_pid;
 	t_leaf	*leaf;
@@ -37,8 +38,8 @@ int	exec_left_child(t_btree *root, t_context *context, int fd_in, int pipe_fds[2
 	if (left_pid == 0)
 	{
 		ft_close(&pipe_fds[PIPE_LEFT]);
-		ft_exec_with_redirects(((t_leaf *)root->content)->cmd, context->env, fd_in,
-			pipe_fds[PIPE_RIGHT]);
+		ft_exec_with_redirects(((t_leaf *)root->content)->cmd,
+			context->env, fd_in, pipe_fds[PIPE_RIGHT]);
 		ft_free_context(context, true);
 		exit(EXIT_SUCCESS);
 	}
@@ -63,7 +64,7 @@ int	handle_right_word_node(t_context *context, int pipe_fd,
 		restore_fd(saved_fds);
 		return (close_wait_and_die(pipe_fd, &status, left_pid));
 	}
-	leaf = context->root->content;
+	leaf = context->root->right->content;
 	if (!ft_cmd_exists(leaf->cmd, context->env))
 	{
 		restore_fd(saved_fds);
@@ -72,8 +73,8 @@ int	handle_right_word_node(t_context *context, int pipe_fd,
 	right_pid = fork();
 	if (right_pid == 0)
 	{
-		ft_exec_with_redirects(((t_leaf *)context->root->right->content)->cmd, context->env,
-			pipe_fd, STDOUT_FILENO);
+		ft_exec_with_redirects(((t_leaf *)context->root->right->content)->cmd,
+			context->env, pipe_fd, STDOUT_FILENO);
 		ft_free_context(context, true);
 		exit(EXIT_SUCCESS);
 	}
