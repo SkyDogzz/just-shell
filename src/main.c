@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 03:51:28 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 05:29:56 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,101 +25,6 @@ static bool	is_comment(char *input)
 	if (*input == '#')
 		return (true);
 	return (false);
-}
-
-
-void ft_lstdellast(t_list **lst)
-{
-	t_list *tmp = *lst;
-	if (!tmp || !tmp->next)
-	{
-		free(tmp);
-		*lst = NULL;
-		return;
-	}
-	while (tmp->next && tmp->next->next)
-		tmp = tmp->next;
-	free(tmp->next);
-	tmp->next = NULL;
-}
-
-static void	handle_subshell_simple(t_btree **root,t_list *tokens, t_list *env)
-{
-	t_leaf *leaf;
-	t_list *mem = tokens;
-
-	if ((*root) )
-	{
-		leaf = (*root)->content;
-		if (leaf->type == NODE_WORD && leaf->cmd->args[0][0] == '(')
-		{
-			char *sub = ft_substr(leaf->cmd->args[0], 1, ft_strlen(leaf->cmd->args[0]) - 4);
-			tokens= ft_lex(env, sub);
-			free(sub);
-			if (!tokens)
-				return ;
-			if (!ft_findsubshell(env, &tokens))
-			{
-				printf("Syntax error near unexpected token ')'\n");
-				ft_lstclear(&tokens, ft_lstclear_t_token);
-				return ;
-			}
-			t_context* context2 = ft_get_execution_context(ft_parse(tokens), env);
-			t_btree *mem = *root;
-			*root = context2->root;
-			free(context2);
-			ft_btree_clear(&mem, ft_free_leaf);
-		}
-	}
-	if ((*root) && (*root)->left )
-	{
-		leaf = (*root)->left->content;
-		if (leaf->cmd->args[0][0] == '(')
-		{
-			char *sub = ft_substr(leaf->cmd->args[0], 1, ft_strlen(leaf->cmd->args[0]) - 4);
-			tokens= ft_lex(env, sub);
-			free(sub);
-			if (!tokens)
-				return ;
-			if (!ft_findsubshell(env, &tokens))
-			{
-				printf("Syntax error near unexpected token ')'\n");
-				ft_lstclear(&tokens, ft_lstclear_t_token);
-				return ;
-			}
-			t_context* context2 = ft_get_execution_context(ft_parse(tokens), env);
-			t_btree *memt = (*root)->left;
-			(*root)->left = context2->root;
-			ft_btree_clear(&memt, ft_free_leaf);
-			free(context2);
-			handle_subshell_simple(&(*root)->left, mem, env);
-		}
-	}
-	tokens = mem;
-	if ((*root) && (*root)->right)
-	{
-		leaf = (*root)->right->content;
-		if (leaf->cmd->args[0][0] == '(')
-		{
-			char *sub = ft_substr(leaf->cmd->args[0], 1, ft_strlen(leaf->cmd->args[0]) - 4);
-			tokens= ft_lex(env, sub);
-			free(sub);
-			if (!tokens)
-				return ;
-			if (!ft_findsubshell(env, &tokens))
-			{
-				printf("Syntax error near unexpected token ')'\n");
-				ft_lstclear(&tokens, ft_lstclear_t_token);
-				return ;
-			}
-			t_context *context2 = ft_get_execution_context(ft_parse(tokens), env);
-			t_btree *memt = (*root)->right;
-			(*root)->right = context2->root;
-			ft_btree_clear(&memt, ft_free_leaf);
-			free(context2);
-			handle_subshell_simple(&(*root)->right, mem, env);
-		}
-	}
 }
 
 static int	handle_input(char *input, t_list *env)
@@ -141,7 +46,12 @@ static int	handle_input(char *input, t_list *env)
 		return (0);
 	}
 	context = ft_get_execution_context(ft_parse(tokens), env);
-	handle_subshell_simple(&context->root, tokens, env);
+	if (!handle_subshell_simple(&context->root, tokens, env))
+	{
+		ft_btree_clear(&context->root, ft_free_leaf);
+		free(context);
+		return (0);
+	}
 	ft_print_tree(context->root, 0, 0);
 	ret = ft_exec(context);
 	ft_btree_clear(&context->root, ft_free_leaf);

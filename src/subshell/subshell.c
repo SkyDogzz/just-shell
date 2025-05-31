@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/29 18:20:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 05:21:28 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static void	ft_group_subshell(t_list **token)
 	while (act)
 	{
 		act_t = act->content;
-		if (ft_strcmp(act_t->content, "$(") == 0 || ft_strcmp(act_t->content, "(") == 0)
+		if (ft_strcmp(act_t->content, "$(") == 0
+			|| ft_strcmp(act_t->content, "(") == 0)
 		{
 			level++;
 			while (level)
