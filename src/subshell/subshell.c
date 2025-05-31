@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:44:19 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 05:21:28 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:09:17 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,9 @@ bool	ft_findsubshell(t_list *env, t_list **token)
 		ft_lstadd_back(token, help.post);
 		ft_lstclear(&help.pre, ft_lstclear_string);
 	}
+	if (!ft_verif_after_paren(*token))
+		return (false);
+	ft_lstprint_tokens(*token, "tokens");
 	ft_group_subshell(token);
 	return (true);
 }
