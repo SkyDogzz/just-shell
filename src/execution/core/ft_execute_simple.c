@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/14 15:44:11 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/17 15:12:27 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 	t_leaf	*leaf;
 	int		fd[4];
 
+	status = 0;
 	if (!root)
 		return (0);
 	leaf = (t_leaf *)root->content;
