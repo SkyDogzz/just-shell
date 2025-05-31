@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/04/30 18:22:55 by tstephan         ###   ########.fr        #
+#    Updated: 2025/05/31 05:42:27 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,6 +110,7 @@ BTREE_SRC 		:= ft_btree_clear.c \
 				   parse_outfile.c
 
 SUBSHELL_SRC 	:= subshell.c \
+				   simple_subshell.c \
 				   read.c
 
 PROMPT_SRC		:= shell.c \
