@@ -6,15 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/27 16:34:26 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 10:08:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_signals.h"
 #include <stdlib.h>
-
-int	status = 1 << 8;
 
 const char	*get_signal_name(int sig_no)
 {

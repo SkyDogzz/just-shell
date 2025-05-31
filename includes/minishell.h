@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/17 15:40:08 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 10:10:10 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ char	*ft_handle_multiline_quote(char *input);
 bool	ft_findsubshell(t_list *env, t_list **tokens);
 char	*ft_read_subshell(int level);
 bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env);
+bool	ft_verif_after_paren(t_list *tokens);
 
 t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens);
 
