@@ -63,7 +63,8 @@ UTILS_SRC		:= ft_set.c \
 				   random_fd.c \
 				   cleanup.c \
 				   ft_isoutfile.c \
-				   fd.c
+				   fd.c \
+				   logger.c
 
 ENV_SRC			:= ft_init_env.c \
 				   ft_clear_env.c \

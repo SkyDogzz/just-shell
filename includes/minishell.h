@@ -264,4 +264,7 @@ bool	ft_is_outfile(t_token *token);
 void	store_fd(int fd[2]);
 void	restore_fd(int fd[4]);
 
+int		ft_show_error_message(const char *message_format, const char *context,
+			int exit_code, int flag);
+
 #endif
