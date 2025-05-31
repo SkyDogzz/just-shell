@@ -33,18 +33,20 @@ FT_IO_DEPS			:= $(FT_IO_OBJS:.o=.d)
 
 FT_IO_OBJ_DIR		:= $(sort $(dir $(FT_IO_OBJS)))
 
-.PHONY: clean_ft_io
+.PHONY: clean_ft_io create_ft_io_dirs ft_io_announce
 
 -include $(FT_IO_DEPS)
 
-$(FT_IO_OBJ_DIR):
+ft_io_announce:
 	@if [ ! -f .ft_io_announced ]; then \
 		echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_IO_MODULE_NAME) $(Color_Off)module"; \
 		touch .ft_io_announced; \
 	fi
-	@$(foreach dir, $(FT_IO_OBJ_DIR), mkdir -p $(dir);)
 
-$(OBJ_PATH)io/%.o: $(SRC_PATH)io/%.c | $(FT_IO_OBJ_DIR)
+create_ft_io_dirs:
+	@mkdir -p $(FT_IO_OBJ_DIR)
+
+$(OBJ_PATH)io/%.o: $(SRC_PATH)io/%.c ft_io_announce create_ft_io_dirs
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(FT_IO_MODULE_NAME)$(Color_Off)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 

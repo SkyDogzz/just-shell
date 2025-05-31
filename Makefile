@@ -30,7 +30,11 @@ LDFLAGS := -lreadline
 .PHONY: all vibe_check
 
 vibe_check:
-	@$(MAKE) --question $(NAME) 2>/dev/null && echo "$(Color_Off)[Announcer] $(Purple)Everything is up to date, nothing to do here. Zzz...$(Color_Off)" || $(MAKE) $(NAME)
+	@if [ -f $(NAME) ] && ! find src includes -type f -newer $(NAME) 2>/dev/null | grep -q .; then \
+		printf "$(Color_Off)[Announcer] Everything is up to date, nothing to do here. $(Purple)Zzz...$(Color_Off)\n"; \
+	else \
+		$(MAKE) $(NAME); \
+	fi
 
 all: vibe_check $(NAME)
 
@@ -127,17 +131,27 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo "$(Color_Off)[Announcer] Linking $(Purple)$(NAME)$(Color_Off)"
+	@if [ ! -f .linking_announced ]; then \
+		echo "$(Color_Off)[Announcer] Linking $(Purple)$(NAME)$(Color_Off)"; \
+		touch .linking_announced; \
+	fi
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT) -o $(NAME)
 ifeq ($(DEBUG), 1)
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled in $(Red)DEBUG$(Color_Off) mode!"
+	@if [ ! -f .finish_announced ]; then \
+		echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled in $(Red)DEBUG$(Color_Off) mode!"; \
+		touch .finish_announced; \
+	fi
 else
-	@echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled :D! Happy hacking!"
+	@if [ ! -f .finish_announced ]; then \
+		echo "$(Color_Off)[Announcer] $(Purple)$(NAME) $(Color_Off)has been compiled :D! Happy hacking!"; \
+		touch .finish_announced; \
+	fi
 endif
 
 clean: clean_ft_execution clean_ft_io clean_ft_parsing clean_ft_env
 	@$(MAKE) clean -C $(LIBFT_PATH)
 	@rm -rf $(OBJ_PATH)
+	@rm -f .linking_announced .finish_announced
 	@echo "$(Color_Off)[Announcer] Removed object and dependency files for $(Purple)$(NAME)$(Color_Off)"
 
 fclean: clean
@@ -145,7 +159,9 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "$(Color_Off)[Announcer] Removed $(Purple)$(NAME)$(Color_Off)"
 		
-re: fclean all
+re:
+	@$(MAKE) --no-print-directory -j1 fclean
+	@$(MAKE) --no-print-directory all
 
 norm:
 	@norminette src/ includes/ libft/ | grep -v "OK" && exit 1 || echo "$(Color_Off)[Announcer] $(Green)All files follow the Norm$(Color_Off)!!! (that was painful though)"

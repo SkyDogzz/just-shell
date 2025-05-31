@@ -46,18 +46,20 @@ FT_EXEC_DEPS		:= $(FT_EXEC_OBJS:.o=.d)
 
 FT_EXEC_OBJ_DIR		:= $(sort $(dir $(FT_EXEC_OBJS)))
 
-.PHONY: clean_ft_execution
+.PHONY: clean_ft_execution create_ft_exec_dirs ft_exec_announce
 
 -include $(FT_EXEC_DEPS)
 
-$(FT_EXEC_OBJ_DIR):
+ft_exec_announce:
 	@if [ ! -f .ft_execution_announced ]; then \
 		echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module"; \
 		touch .ft_execution_announced; \
 	fi
-	@$(foreach dir, $(FT_EXEC_OBJ_DIR), mkdir -p $(dir);)
 
-$(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c | $(FT_EXEC_OBJ_DIR)
+create_ft_exec_dirs:
+	@mkdir -p $(FT_EXEC_OBJ_DIR)
+
+$(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c ft_exec_announce create_ft_exec_dirs
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(FT_EXEC_MODULE_NAME)$(Purple)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 

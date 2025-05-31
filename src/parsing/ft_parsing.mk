@@ -49,18 +49,20 @@ FT_PARSING_DEPS			:= $(FT_PARSING_OBJS:.o=.d)
 
 FT_PARSING_OBJ_DIR		:= $(sort $(dir $(FT_PARSING_OBJS)))
 
-.PHONY: clean_ft_parsing
+.PHONY: clean_ft_parsing create_ft_parsing_dirs ft_parsing_announce
 
 -include $(FT_PARSING_DEPS)
 
-$(FT_PARSING_OBJ_DIR):
+ft_parsing_announce:
 	@if [ ! -f .ft_parsing_announced ]; then \
 		echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_PARSING_MODULE_NAME) $(Color_Off)module"; \
 		touch .ft_parsing_announced; \
 	fi
-	@$(foreach dir, $(FT_PARSING_OBJ_DIR), mkdir -p $(dir);)
 
-$(OBJ_PATH)parsing/%.o: $(SRC_PATH)parsing/%.c | $(FT_PARSING_OBJ_DIR)
+create_ft_parsing_dirs:
+	@mkdir -p $(FT_PARSING_OBJ_DIR)
+
+$(OBJ_PATH)parsing/%.o: $(SRC_PATH)parsing/%.c ft_parsing_announce create_ft_parsing_dirs
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(FT_PARSING_MODULE_NAME)$(Purple)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 

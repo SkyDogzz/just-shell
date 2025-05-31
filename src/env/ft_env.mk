@@ -30,18 +30,20 @@ FT_ENV_DEPS			:= $(FT_ENV_OBJS:.o=.d)
 
 FT_ENV_OBJ_DIR		:= $(sort $(dir $(FT_ENV_OBJS)))
 
-.PHONY: clean_ft_env
+.PHONY: clean_ft_env create_ft_env_dirs ft_env_announce
 
 -include $(FT_ENV_DEPS)
 
-$(FT_ENV_OBJ_DIR):
+ft_env_announce:
 	@if [ ! -f .ft_env_announced ]; then \
 		echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_ENV_MODULE_NAME) $(Color_Off)module"; \
 		touch .ft_env_announced; \
 	fi
-	@$(foreach dir, $(FT_ENV_OBJ_DIR), mkdir -p $(dir);)
 
-$(OBJ_PATH)env/%.o: $(SRC_PATH)env/%.c | $(FT_ENV_OBJ_DIR)
+create_ft_env_dirs:
+	@mkdir -p $(FT_ENV_OBJ_DIR)
+
+$(OBJ_PATH)env/%.o: $(SRC_PATH)env/%.c ft_env_announce create_ft_env_dirs
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ || (echo "$(Color_Off)[Announcer] $(Yellow)$(FT_ENV_MODULE_NAME)$(Purple)'s compilation $(Red)failed$(Color_Off) :[" && exit 1)
 
 
