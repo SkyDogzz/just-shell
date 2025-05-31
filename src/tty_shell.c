@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 08:49:50 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 09:57:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static t_context	*handle_input(char *input, t_list *env)
 	tokens = ft_lex(env, input);
 	if (!tokens)
 		return (NULL);
-	free(input);
 	input = NULL;
 	if (!ft_findsubshell(env, &tokens))
 	{
