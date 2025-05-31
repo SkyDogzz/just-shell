@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 11:19:34 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:25:14 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ static int	exec_pipe_node(t_context *context, int fd_in)
 		return (handle_right_node(context, pipe_fds[PIPE_LEFT], left_pid));
 }
 
-int	ft_exec_pipeline(t_context * context)
+int	ft_exec_pipeline(t_context *context)
 {
-	int						ret;
-	t_context *new_context; 
+	int			ret;
+	t_context	*new_context;
+
 	ret = 0;
 	if (!context || !context->root)
 		return (0);

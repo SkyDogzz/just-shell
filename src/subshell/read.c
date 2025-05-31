@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/27 16:30:20 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 18:26:16 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*ft_read_subshell(int level)
 {
 	char	*content;
 	char	*input;
-	content = ft_strdup("");
 
+	content = ft_strdup("");
 	while (true)
 	{
 		if (handle_sigint())

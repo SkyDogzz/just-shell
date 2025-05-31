@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 06:32:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 18:24:06 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <unistd.h>
 
-int	ft_exec(t_context * context)
+int	ft_exec(t_context *context)
 {
 	int		ret;
 	t_btree	*root;

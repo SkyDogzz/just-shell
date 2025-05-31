@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/05/31 10:10:31 by tstephan         ###   ########.fr        #
+#    Updated: 2025/05/31 19:53:41 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,6 +107,7 @@ HISTORY_SRC		:= history.c
 SRC := main.c \
 	   tty_shell.c \
 	   non_tty_shell.c \
+	   input_handler.c \
 	   $(addprefix utils/, $(UTILS_SRC)) \
 	   $(addprefix signal/, $(SIGNAL_SRC)) \
 	   $(addprefix btree/, $(BTREE_SRC)) \
