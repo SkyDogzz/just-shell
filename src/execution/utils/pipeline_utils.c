@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:28:10 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 06:35:12 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 09:55:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	handle_right_node(t_context *context, int pipe_fd, pid_t left_pid)
 
 	store_fd(saved_fds);
 	status = ft_exec_pipeline(context);
+	free(context);
 	ft_close(&pipe_fd);
 	waitpid(left_pid, &status, 0);
 	restore_fd(saved_fds);
