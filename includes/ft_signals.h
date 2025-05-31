@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:22:35 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/17 11:44:42 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:33:49 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,5 @@ static const t_signal	g_signals[] = {
 };
 
 const char	*get_signal_name(int sig_no);
-const char	*get_exited_status(void);
-const char	*get_signaled_status(void);
 
 #endif

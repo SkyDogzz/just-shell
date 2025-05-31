@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 16:54:42 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 14:57:30 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 	return (ret);
 }
 
-int	ft_exec_logical(const t_btree *root, t_list *env)
+int	ft_exec_logical(const t_context *context)
 {
-	if (!root)
+	if (!context || !context->root)
 		return (0);
-	if (((t_leaf *)root->content)->type == NODE_LOGICAL)
-		return (exec_logical_node((t_btree *)root, env));
+	if (((t_leaf *)context->root->content)->type == NODE_LOGICAL)
+		return (exec_logical_node((t_btree *)context->root, context->env));
 	return (-1);
 }

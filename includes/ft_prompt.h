@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 22:26:19 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/20 22:30:18 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:34:10 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@
 # define HOST_ROOT "nasa (%s)"
 # define HOST_REGULAR "%s"
 
-const char	*get_prompt_main(t_list *env);
+const char	*get_prompt_main(t_list *env, int last_exit);
 const char	*get_prompt_user(t_list *env);
 const char	*get_prompt_host(t_list *env);
 const char	*get_prompt_path(t_list *env);
-const char	*get_prompt_last_exit(void);
+const char	*get_prompt_last_exit(int last_exit);
+const char	*get_exited_status(int status);
+const char	*get_signaled_status(int status);
 
 #endif

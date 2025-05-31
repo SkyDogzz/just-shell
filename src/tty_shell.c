@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/23 13:19:49 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:27:06 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ static int	main_process_tty(t_list *env)
 	int			status;
 	t_context	*context;
 
+	status = 0;
 	while (true)
 	{
-		input = ft_readline(PROMPT_MAIN, env);
+		input = ft_readline(PROMPT_MAIN, env, status);
 		if (!input)
 			break ;
 		input = ft_handle_multiline_quote(input);
@@ -69,12 +70,10 @@ static int	main_process_tty(t_list *env)
 			continue ;
 		context = handle_input(input, env);
 		if (!context)
-		{
-			free(input);
 			return (0);
-		}
 		status = ft_exec(context);
-		if (status == 2)
+		ft_free_context(context, false);
+		if (status == 238)
 			return (0);
 	}
 	return (status);

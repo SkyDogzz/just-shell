@@ -6,15 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/17 15:01:58 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:34:26 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_signals.h"
-#include <stdlib.h>
-
-int	status = 1 << 8;
 
 const char	*get_signal_name(int sig_no)
 {
@@ -30,7 +27,7 @@ const char	*get_signal_name(int sig_no)
 	return ("N/A");
 }
 
-const char	*get_exited_status(void)
+const char	*get_exited_status(int status)
 {
 	char		*exit;
 	char		*failure;
@@ -47,7 +44,7 @@ const char	*get_exited_status(void)
 	return (last_status);
 }
 
-const char	*get_signaled_status(void)
+const char	*get_signaled_status(int status)
 {
 	char		*exit;
 	char		*temp;
@@ -64,17 +61,17 @@ const char	*get_signaled_status(void)
 	return (last_status);
 }
 
-const char	*get_prompt_last_exit(void)
+const char	*get_prompt_last_exit(int last_exit)
 {
 	const char	*last_status;
 
-	if (WEXITSTATUS(status) == 0)
+	if (WEXITSTATUS(last_exit << 8) == 0)
 		return (ft_strdup(GREEN"✓"NC));
-	else if (WIFEXITED(status))
-		last_status = get_exited_status();
-	else if (WIFSIGNALED(status))
-		last_status = get_signaled_status();
-	else if (status & CMD_NOT_FOUND_FLAG)
+	else if (WIFEXITED(last_exit))
+		last_status = get_exited_status(last_exit);
+	else if (WIFSIGNALED(last_exit))
+		last_status = get_signaled_status(last_exit);
+	else if (last_exit & CMD_NOT_FOUND_FLAG)
 		last_status = ft_strdup(RED"✗ - not found"NC);
 	else
 		last_status = ft_strdup("N/A");
