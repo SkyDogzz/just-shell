@@ -35,7 +35,7 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 	return (free(context_right), ret);
 }
 
-int	ft_exec_logical(const t_context *context)
+int	ft_exec_logical(t_context *context)
 {
 	if (!context || !context->root)
 		return (0);

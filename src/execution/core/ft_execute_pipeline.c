@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 06:33:44 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/31 18:25:14 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 int	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 {
 	int	ret;
-	int	saved_fds[4];
 
-	store_fd(saved_fds);
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -36,11 +34,9 @@ int	ft_exec_with_redirects(t_cmd *cmd, t_list *env, int fd_in, int fd_out)
 	if (ft_is_builtin(cmd->args[0]))
 	{
 		ret = ft_execute_builtin(cmd, env);
-		restore_fd(saved_fds);
 		return (ret);
 	}
 	ft_subprocess(cmd, env);
-	restore_fd(saved_fds);
 	exit(EXIT_FAILURE);
 }
 
@@ -75,16 +71,15 @@ static int	exec_pipe_node(t_context *context, int fd_in)
 		return (handle_right_node(context, pipe_fds[PIPE_LEFT], left_pid));
 }
 
-int	ft_exec_pipeline(const t_context *const context)
+int	ft_exec_pipeline(t_context *context)
 {
-	int						ret;
-	const t_context *const	new_context = ft_get_execution_context(
-			context->root->left,
-			context->env);
+	int			ret;
+	t_context	*new_context;
 
 	ret = 0;
 	if (!context || !context->root)
 		return (0);
+	new_context = ft_get_execution_context(context->root->left, context->env);
 	if (new_context
 		&& ((t_leaf *)new_context->root->content)->type == NODE_PIPE)
 		ft_exec_pipeline(new_context);

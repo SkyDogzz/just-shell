@@ -12,23 +12,24 @@
 
 #include "ft_execution.h"
 
-static bool	ft_fork(int fd[4], t_leaf *leaf, t_list *env, int *status)
+static bool	ft_fork(t_leaf *leaf, t_list *env, int *status, t_context *context)
 {
 	int		pid;
 
 	pid = fork();
 	if (pid == -1)
-	{
-		restore_fd(fd);
 		return (false);
-	}
 	if (pid == 0)
+	{
+		close(context->fdin);
+		close(context->fdout);
 		ft_subprocess(leaf->cmd, env);
+	}
 	waitpid(pid, status, 0);
 	return (true);
 }
 
-int	ft_exec_simple(const t_context *context)
+int	ft_exec_simple(t_context *context)
 {
 	int		status;
 	t_leaf	*leaf;
@@ -41,20 +42,14 @@ int	ft_exec_simple(const t_context *context)
 	if (!ft_cmd_exists(leaf->cmd, context->env))
 		return (ft_show_error_message(COMMAND_NOT_FOUND, leaf->cmd->args[0],
 				127, CMD_NOT_FOUND_FLAG));
-	if (leaf->cmd->redir != NULL)
-		store_fd(fd);
 	if (!open_outfile((t_cmd *)leaf->cmd, fd))
 		return (1);
 	if (ft_is_builtin(leaf->cmd->args[0]))
 	{
 		status = ft_execute_builtin((t_cmd *)leaf->cmd, context->env);
-		if (leaf->cmd->redir != NULL)
-			restore_fd(fd);
 		return (status);
 	}
-	if (!ft_fork(fd, leaf, context->env, &status))
+	if (!ft_fork(leaf, context->env, &status, context))
 		return (1);
-	if (leaf->cmd->redir != NULL)
-		restore_fd(fd);
 	return (status);
 }
