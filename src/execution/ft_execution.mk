@@ -51,7 +51,10 @@ FT_EXEC_OBJ_DIR		:= $(sort $(dir $(FT_EXEC_OBJS)))
 -include $(FT_EXEC_DEPS)
 
 $(FT_EXEC_OBJ_DIR):
-	@echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module"
+	@if [ ! -f .ft_execution_announced ]; then \
+		echo "$(Color_Off)[Announcer] Building $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module"; \
+		touch .ft_execution_announced; \
+	fi
 	@$(foreach dir, $(FT_EXEC_OBJ_DIR), mkdir -p $(dir);)
 
 $(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c | $(FT_EXEC_OBJ_DIR)
@@ -60,5 +63,6 @@ $(OBJ_PATH)execution/%.o: $(SRC_PATH)execution/%.c | $(FT_EXEC_OBJ_DIR)
 
 clean_ft_execution:
 	@rm -rf $(FT_EXEC_OBJS) $(FT_EXEC_DEPS)
+	@rm -f .ft_execution_announced
 	@echo "$(Color_Off)[Announcer] Removed $(Cyan)$(FT_EXEC_MODULE_NAME) $(Color_Off)module's object files"
 
