@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/29 16:43:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 05:29:56 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ static int	handle_input(char *input, t_list *env)
 		return (0);
 	}
 	context = ft_get_execution_context(ft_parse(tokens), env);
+	if (!handle_subshell_simple(&context->root, tokens, env))
+	{
+		ft_btree_clear(&context->root, ft_free_leaf);
+		free(context);
+		return (0);
+	}
+	ft_print_tree(context->root, 0, 0);
 	ret = ft_exec(context);
 	ft_btree_clear(&context->root, ft_free_leaf);
 	free(context);
