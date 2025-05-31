@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 #include "ft_signals.h"
+#include <stdlib.h>
+
+int	status = 1 << 8;
 
 const char	*get_signal_name(int sig_no)
 {
