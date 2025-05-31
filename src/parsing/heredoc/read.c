@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/20 22:02:46 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:30:38 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_read_heredoc(const char *delimiter)
 	{
 		if (handle_sigint())
 			return (ft_quit_heredoc(content));
-		input = ft_readline(PROMPT_HEREDOC, NULL);
+		input = ft_readline(PROMPT_HEREDOC, NULL, 0);
 		if (!input)
 			return (ft_quit_heredoc(content));
 		if (ft_strcmp(input, delimiter) == 0)

@@ -19,6 +19,8 @@ static int	cmp(void *c1, void *c2)
 
 	leaf1 = (t_leaf *)c1;
 	leaf2 = (t_leaf *)c2;
+	if (leaf1->type == NODE_PIPE)
+        return (0);
 	if (leaf1->type == NODE_PIPE && leaf2->type == NODE_WORD)
 		return (0);
 	if (leaf1->type == NODE_LOGICAL)

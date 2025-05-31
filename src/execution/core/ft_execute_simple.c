@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:41:29 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/23 12:41:40 by yandry           ###   ########.fr       */
+/*   Updated: 2025/05/27 14:54:21 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static bool	ft_fork(int fd[4], t_leaf *leaf, t_list *env, int *status)
 	return (true);
 }
 
-int	ft_exec_simple(const t_btree *root, t_list *env)
+int	ft_exec_simple(const t_context *context)
 {
 	int		status;
 	t_leaf	*leaf;
 	int		fd[4];
 
 	status = 0;
-	if (!root)
+	if (!context || !context->root)
 		return (0);
-	leaf = (t_leaf *)root->content;
-	if (!ft_cmd_exists(leaf->cmd, env))
+	leaf = (t_leaf *)context->root->content;
+	if (!ft_cmd_exists(leaf->cmd, context->env))
 		return (ft_show_error_message(COMMAND_NOT_FOUND, leaf->cmd->args[0],
 				127, CMD_NOT_FOUND_FLAG));
 	if (leaf->cmd->redir != NULL)
@@ -47,12 +47,12 @@ int	ft_exec_simple(const t_btree *root, t_list *env)
 		return (1);
 	if (ft_is_builtin(leaf->cmd->args[0]))
 	{
-		status = ft_execute_builtin((t_cmd *)leaf->cmd, env);
+		status = ft_execute_builtin((t_cmd *)leaf->cmd, context->env);
 		if (leaf->cmd->redir != NULL)
 			restore_fd(fd);
 		return (status);
 	}
-	if (!ft_fork(fd, leaf, env, &status))
+	if (!ft_fork(fd, leaf, context->env, &status))
 		return (1);
 	if (leaf->cmd->redir != NULL)
 		restore_fd(fd);

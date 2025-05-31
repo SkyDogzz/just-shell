@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 05:16:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:28:04 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env);
 
 t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens);
 
-char	*ft_readline(t_prompt id, t_list *env);
+char	*ft_readline(t_prompt id, t_list *env, int last_status);
 
 bool	ft_is_pipe(const t_token *token);
 bool	ft_is_logical(const t_token *token);
