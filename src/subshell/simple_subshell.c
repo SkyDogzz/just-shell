@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 05:16:59 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 05:38:07 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:43:44 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ static bool	handle_subshell_utils(t_leaf *leaf, t_btree **root, t_list *env,
 	return (true);
 }
 
+static bool	verif(t_leaf *leaf)
+{
+	return (leaf->type == NODE_WORD && leaf->cmd && leaf->cmd->args
+		&& leaf->cmd->args[0] && leaf->cmd->args[0][0]
+		&& leaf->cmd->args[0][0] == '(');
+}
+
 bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env)
 {
 	t_leaf	*leaf;
@@ -48,20 +55,20 @@ bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env)
 	if (!root)
 		return (false);
 	leaf = (*root)->content;
-	if (leaf->type == NODE_WORD && leaf->cmd->args[0][0] == '(')
+	if (verif(leaf))
 		if (!handle_subshell_utils(leaf, root, env, tokens))
 			return (false);
 	if ((*root)->left)
 	{
 		leaf = (*root)->left->content;
-		if (leaf->type == NODE_WORD && leaf->cmd->args[0][0] == '(')
+		if (verif(leaf))
 			if (!handle_subshell_utils(leaf, &(*root)->left, env, tokens))
 				return (false);
 	}
 	if ((*root)->right)
 	{
 		leaf = (*root)->right->content;
-		if (leaf->type == NODE_WORD && leaf->cmd->args[0][0] == '(')
+		if (verif(leaf))
 			if (!handle_subshell_utils(leaf, &(*root)->right, env, tokens))
 				return (false);
 	}
