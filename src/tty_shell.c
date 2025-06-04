@@ -6,29 +6,32 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 19:40:14 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/03 13:33:17 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "ft_history.h"
 #include "minishell.h"
+#include "ft_io.h"
 
 t_context	*handle_input(char *input, t_list *env, int fd[2]);
 
-static void	manage_tty_fds(int fd[2], bool restore)
-{
-	if (!restore)
-	{
-		fd[0] = dup(STDIN_FILENO);
-		fd[1] = dup(STDOUT_FILENO);
-	}
-	else
-	{
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-	}
-}
+// static void	manage_tty_fds(int fd[2], bool restore)
+// {
+// 	if (!restore)
+// 	{
+// 		fd[0] = dup(STDIN_FILENO);
+// 		fd[1] = dup(STDOUT_FILENO);
+// 	}
+// 	else
+// 	{
+// 		dup2(fd[0], STDIN_FILENO);
+// 		dup2(fd[1], STDOUT_FILENO);
+// 		ft_close(&fd[0]);
+// 		ft_close(&fd[1]);
+// 	}
+// }
 
 static char	*process_input(t_list *env, int status)
 {
@@ -61,7 +64,9 @@ static int	main_process_tty(t_list *env)
 	int			status;
 	int			fd[2];
 
-	manage_tty_fds(fd, false);
+	//manage_tty_fds(fd, false);
+	fd[0] = -1;
+	fd[1] = -1;
 	status = 0;
 	while (true)
 	{
@@ -76,7 +81,7 @@ static int	main_process_tty(t_list *env)
 			continue ;
 		if (status == 238)
 			return (0);
-		manage_tty_fds(fd, true);
+		//manage_tty_fds(fd, true);
 	}
 	return (status);
 }
