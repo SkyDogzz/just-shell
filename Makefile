@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/05/31 10:10:31 by tstephan         ###   ########.fr        #
+#    Updated: 2025/06/09 18:02:09 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MAKEFLAGS += --no-print-directory -j $(shell nproc)
 
 NAME := minishell
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -MMD -MP
+CFLAGS := -Wall -Wextra -Werror -Wunused-function -MMD -MP
 LIBFT_PATH := libft/
 INCLUDES = -I ./includes -I $(LIBFT_PATH)
 LDFLAGS := -lreadline

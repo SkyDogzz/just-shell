@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:12:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/03 19:48:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/09 18:22:36 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static t_list	*parse_pipe(t_list *tokens)
 	return (pipes);
 }
 
-static bool ft_verif_cmd(t_btree *root)
+static bool	ft_verif_cmd(t_btree *root)
 {
-	t_leaf *leaf;
+	t_leaf	*leaf;
 	bool	status;
 
 	if (!root || !root->content)
