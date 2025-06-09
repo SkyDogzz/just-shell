@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 12:11:46 by yandry            #+#    #+#              #
-#    Updated: 2025/05/09 13:20:21 by yandry           ###   ########.fr        #
+#    Updated: 2025/06/09 18:03:20 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,9 @@ FT_BUILTINS_SRC		:= cd.c \
 					   ft_is_builtin.c \
 					   ft_execute_builtin.c
 
-FT_UTILS_SRC		:= pipeline_utils.c \
-					   execution_utils.c
+FT_UTILS_SRC		:= execution_utils.c
 
-FT_CORE_SRC			:= ft_execute_simple.c \
-					   ft_execute_pipeline.c \
-					   ft_execute_logical.c \
-					   ft_execft.c \
-					   ft_execution_context.c \
+FT_CORE_SRC			:= ft_execution_context.c \
 					   ft_cmd_exists.c
 
 FT_EXEC_SRC			:= ft_exec.c \
