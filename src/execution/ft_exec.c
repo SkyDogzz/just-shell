@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/09 20:36:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:38:33 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,27 @@ static int	ft_sombrax(t_cmd *cmd, t_list *env)
 	return (0);
 }
 
-static int	ft_exec_simple(t_context *context)
+static int	ft_exec_simple(t_context *context, int *status)
 {
 	pid_t	pid;
 	int		ret;
+	int		fd[4];
 
 	ret = 0;
+	if (((t_leaf *)(context->root->content))->cmd->redir)
+		store_fd(fd);
+	if (!open_outfile(((t_leaf *)(context->root->content))->cmd, fd))
+	{
+		fprintf(stdout, "failed to open outfile\n");
+	}
 	if (!ft_infile_exec(((t_leaf *)(context->root)->content)->cmd))
 		return (127);
 	pid = fork();
 	if (pid == 0)
 		ret = ft_sombrax(((t_leaf *)(context->root->content))->cmd, context->env);
-	waitpid(pid, &ret, 0);
+	waitpid(pid, status, 0);
+	if (((t_leaf *)(context->root->content))->cmd->redir)
+		restore_fd(fd);
 	return (ret);
 }
 
@@ -76,6 +85,7 @@ int	ft_exec(t_context *context)
 {
 	int		ret;
 	t_btree	*root;
+	int		status;
 
 	if (!context)
 		return (1);
@@ -84,7 +94,7 @@ int	ft_exec(t_context *context)
 	if (!root || !root->content)
 		return (1);
 	if (((t_leaf *)root->content)->type == NODE_WORD)
-		ret = ft_exec_simple(context);
+		ret = ft_exec_simple(context, &status);
 	else if (((t_leaf *)root->content)->type == NODE_PIPE)
 		ret = ft_exec_pipeline(context);
 	else if (((t_leaf *)root->content)->type == NODE_LOGICAL)

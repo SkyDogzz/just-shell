@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/09 20:34:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:40:35 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,16 @@ bool	ft_infile_exec(t_cmd *cmd)
 	if (cmd->redir)
 	{
 		filename = get_tmp_fd();
-		fd = open(filename, O_CREAT | O_RDWR, 0644);
+		fd = open(filename, O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 			return (false);
 		while (cmd->redir)
 			if (!ft_redir_all(cmd, fd, filename))
 				return (false);
+		ft_close(&fd);
+		fd = open(filename, O_RDONLY);
+		if (fd < 0)
+			return (false);
 		dup2(fd, STDIN_FILENO);
 		ft_close(&fd);
 		unlink(filename);
