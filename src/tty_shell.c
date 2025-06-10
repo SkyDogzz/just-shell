@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/09 20:25:08 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:17:35 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	main_process_tty(t_list *env)
 	while (true)
 	{
 		input = ft_readline(PROMPT_MAIN, env, status);
-		printf("input '%s'\n", input);
 		if (!input)
 			break ;
 		input = ft_handle_multiline_quote(input);
@@ -82,7 +81,6 @@ static int	main_process_tty(t_list *env)
 		}
 		status = ft_exec(context);
 		ft_free_context(context, false);
-		printf("le status %d\n", status);
 		if (status == 238)
 			return (0);
 	}
