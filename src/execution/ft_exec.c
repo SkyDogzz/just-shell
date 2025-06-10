@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/10 18:38:33 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:37:50 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ static int	ft_sombrax(t_cmd *cmd, t_list *env)
 	return (0);
 }
 
+static void init_fds(int fd[4])
+{
+	fd[0] = -2;
+	fd[1] = -2;
+	fd[2] = -2;
+	fd[3] = -2;
+}
+
 static int	ft_exec_simple(t_context *context, int *status)
 {
 	pid_t	pid;
@@ -50,6 +58,7 @@ static int	ft_exec_simple(t_context *context, int *status)
 	int		fd[4];
 
 	ret = 0;
+	init_fds(fd);
 	if (((t_leaf *)(context->root->content))->cmd->redir)
 		store_fd(fd);
 	if (!open_outfile(((t_leaf *)(context->root->content))->cmd, fd))

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:22:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 06:31:41 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/10 19:39:33 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	store_fd(int fd[4])
 {
+	printf("fds %d %d %d %d\n", fd[0], fd[1], fd[2], fd[3]);
 	fd[0] = dup(STDIN_FILENO);
 	if (fd[0] == -1)
 		perror("dup failed for STDIN");
