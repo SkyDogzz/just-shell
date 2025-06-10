@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/10 18:40:35 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:02:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	buffer = ft_get_next_line(fd2);
 	while (buffer)
 	{
-		buffer = ft_get_next_line(fd2);
 		ft_putstr_fd(buffer, fd);
 		free(buffer);
+		buffer = ft_get_next_line(fd2);
 	}
 	close(fd2);
 	return (true);
