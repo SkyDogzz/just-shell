@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/10 18:10:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:35:47 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ bool	open_outfile(t_cmd *cmd, int fd[4])
 	t_redir	*redir;
 	t_list	*mem;
 
-	fd[2] = -2;
 	fd[3] = -2;
 	mem = cmd->redir;
 	while (cmd->redir)
@@ -113,7 +112,9 @@ bool	open_outfile(t_cmd *cmd, int fd[4])
 		}
 		cmd->redir = cmd->redir->next;
 	}
+	printf("fd[2] %d\n", fd[2]);
 	dup2(fd[2], STDOUT_FILENO);
+	printf("fd[2] %d\n", fd[2]);
 	dup2(fd[3], STDERR_FILENO);
 	if (!ft_ft(fd, cmd, mem))
 		return (false);
