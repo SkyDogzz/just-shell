@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/10 19:35:47 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:15:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	close_open(const char *pathname, int flags, mode_t mode, int fd)
 {
 	if (fd != -1 && fd != -2)
 		close(fd);
-	fd = open(pathname, flags, mode);
+	fd = open(pathname, flags | O_CLOEXEC, mode);
 	if (fd == -1)
 		return (-1);
 	return (fd);

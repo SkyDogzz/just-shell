@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/10 19:37:50 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:54:52 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,21 @@ static int	ft_exec_simple(t_context *context, int *status)
 	ret = 0;
 	init_fds(fd);
 	if (((t_leaf *)(context->root->content))->cmd->redir)
-		store_fd(fd);
-	if (!open_outfile(((t_leaf *)(context->root->content))->cmd, fd))
 	{
-		fprintf(stdout, "failed to open outfile\n");
+		store_fd(fd);
+		if (!open_outfile(((t_leaf *)(context->root->content))->cmd, fd))
+		{
+			fprintf(stdout, "failed to open outfile\n");
+			restore_fd(fd);
+			return (127);
+		}
+		if (!ft_infile_exec(((t_leaf *)(context->root)->content)->cmd))
+		{
+			fprintf(stdout, "failed to open outfile\n");
+			restore_fd(fd);
+			return (127);
+		}
 	}
-	if (!ft_infile_exec(((t_leaf *)(context->root)->content)->cmd))
-		return (127);
 	pid = fork();
 	if (pid == 0)
 		ret = ft_sombrax(((t_leaf *)(context->root->content))->cmd, context->env);
