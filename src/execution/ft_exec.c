@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/11 15:54:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:26:32 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,22 @@ static int	ft_sombrax(t_cmd *cmd, t_list *env)
 	return (0);
 }
 
-static void init_fds(int fd[4])
+static void init_fds(int fd[5])
 {
 	fd[0] = -2;
 	fd[1] = -2;
 	fd[2] = -2;
 	fd[3] = -2;
+	fd[4] = -2;
 }
+
+#include "ft_io.h"
 
 static int	ft_exec_simple(t_context *context, int *status)
 {
 	pid_t	pid;
 	int		ret;
-	int		fd[4];
+	int		fd[5];
 
 	ret = 0;
 	init_fds(fd);
@@ -77,7 +80,14 @@ static int	ft_exec_simple(t_context *context, int *status)
 	}
 	pid = fork();
 	if (pid == 0)
+	{ 
+		ft_close(&fd[0]);
+		ft_close(&fd[1]);
+		ft_close(&fd[2]);
+		ft_close(&fd[3]);
+		ft_close(&fd[4]);
 		ret = ft_sombrax(((t_leaf *)(context->root->content))->cmd, context->env);
+	}
 	waitpid(pid, status, 0);
 	if (((t_leaf *)(context->root->content))->cmd->redir)
 		restore_fd(fd);
