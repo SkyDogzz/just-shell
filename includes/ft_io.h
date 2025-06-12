@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:48:08 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/16 12:49:54 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:21:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include <stdbool.h>
 
 bool	ft_close(int *fd);
+void	init_fds(int fd[5]);
 
 #endif
