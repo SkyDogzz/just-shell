@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/21 15:57:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:54:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static t_list	*ft_replace_heredoc(t_list *env, t_list *lst, char *content)
 			act_t->content = content;
 			act_t->token_type = T_HEREDOC;
 			act_t = ft_expand(env, act_t);
+			act_t->token_type = T_HEREDOC;
 			act->content = act_t;
 			free(mem);
 			return (lst);
