@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/12 16:05:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:58:07 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static int	ft_exec_pipeline(t_context *context)
 	return (0);
 	(void) context;
 }
-
-
 
 int	ft_exec(t_context *context)
 {
