@@ -6,11 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 09:08:12 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:00:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_io.h"
 
 static void	ft_redir_heredoc(t_cmd *cmd, int fd)
 {
@@ -43,7 +44,7 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	char		*buffer;
 	int			fd2;
 
-	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
+	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY | O_CLOEXEC);
 	if (!ft_check_fd(fd2, cmd))
 	{
 		unlink(filename);
@@ -53,9 +54,9 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	buffer = ft_get_next_line(fd2);
 	while (buffer)
 	{
-		buffer = ft_get_next_line(fd2);
 		ft_putstr_fd(buffer, fd);
 		free(buffer);
+		buffer = ft_get_next_line(fd2);
 	}
 	close(fd2);
 	return (true);
@@ -80,7 +81,7 @@ static bool	ft_redir_all(t_cmd *cmd, int fd, char *filename)
 	return (true);
 }
 
-void	ft_infile_exec(t_cmd *cmd)
+bool	ft_infile_exec(t_cmd *cmd)
 {
 	int		fd;
 	char	*filename;
@@ -90,20 +91,21 @@ void	ft_infile_exec(t_cmd *cmd)
 	if (cmd->redir)
 	{
 		filename = get_tmp_fd();
-		fd = open(filename, O_CREAT | O_WRONLY, 0644);
+		fd = open(filename, O_CREAT | O_WRONLY | O_CLOEXEC, 0644);
 		if (fd < 0)
-			return ;
+			return (false);
 		while (cmd->redir)
 			if (!ft_redir_all(cmd, fd, filename))
-				exit(1);
-		close(fd);
-		fd = open(filename, O_RDONLY);
+				return (false);
+		ft_close(&fd);
+		fd = open(filename, O_RDONLY | O_CLOEXEC);
 		if (fd < 0)
-			return ;
+			return (false);
 		dup2(fd, STDIN_FILENO);
-		close(fd);
+		ft_close(&fd);
 		unlink(filename);
 		free(filename);
 	}
 	cmd->redir = redir;
+	return (true);
 }
