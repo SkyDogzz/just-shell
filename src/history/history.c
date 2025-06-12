@@ -6,7 +6,7 @@
 /*   By: skydogzz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 06:40:36 by skydogzz          #+#    #+#             */
-/*   Updated: 2025/04/28 14:02:17 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:04:43 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	retreive_history(t_list *env)
 	path = ft_strreplace(HISTORY_FILE, "~", ft_get_env(env, "HOME")->value);
 	if (!path)
 		return ;
-	fd = open(path, O_RDONLY);
+	fd = open(path, O_RDONLY | O_CLOEXEC);
 	free(path);
 	if (fd <= 0)
 		return ;
@@ -50,7 +50,7 @@ void	store_history(char *input, t_list *env)
 	path = ft_strreplace(HISTORY_FILE, "~", ft_get_env(env, "HOME")->value);
 	if (!path)
 		return ;
-	fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	fd = open(path, O_WRONLY | O_APPEND | O_CREAT | O_CLOEXEC, 0644);
 	if (fd < 0)
 	{
 		free(path);

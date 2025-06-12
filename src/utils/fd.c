@@ -6,14 +6,14 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:22:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 06:31:41 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/11 18:10:39 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_io.h"
 
-void	store_fd(int fd[4])
+void	store_fd(int fd[5])
 {
 	fd[0] = dup(STDIN_FILENO);
 	if (fd[0] == -1)
@@ -24,10 +24,9 @@ void	store_fd(int fd[4])
 	fd[2] = dup(STDERR_FILENO);
 	if (fd[2] == -1)
 		perror("dup failed for STDERR");
-	fd[3] = -1;
 }
 
-void	restore_fd(int fd[4])
+void	restore_fd(int fd[5])
 {
 	dup2(fd[0], STDIN_FILENO);
 	ft_close(&fd[0]);
@@ -36,4 +35,5 @@ void	restore_fd(int fd[4])
 	dup2(fd[2], STDERR_FILENO);
 	ft_close(&fd[2]);
 	ft_close(&fd[3]);
+	ft_close(&fd[4]);
 }
