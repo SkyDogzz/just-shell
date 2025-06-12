@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 05:16:59 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/31 18:43:44 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:14:19 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	handle_subshell_utils(t_leaf *leaf, t_btree **root, t_list *env,
 		return (true);
 	if (!ft_findsubshell(env, &tokens))
 	{
-		printf("Syntax error near unexpected token ')'\n");
+		ft_putendl_fd("Syntax error near unexpected token ')", STDERR_FILENO);
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (false);
 	}
