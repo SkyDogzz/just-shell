@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 17:49:00 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:51:25 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_token	*particular_expand(t_token *token, t_expand *expand, int status)
 {
 	int	exit;
 
-	printf("status %d\n", status);
 	if (ft_strcmp(expand->envvar, "$") == 0)
 		expand->envvarrr = ft_itoa(get_shell_pid());
 	else if (ft_strcmp(expand->envvar, "?") == 0)
