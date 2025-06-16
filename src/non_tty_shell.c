@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:14:03 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/16 17:42:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:59:26 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,12 @@ static bool	is_comment(char *input)
 	return (*input == '#');
 }
 
-static t_context	*handle_input(char *input, t_list *env, int status)
+static t_context	*handle_input_backend(t_list *tokens, t_list *env,
+		int status)
 {
-	t_list		*tokens;
 	t_context	*context;
 	t_btree		*tree;
 
-	if (ft_strlen(input) == 0 || is_comment(input))
-		return (NULL);
-	tokens = ft_lex(env, input, status);
-	if (!tokens)
-		return (NULL);
-	free(input);
-	input = NULL;
-	if (!ft_findsubshell(env, &tokens, status))
-	{
-		ft_putendl_fd("Syntax error near unexpected token ')'", STDERR_FILENO);
-		ft_lstclear(&tokens, ft_lstclear_t_token);
-		return (NULL);
-	}
 	tree = ft_parse(tokens);
 	if (!tree)
 		return (NULL);
@@ -47,13 +34,34 @@ static t_context	*handle_input(char *input, t_list *env, int status)
 	{
 		ft_btree_clear(&context->root, ft_free_leaf);
 		free(context);
-		return (0);
+		return (NULL);
 	}
 	if (!context)
 	{
 		ft_btree_clear(&tree, ft_free_leaf);
-		return (0);
+		return (NULL);
 	}
+	return (context);
+}
+
+static t_context	*handle_input(char *input, t_list *env, int status)
+{
+	t_list		*tokens;
+	t_context	*context;
+
+	if (ft_strlen(input) == 0 || is_comment(input))
+		return (NULL);
+	tokens = ft_lex(env, input, status);
+	if (!tokens)
+		return (NULL);
+	input = NULL;
+	if (!ft_findsubshell(env, &tokens, status))
+	{
+		ft_putendl_fd("Syntax error near unexpected token ')'", STDERR_FILENO);
+		ft_lstclear(&tokens, ft_lstclear_t_token);
+		return (NULL);
+	}
+	context = handle_input_backend(tokens, env, status);
 	return (context);
 }
 

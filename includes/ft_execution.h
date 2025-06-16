@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/12 15:59:50 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:29:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		ft_free_context(t_context *context, bool clear_env);
 int			ft_exec(t_context *context);
 int			ft_exec_global(t_cmd *cmd, t_list *env);
 
-int			ft_exec_simple(t_context *context, int *status);
+void		ft_exec_simple(t_context *context, int *status);
 int			ft_exec_logical(t_context *context, int *status);
 
 bool		ft_is_builtin(const char *name);
