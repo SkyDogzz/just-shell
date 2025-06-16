@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exec_logical.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
+/*   Updated: 2025/06/16 18:46:18 by tstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "ft_execution.h"
 #include "ft_io.h"
@@ -15,8 +27,8 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 	free(context_left);
 	if (node_ret == 1)
 		return (ft_free_context(context_right, false), -1);
-	if (node_ret != 0 && ft_strcmp(((t_leaf *)node->content)->cmd->args[0], "or")
-		== 0)
+	if (node_ret != 0
+		&& ft_strcmp(((t_leaf *)node->content)->cmd->args[0], "or") == 0)
 		ret = ft_exec(context_right);
 	else if (node_ret == 0 && ft_strcmp(((t_leaf *)node->content)->cmd->args[0],
 			"and") == 0)

@@ -6,17 +6,17 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/29 17:18:01 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:44:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	handle_heredoc_error(t_list *env, t_list **tokens)
+static bool	handle_heredoc_error(t_list *env, t_list **tokens, int status)
 {
 	int	error;
 
-	error = ft_handle_heredocs(env, tokens);
+	error = ft_handle_heredocs(env, tokens, status);
 	if (error)
 	{
 		if (error == HEREDOC_PARSE_ERROR)
@@ -85,7 +85,7 @@ static char	*check_tokens(t_list *tokens)
 	return (NULL);
 }
 
-t_list	*ft_lex(t_list *env, const char *input)
+t_list	*ft_lex(t_list *env, const char *input, int status)
 {
 	t_list	*tokens;
 	t_list	*pre_tokens;
@@ -96,10 +96,10 @@ t_list	*ft_lex(t_list *env, const char *input)
 		return (NULL);
 	pre_tokens = ft_remove_whitespace(pre_tokens);
 	tokens = NULL;
-	tokens = ft_string_to_token(env, tokens, pre_tokens);
+	tokens = ft_string_to_token(env, tokens, pre_tokens, status);
 	ft_lstclear(&pre_tokens, ft_lstclear_string);
 	tokens = ft_fuse_word(tokens);
-	if (handle_heredoc_error(env, &tokens))
+	if (handle_heredoc_error(env, &tokens, status))
 		return (NULL);
 	tokens = ft_remove_spaces(tokens);
 	unexpected = check_tokens(tokens);

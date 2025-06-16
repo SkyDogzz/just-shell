@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/12 17:05:47 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:46:44 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	ft_exec_simple(t_context *context, int *status)
 	int		fd[5];
 
 	ret = 0;
+	if (!ft_cmd_exists(((t_leaf *)(context->root->content))->cmd, context->env))
+	{
+		*status = 127 | CMD_NOT_FOUND_FLAG;
+		return (127);
+	}
 	init_fds(fd);
 	if (((t_leaf *)(context->root->content))->cmd->redir)
 	{
@@ -29,17 +34,20 @@ int	ft_exec_simple(t_context *context, int *status)
 		{
 			ft_dprintf(STDERR_FILENO, "failed to open outfile\n");
 			restore_fd(fd);
+			*status = 127 | CANT_OPEN_OUTFILE;
 			return (127);
 		}
 		if (!ft_infile_exec(((t_leaf *)(context->root)->content)->cmd))
 		{
 			ft_dprintf(STDERR_FILENO, "failed to open infile\n");
 			restore_fd(fd);
+			*status = 127 | CANT_OPEN_INFILE;
 			return (127);
 		}
 	}
 	if (ft_is_builtin(((t_leaf *)(context->root->content))->cmd->args[0]))
-		ret = ft_execute_builtin(((t_leaf *)(context->root->content))->cmd, context->env);
+		ret = ft_execute_builtin(((t_leaf *)(context->root->content))->cmd,
+				context->env);
 	else
 	{
 		pid = fork();
@@ -50,7 +58,8 @@ int	ft_exec_simple(t_context *context, int *status)
 			ft_close(&fd[2]);
 			ft_close(&fd[3]);
 			ft_close(&fd[4]);
-			ret = ft_exec_global(((t_leaf *)(context->root->content))->cmd, context->env);
+			ret = ft_exec_global(((t_leaf *)(context->root->content))->cmd,
+					context->env);
 			exit(ret);
 		}
 		else
