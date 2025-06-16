@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/29 17:22:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:46:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void	ft_post_expand(t_token *dup, t_list **tokens)
 	}
 }
 
-static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
+static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act,
+		int status)
 {
 	t_token	*dup;
 
@@ -62,7 +63,7 @@ static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
 		return ;
 	dup->content = ft_strdup(act->content);
 	dup->token_type = ft_gettype(dup->content);
-	dup = ft_expand(env, dup);
+	dup = ft_expand(env, dup, status);
 	dup = ft_remove_quote(dup);
 	if (ft_expand_wildcard(tokens, dup))
 	{
@@ -81,14 +82,15 @@ static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act)
 	}
 }
 
-t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens)
+t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens,
+		int status)
 {
 	t_list	*act;
 
 	act = pre_tokens;
 	while (act)
 	{
-		ft_expand_utils(env, &tokens, act);
+		ft_expand_utils(env, &tokens, act, status);
 		act = act->next;
 	}
 	return (tokens);

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/31 10:08:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:59:32 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ const char	*get_prompt_last_exit(int last_exit)
 		last_status = get_signaled_status(last_exit);
 	else if (last_exit & CMD_NOT_FOUND_FLAG)
 		last_status = ft_strdup(RED"✗ - not found"NC);
+	else if (last_exit & CANT_OPEN_OUTFILE)
+		last_status = ft_strdup(RED"✗ - can't open outfile"NC);
+	else if (last_exit & CANT_OPEN_INFILE)
+		last_status = ft_strdup(RED"✗ - can't open infile"NC);
 	else
 		last_status = ft_strdup("N/A");
 	return (last_status);
