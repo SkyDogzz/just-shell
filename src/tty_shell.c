@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/16 17:45:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:58:21 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,34 @@ static bool	is_comment(char *input)
 	return (*input == '#');
 }
 
+static t_context	*handle_input_backend(t_list *tokens, t_list *env,
+		int status)
+{
+	t_context	*context;
+	t_btree		*tree;
+
+	tree = ft_parse(tokens);
+	if (!tree)
+		return (NULL);
+	context = ft_get_execution_context(tree, env);
+	if (!handle_subshell_simple(&context->root, tokens, env, status))
+	{
+		ft_btree_clear(&context->root, ft_free_leaf);
+		free(context);
+		return (NULL);
+	}
+	if (!context)
+	{
+		ft_btree_clear(&tree, ft_free_leaf);
+		return (NULL);
+	}
+	return (context);
+}
+
 static t_context	*handle_input(char *input, t_list *env, int status)
 {
 	t_list		*tokens;
 	t_context	*context;
-	t_btree		*tree;
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (NULL);
@@ -40,21 +63,7 @@ static t_context	*handle_input(char *input, t_list *env, int status)
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (NULL);
 	}
-	tree = ft_parse(tokens);
-	if (!tree)
-		return (NULL);
-	context = ft_get_execution_context(tree, env);
-	if (!handle_subshell_simple(&context->root, tokens, env, status))
-	{
-		ft_btree_clear(&context->root, ft_free_leaf);
-		free(context);
-		return (0);
-	}
-	if (!context)
-	{
-		ft_btree_clear(&tree, ft_free_leaf);
-		return (0);
-	}
+	context = handle_input_backend(tokens, env, status);
 	return (context);
 }
 
