@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/11 18:08:53 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:00:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,7 @@ bool	open_outfile(t_cmd *cmd, int fd[5])
 		}
 		cmd->redir = cmd->redir->next;
 	}
-	printf("fd[2] %d\n", fd[2]);
 	dup2(fd[3], STDOUT_FILENO);
-	printf("fd[2] %d\n", fd[2]);
 	dup2(fd[4], STDERR_FILENO);
 	if (!ft_ft(fd, cmd, mem))
 		return (false);
