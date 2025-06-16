@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/12 15:34:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:58:07 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,30 +50,22 @@ static int	ft_exec_pipeline(t_context *context)
 	(void) context;
 }
 
-static int	ft_exec_logical(t_context *context)
-{
-	printf("Exec logical\n");
-	return (0);
-	(void) context;
-}
-
 int	ft_exec(t_context *context)
 {
-	int		ret;
 	t_btree	*root;
 	int		status;
 
 	if (!context)
 		return (1);
-	ret = 0;
 	root = context->root;
 	if (!root || !root->content)
 		return (1);
+	status = 0;
 	if (((t_leaf *)root->content)->type == NODE_WORD)
-		ret = ft_exec_simple(context, &status);
+		ft_exec_simple(context, &status);
 	else if (((t_leaf *)root->content)->type == NODE_PIPE)
-		ret = ft_exec_pipeline(context);
+		ft_exec_pipeline(context);
 	else if (((t_leaf *)root->content)->type == NODE_LOGICAL)
-		ret = ft_exec_logical(context);
-	return (ret);
+		ft_exec_logical(context, &status);
+	return (status);
 }

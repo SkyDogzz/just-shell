@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/11 18:06:19 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:51:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # include "ft_env.h"
 
 # define CMD_NOT_FOUND_FLAG 0x10000
+# define CANT_OPEN_INFILE 0x20000
+# define CANT_OPEN_OUTFILE 0x40000
 
 # define NC		"\1\e[0m\2"
 # define BOLD	"\1\e[1m\2"
@@ -201,14 +203,14 @@ void	ft_lstprint_tokens(t_list *lst, const char *s);
 void	ft_lstclear_pipes(void *content);
 void	ft_lstprint_pipes(t_list *lst, const char *s);
 
-int		ft_handle_heredocs(t_list *env, t_list **lst);
+int		ft_handle_heredocs(t_list *env, t_list **lst, int status);
 char	*ft_read_heredoc(const char *delimiter);
 
-t_list	*ft_lex(t_list *env, const char *cmd_line);
+t_list	*ft_lex(t_list *env, const char *cmd_line, int status);
 t_list	*ft_doom_split(const char *input);
 t_list	*ft_remove_whitespace(t_list *lst);
 t_token	*ft_remove_quote(t_token *token);
-t_token	*ft_expand(t_list *env, t_token *token);
+t_token	*ft_expand(t_list *env, t_token *token, int status);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
 
@@ -238,12 +240,14 @@ void	ft_free_leaf(void *leaf);
 
 char	*ft_handle_multiline_quote(char *input);
 
-bool	ft_findsubshell(t_list *env, t_list **tokens);
+bool	ft_findsubshell(t_list *env, t_list **tokens, int status);
 char	*ft_read_subshell(int level);
-bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env);
+bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env,
+			int status);
 bool	ft_verif_after_paren(t_list *tokens);
 
-t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens);
+t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens,
+			int status);
 
 char	*ft_readline(t_prompt id, t_list *env, int last_status);
 

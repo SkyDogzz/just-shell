@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:26:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/27 16:30:20 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/16 18:51:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@ char	*ft_read_subshell(int level)
 		content = fuse_content(content, input);
 		free(input);
 	}
-	printf("content %s\n", content);
 	return (content);
 }
