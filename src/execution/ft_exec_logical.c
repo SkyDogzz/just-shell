@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 18:46:18 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:50:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_exec_logical(t_context *context, int *status)
 	if (!context || !context->root)
 		return (0);
 	if (((t_leaf *)context->root->content)->type == NODE_LOGICAL)
-		return (exec_logical_node((t_btree *)context->root, context->env));
-	return (-1);
-	(void) status;
+		*status = exec_logical_node((t_btree *)context->root, context->env);
+	return (*status);
 }
