@@ -13,9 +13,9 @@
 #include "ft_env.h"
 #include "ft_execution.h"
 
-t_context	*ft_get_execution_context(t_btree *tree, t_list *env)
+t_sombrax	*ft_get_execution_context(t_btree *tree, t_list *env)
 {
-	t_context	*context;
+	t_sombrax	*context;
 
 	if (!tree || !env)
 		return (NULL);
@@ -28,7 +28,7 @@ t_context	*ft_get_execution_context(t_btree *tree, t_list *env)
 	return (context);
 }
 
-void	ft_free_context(t_context *context, bool clear_env)
+void	ft_free_context(t_sombrax *context, bool clear_env)
 {
 	if (!context)
 		return ;

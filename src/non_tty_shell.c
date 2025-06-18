@@ -20,10 +20,10 @@ static bool	is_comment(char *input)
 	return (*input == '#');
 }
 
-static t_context	*handle_input_backend(t_list *tokens, t_list *env,
+static t_sombrax	*handle_input_backend(t_list *tokens, t_list *env,
 		int status)
 {
-	t_context	*context;
+	t_sombrax	*context;
 	t_btree		*tree;
 
 	tree = ft_parse(tokens);
@@ -44,10 +44,10 @@ static t_context	*handle_input_backend(t_list *tokens, t_list *env,
 	return (context);
 }
 
-static t_context	*handle_input(char *input, t_list *env, int status)
+static t_sombrax	*handle_input(char *input, t_list *env, int status)
 {
 	t_list		*tokens;
-	t_context	*context;
+	t_sombrax	*context;
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (NULL);
@@ -69,7 +69,7 @@ static int	main_process(t_list *env)
 {
 	char		*input;
 	int			status;
-	t_context	*context;
+	t_sombrax	*context;
 
 	while (true)
 	{

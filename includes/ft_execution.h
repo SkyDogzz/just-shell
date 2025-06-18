@@ -24,22 +24,22 @@ typedef enum e_pipeside
 	PIPE_RIGHT
 }		t_pipeside;
 
-typedef struct s_context
+typedef struct s_sombrax
 {
 	int		last_exit_code;
 	t_btree	*root;
 	t_list	*env;
-}	t_context;
+}	t_sombrax;
 
-t_context	*ft_get_execution_context(t_btree *tree, t_list *env);
-void		ft_free_context(t_context *context, bool clear_env);
+t_sombrax	*ft_get_execution_context(t_btree *tree, t_list *env);
+void		ft_free_context(t_sombrax *context, bool clear_env);
 
-int			ft_exec(t_context *context);
+int			ft_exec(t_sombrax *context);
 int			ft_exec_global(t_cmd *cmd, t_list *env);
 
-void		ft_exec_simple(t_context *context, int *status);
-int			ft_exec_logical(t_context *context, int *status);
-int			ft_exec_pipeline(t_context *context, int *status);
+void		ft_exec_simple(t_sombrax *context, int *status);
+int			ft_exec_logical(t_sombrax *context, int *status);
+int			ft_exec_pipeline(t_sombrax *context, int *status);
 
 bool		ft_is_builtin(const char *name);
 bool		ft_cmd_exists(t_cmd *cmd, t_list *env);

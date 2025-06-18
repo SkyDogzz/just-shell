@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 19:15:35 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:49:11 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_execution.h"
 #include "ft_io.h"
 
-static int	manage_redir(t_context *context, int fd[5], int *status)
+static int	manage_redir(t_sombrax *context, int fd[5], int *status)
 {
 	if (((t_leaf *)(context->root->content))->cmd->redir)
 	{
@@ -43,7 +43,7 @@ static void	close_fds(int *fd, int number)
 		ft_close(&fd[number]);
 }
 
-static void	manage_fork(t_context *context, int fd[5], int *status)
+static void	manage_fork(t_sombrax *context, int fd[5], int *status)
 {
 	pid_t	pid;
 
@@ -53,13 +53,14 @@ static void	manage_fork(t_context *context, int fd[5], int *status)
 		close_fds(fd, 5);
 		*status = ft_exec_global(((t_leaf *)(context->root->content))->cmd,
 				context->env);
-		exit(*status);
+		ft_free_context(context, true);
+		//exit(*status);
 	}
 	else
 		waitpid(pid, status, 0);
 }
 
-void	ft_exec_simple(t_context *context, int *status)
+void	ft_exec_simple(t_sombrax *context, int *status)
 {
 	int		fd[5];
 
