@@ -17,7 +17,7 @@ static bool	handle_subshell_utils(t_btree **root, t_list *env, t_list *tokens,
 		int status)
 {
 	t_btree		*mem ;
-	t_context	*context;
+	t_sombrax	*context;
 	char		*sub;
 
 	sub = ft_substr(((t_leaf *)(*root)->content)->cmd->args[0], 1,

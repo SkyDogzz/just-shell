@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/16 20:05:23 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:45:49 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,17 @@ int	ft_exec_global(t_cmd *cmd, t_list *env)
 	if (!path)
 		return (ft_freeplusplus(path, NULL));
 	env_arr = ft_lsttoarray_c(env, copy_env_to_str);
-	if (!env_arr)
-		return (ft_freeplusplus(path, NULL));
 	if (!execve(path, cmd->args, (char *const *)env_arr))
 		return (ft_freeplusplus(path, &env_arr));
 	return (0);
 }
 
-int	ft_exec(t_context *context)
+int	ft_exec(t_sombrax *context)
 {
 	t_btree	*root;
 	int		status;
 
+	dprintf(STDERR_FILENO, "*pom pom popm* j'execute depuis %d\n", getpid());
 	if (!context)
 		return (1);
 	root = context->root;

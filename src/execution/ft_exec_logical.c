@@ -18,8 +18,8 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 {
 	int			ret;
 	int			node_ret;
-	t_context	*context_left;
-	t_context	*context_right;
+	t_sombrax	*context_left;
+	t_sombrax	*context_right;
 
 	context_left = ft_get_execution_context(node->left, env);
 	context_right = ft_get_execution_context(node->right, env);
@@ -38,7 +38,7 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 	return (free(context_right), ret);
 }
 
-int	ft_exec_logical(t_context *context, int *status)
+int	ft_exec_logical(t_sombrax *context, int *status)
 {
 	if (!context || !context->root)
 		return (0);
