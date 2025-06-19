@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 05:16:59 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 18:45:40 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 08:06:22 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	handle_subshell_utils(t_btree **root, t_list *env, t_list *tokens,
 		int status)
 {
 	t_btree		*mem ;
-	t_context	*context;
+	t_contex2	*context;
 	char		*sub;
 
 	sub = ft_substr(((t_leaf *)(*root)->content)->cmd->args[0], 1,

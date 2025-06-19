@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 19:00:48 by yandry            #+#    #+#              #
-#    Updated: 2025/06/19 06:20:36 by tstephan         ###   ########.fr        #
+#    Updated: 2025/06/19 10:28:32 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,6 @@ FT_IO_SRC			:= ft_tuyau.c \
 					   outfile.c \
 					   v2.c \
 					   file_operations.c
-
-ifdef CUSTOM_RL
-FT_IO_SRC			+= $(addprefix ft_readline/, $(FT_READLINE_SRC))
-endif
 
 FT_IO_OBJ			:= $(FT_IO_SRC:.c=.o)
 FT_IO_SRCS			:= $(addprefix $(SRC_PATH)io/, $(FT_IO_SRC))

@@ -6,16 +6,16 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:23:32 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/27 16:24:32 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/19 08:00:18 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 #include "ft_execution.h"
 
-t_context	*ft_get_execution_context(t_btree *tree, t_list *env)
+t_contex2	*ft_get_execution_context(t_btree *tree, t_list *env)
 {
-	t_context	*context;
+	t_contex2	*context;
 
 	if (!tree || !env)
 		return (NULL);
@@ -23,12 +23,12 @@ t_context	*ft_get_execution_context(t_btree *tree, t_list *env)
 	if (!context)
 		return (NULL);
 	context->root = tree;
+	context->context = tree;
 	context->env = env;
-	context->last_exit_code = 0;
 	return (context);
 }
 
-void	ft_free_context(t_context *context, bool clear_env)
+void	ft_free_context(t_contex2 *context, bool clear_env)
 {
 	if (!context)
 		return ;

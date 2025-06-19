@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 06:35:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:27:34 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ int	ft_exec_global(t_cmd *cmd, t_list *env)
 	return (0);
 }
 
-int	ft_exec(t_context *context)
+int	ft_exec(t_contex2 *context)
 {
-	t_btree	*root;
+	t_btree	*ctx;
 	int		status;
 
 	if (!context)
 		return (1);
-	root = context->root;
-	if (!root || !root->content)
+	ctx = context->context;
+	if (!ctx || !ctx->content)
 		return (1);
 	status = 0;
-	if (((t_leaf *)root->content)->type == NODE_WORD)
+	if (((t_leaf *)ctx->content)->type == NODE_WORD)
 		ft_exec_simple(context, &status);
-	else if (((t_leaf *)root->content)->type == NODE_PIPE)
+	else if (((t_leaf *)ctx->content)->type == NODE_PIPE)
 		ft_exec_pipeline(context, &status);
-	else if (((t_leaf *)root->content)->type == NODE_LOGICAL)
+	else if (((t_leaf *)ctx->content)->type == NODE_LOGICAL)
 		ft_exec_logical(context, &status);
 	return (status);
 }

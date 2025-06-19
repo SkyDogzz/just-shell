@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 06:36:50 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 08:05:15 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 {
 	int			ret;
 	int			node_ret;
-	t_context	*context_left;
-	t_context	*context_right;
+	t_contex2	*context_left;
+	t_contex2	*context_right;
 
 	context_left = ft_get_execution_context(node->left, env);
 	context_right = ft_get_execution_context(node->right, env);
@@ -37,7 +37,7 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 	return (free(context_right), ret);
 }
 
-int	ft_exec_logical(t_context *context, int *status)
+int	ft_exec_logical(t_contex2 *context, int *status)
 {
 	if (!context || !context->root)
 		return (0);
