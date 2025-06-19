@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 07:02:54 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:21:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,13 @@ bool	ft_infile_exec(t_cmd *cmd)
 			return (false);
 		}
 		while (cmd->redir)
+		{
 			if (!ft_redir_all(cmd, fd, filename))
 			{
 				free(filename);
 				return (false);
 			}
+		}
 		ft_close(&fd);
 		fd = open(filename, O_RDONLY | O_CLOEXEC);
 		if (fd < 0)
