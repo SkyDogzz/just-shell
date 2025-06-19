@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 06:19:44 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:36:25 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	run_child(t_btree *root, t_list *env,
 			&& other_fd != STDOUT_FILENO)
 			ft_close(&other_fd);
 		context = ft_get_execution_context(root, env);
-		status = ft_exec(context, false);
+		status = ft_exec(context);
 		ft_free_context(context, false);
 		exit(status);
 	}
