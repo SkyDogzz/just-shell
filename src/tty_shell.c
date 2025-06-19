@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 12:27:31 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:42:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_contex2	*handle_input_backend(t_list *tokens, t_list *env,
 	return (context);
 }
 
-static t_contex2	*handle_input(char *input, t_list *env, int status)
+t_contex2	*handle_input(char *input, t_list *env, int status)
 {
 	t_list		*tokens;
 	t_contex2	*context;
@@ -65,44 +65,6 @@ static t_contex2	*handle_input(char *input, t_list *env, int status)
 	}
 	context = handle_input_backend(tokens, env, status);
 	return (context);
-}
-
-static int	main_process_tty(t_list *env)
-{
-	char		*input;
-	int			status;
-	t_contex2	*context;
-	void		*test;
-
-	status = 0;
-	while (true)
-	{
-		test = malloc(INT_MAX >> 8);
-		if (!test)
-		{
-			ft_dprintf(STDERR_FILENO, "the heap failed ahh run away\n");
-			return (status);
-		}
-		free(test);
-		input = ft_readline(PROMPT_MAIN, env, status);
-		if (!input)
-			break ;
-		input = ft_handle_multiline_quote(input);
-		if (!input)
-			continue ;
-		context = handle_input(input, env, status);
-		if (!context)
-		{
-			free(input);
-			continue ;
-		}
-		free(input);
-		status = ft_exec(context);
-		ft_free_context(context, false);
-		if (status == 238)
-			return (0);
-	}
-	return (status);
 }
 
 int	tty_shell(t_list *env)

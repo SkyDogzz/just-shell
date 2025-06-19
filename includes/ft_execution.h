@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 12:24:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:47:57 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ char		*ft_get_executable_path(const t_cmd *cmd, t_list *env);
 
 int			setup_pipe(int pipe_fds[2]);
 void		destop_turbo(int pipe_fds[2]);
+
+t_contex2	*handle_input(char *input, t_list *env, int status);
 
 #endif
