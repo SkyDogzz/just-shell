@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 06:36:07 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 07:18:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,18 @@ static int	main_process_tty(t_list *env)
 	char		*input;
 	int			status;
 	t_context	*context;
+	void	 	*test;
 
 	status = 0;
 	while (true)
 	{
+		test = malloc(INT_MAX);
+		if (!test)
+		{
+			ft_dprintf(STDERR_FILENO, "the heap failed ahh run away\n");
+			return (status);
+		}
+		free(test);
 		input = ft_readline(PROMPT_MAIN, env, status);
 		if (!input)
 			break ;

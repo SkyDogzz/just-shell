@@ -6,7 +6,7 @@
 /*   By: tstephan <tstephan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:00:01 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 05:51:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:41:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	ft_signal_handler(const int signal)
 {
-	printf("aa\n");
 	if (signal == SIGINT)
 	{
 		g_exit = SIGINT;
