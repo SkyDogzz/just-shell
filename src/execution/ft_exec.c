@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 03:20:07 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:12:01 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_exec(t_context *context, bool do_fork)
 	t_btree	*root;
 	int		status;
 
-	ft_dprintf(STDERR_FILENO, "pid %d\n", getpid());
 	if (!context)
 		return (1);
 	root = context->root;

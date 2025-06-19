@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 04:33:23 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 02:48:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:10:28 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ bool	cmd_exists_in_path(t_cmd *cmd, t_list *env)
 bool	ft_cmd_exists(t_cmd *cmd, t_list *env)
 {
 	bool	ret;
+
 	if (!cmd)
 		return (false);
-	ret = cmd_is_alias(cmd)
-		|| cmd_is_builtin(cmd)
-		|| cmd_exists_in_path(cmd, env);
+	ret = (cmd_is_alias(cmd) || cmd_is_builtin(cmd)
+			|| cmd_exists_in_path(cmd, env));
 	if (!ret)
 		ft_dprintf(STDERR_FILENO, "Command not found \"%s\"\n", cmd->args[0]);
 	return (ret);

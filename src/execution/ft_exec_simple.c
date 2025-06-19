@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 05:47:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:24:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	manage_fork(t_context *context, int fd[5], int *status)
 		close_fds(fd, 5);
 		*status = ft_exec_global(((t_leaf *)(context->root->content))->cmd,
 				context->env);
+		ft_free_context(context, true);
 		exit(*status);
 	}
 	else
@@ -76,8 +77,7 @@ void	ft_exec_simple(t_context *context, int *status, bool do_fork)
 	if (ft_is_builtin(((t_leaf *)(context->root->content))->cmd->args[0]))
 		*status = ft_execute_builtin(((t_leaf *)(context->root->content))->cmd,
 				context->env);
-	else
-	/*else if (do_fork)*/
+	else if (do_fork)
 		manage_fork(context, fd, status);
 	if (((t_leaf *)(context->root->content))->cmd->redir)
 		restore_fd(fd);
