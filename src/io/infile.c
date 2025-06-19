@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:21:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:37:53 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	return (true);
 }
 
-static bool	ft_redir_all(t_cmd *cmd, int fd, char *filename)
+bool	ft_redir_all(t_cmd *cmd, int fd, char *filename)
 {
 	if (((t_redir *)cmd->redir->content)->type != REDIR_INPUT
 		&& ((t_redir *)cmd->redir->content)->type != REDIR_HEREDOC)
@@ -78,45 +78,5 @@ static bool	ft_redir_all(t_cmd *cmd, int fd, char *filename)
 	else
 		ft_redir_heredoc(cmd, fd);
 	cmd->redir = cmd->redir->next;
-	return (true);
-}
-
-bool	ft_infile_exec(t_cmd *cmd)
-{
-	int		fd;
-	char	*filename;
-	t_list	*redir;
-
-	redir = cmd->redir;
-	if (cmd->redir)
-	{
-		filename = get_tmp_fd();
-		fd = open(filename, O_CREAT | O_WRONLY | O_CLOEXEC, 0644);
-		if (fd < 0)
-		{
-			free(filename);
-			return (false);
-		}
-		while (cmd->redir)
-		{
-			if (!ft_redir_all(cmd, fd, filename))
-			{
-				free(filename);
-				return (false);
-			}
-		}
-		ft_close(&fd);
-		fd = open(filename, O_RDONLY | O_CLOEXEC);
-		if (fd < 0)
-		{
-			free(filename);
-			return (false);
-		}
-		dup2(fd, STDIN_FILENO);
-		ft_close(&fd);
-		unlink(filename);
-		free(filename);
-	}
-	cmd->redir = redir;
 	return (true);
 }
