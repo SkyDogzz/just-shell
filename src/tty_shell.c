@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 07:18:03 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:25:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static bool	is_comment(char *input)
 	return (*input == '#');
 }
 
-static t_context	*handle_input_backend(t_list *tokens, t_list *env,
+static t_contex2	*handle_input_backend(t_list *tokens, t_list *env,
 		int status)
 {
-	t_context	*context;
+	t_contex2	*context;
 	t_btree		*tree;
 
 	tree = ft_parse(tokens);
@@ -45,10 +45,10 @@ static t_context	*handle_input_backend(t_list *tokens, t_list *env,
 	return (context);
 }
 
-static t_context	*handle_input(char *input, t_list *env, int status)
+static t_contex2	*handle_input(char *input, t_list *env, int status)
 {
 	t_list		*tokens;
-	t_context	*context;
+	t_contex2	*context;
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (NULL);
@@ -71,13 +71,13 @@ static int	main_process_tty(t_list *env)
 {
 	char		*input;
 	int			status;
-	t_context	*context;
+	t_contex2	*context;
 	void	 	*test;
 
 	status = 0;
 	while (true)
 	{
-		test = malloc(INT_MAX);
+		test = malloc(INT_MAX >> 8);
 		if (!test)
 		{
 			ft_dprintf(STDERR_FILENO, "the heap failed ahh run away\n");
