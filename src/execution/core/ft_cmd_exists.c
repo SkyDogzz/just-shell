@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 04:33:23 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/09 13:12:45 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/19 02:48:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ static bool	cmd_is_alias(t_cmd *cmd)
 	return (false);
 }
 
-static bool	cmd_exists_in_path(t_cmd *cmd, t_list *env)
+static bool	is_executable_file(const char *path)
 {
-	char	*path;
+	struct stat	sb;
 
-	path = ft_get_executable_path(cmd, env);
-	if (!path)
-		return (false);
-	free(path);
-	return (true);
+	if (stat(path, &sb) == 0 && S_ISREG(sb.st_mode) && access(path, X_OK) == 0)
+		return (true);
+	return (false);
 }
 
 static bool	cmd_is_builtin(t_cmd *cmd)
@@ -34,11 +32,31 @@ static bool	cmd_is_builtin(t_cmd *cmd)
 	return (cmd->args && ft_is_builtin(cmd->args[0]));
 }
 
+bool	cmd_exists_in_path(t_cmd *cmd, t_list *env)
+{
+	char	*path;
+
+	path = ft_get_executable_path(cmd, env);
+	if (!path)
+		return (false);
+	if (!is_executable_file(path))
+	{
+		free(path);
+		return (false);
+	}
+	free(path);
+	return (true);
+}
+
 bool	ft_cmd_exists(t_cmd *cmd, t_list *env)
 {
+	bool	ret;
 	if (!cmd)
 		return (false);
-	return (cmd_is_alias(cmd)
+	ret = cmd_is_alias(cmd)
 		|| cmd_is_builtin(cmd)
-		|| cmd_exists_in_path(cmd, env));
+		|| cmd_exists_in_path(cmd, env);
+	if (!ret)
+		ft_dprintf(STDERR_FILENO, "Command not found \"%s\"\n", cmd->args[0]);
+	return (ret);
 }
