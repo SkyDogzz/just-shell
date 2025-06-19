@@ -6,13 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 19:50:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:36:50 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_execution.h"
-#include "ft_io.h"
 
 static int	exec_logical_node(t_btree *node, t_list *env)
 {

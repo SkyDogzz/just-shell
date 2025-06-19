@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 17:51:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 07:14:07 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <dirent.h>
+# include <limits.h>
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
@@ -184,6 +185,7 @@ typedef struct s_expand
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
+void	ft_set_sigaction_no_inter(void);
 bool	handle_sigint(void);
 
 char	*ft_strndup(const char *s, size_t n);

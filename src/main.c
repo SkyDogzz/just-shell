@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/23 13:18:21 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/19 02:30:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char *argv[], char *argp[])
 	if (isatty(STDIN_FILENO))
 		shell_mode = tty_shell;
 	else
-		shell_mode = non_tty_shell;
+		shell_mode = tty_shell;
 	final_ret = shell_mode(env);
 	ft_clear_env(env);
 	exit(final_ret);

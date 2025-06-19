@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:22:10 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/11 18:10:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:19:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	store_fd(int fd[5])
 
 void	restore_fd(int fd[5])
 {
-	dup2(fd[0], STDIN_FILENO);
+	dup2v2(fd[0], STDIN_FILENO);
 	ft_close(&fd[0]);
-	dup2(fd[1], STDOUT_FILENO);
+	dup2v2(fd[1], STDOUT_FILENO);
 	ft_close(&fd[1]);
-	dup2(fd[2], STDERR_FILENO);
+	dup2v2(fd[2], STDERR_FILENO);
 	ft_close(&fd[2]);
 	ft_close(&fd[3]);
 	ft_close(&fd[4]);
