@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 11:45:03 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:57:44 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define COMMAND_FAILED "ssh-xx: failed to run command: %s\n"
 
 # define MAX_PIDS_WAIT 65535
-
 
 typedef enum e_pipeside
 {
