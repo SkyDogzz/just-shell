@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:14:03 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/16 18:59:26 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 03:10:01 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	main_process(t_list *env)
 			free(input);
 			return (0);
 		}
-		status = ft_exec(context);
+		status = ft_exec(context, true);
 		if (status == 2)
 			return (0);
 	}

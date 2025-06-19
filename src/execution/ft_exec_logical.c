@@ -6,13 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 19:50:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 03:10:55 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_execution.h"
-#include "ft_io.h"
 
 static int	exec_logical_node(t_btree *node, t_list *env)
 {
@@ -23,16 +22,16 @@ static int	exec_logical_node(t_btree *node, t_list *env)
 
 	context_left = ft_get_execution_context(node->left, env);
 	context_right = ft_get_execution_context(node->right, env);
-	node_ret = ft_exec(context_left);
+	node_ret = ft_exec(context_left, true);
 	free(context_left);
 	if (node_ret == 1)
 		return (ft_free_context(context_right, false), -1);
 	if (node_ret != 0
 		&& ft_strcmp(((t_leaf *)node->content)->cmd->args[0], "or") == 0)
-		ret = ft_exec(context_right);
+		ret = ft_exec(context_right, true);
 	else if (node_ret == 0 && ft_strcmp(((t_leaf *)node->content)->cmd->args[0],
 			"and") == 0)
-		ret = ft_exec(context_right);
+		ret = ft_exec(context_right, true);
 	else
 		return (free(context_right), -1);
 	return (free(context_right), ret);

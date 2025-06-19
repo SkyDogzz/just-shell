@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 20:09:24 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 05:46:17 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ static int	run_child(t_btree *root, t_list *env, int in_fd, int out_fd)
 		return (127);
 	if (pid == 0)
 	{
+		ft_set_sigaction_no_inter();
 		if (in_fd != STDIN_FILENO)
 			dup2(in_fd, STDIN_FILENO);
 		if (out_fd != STDOUT_FILENO)
 			dup2(out_fd, STDOUT_FILENO);
 		if (in_fd != STDIN_FILENO)
-			close(in_fd);
+			ft_close(&in_fd);
 		if (out_fd != STDOUT_FILENO)
-			close(out_fd);
+			ft_close(&out_fd);
 		context = ft_get_execution_context(root, env);
-		status = ft_exec(context);
+		status = ft_exec(context, false);
 		ft_free_context(context, false);
 		exit(status);
 	}
@@ -45,7 +46,7 @@ static int	launch_recursive(t_btree *root, t_list *env, int in_fd)
 {
 	int		status;
 	t_leaf	*leaf;
-	pid_t	pid[2];
+	pid_t	pid;
 	int		fd[2];
 
 	if (!root)
@@ -53,20 +54,25 @@ static int	launch_recursive(t_btree *root, t_list *env, int in_fd)
 	leaf = root->content;
 	if (leaf->type != NODE_PIPE)
 	{
-		pid[0] = run_child(root, env, in_fd, STDOUT_FILENO);
+		pid = run_child(root, env, in_fd, STDOUT_FILENO);
 		if (in_fd != STDIN_FILENO)
-			close(in_fd);
-		waitpid(pid[0], &status, 0);
+			ft_close(&in_fd);
+		waitpid(pid, &status, 0);
 		return (status);
 	}
 	if (pipe(fd) == -1)
 		return (127);
-	pid[1] = run_child(root->left, env, in_fd, fd[1]);
-	close(fd[1]);
+	printf("fd = %d\n", fd[0]);
+	printf("fd = %d\n", fd[1]);
+	ioctl(fd[0], FIOCLEX);
+	ioctl(fd[1], FIOCLEX);
+	pid = run_child(root->left, env, in_fd, fd[1]);
+	waitpid(pid, NULL, 0);
+	ft_close(&fd[1]);
 	if (in_fd != STDIN_FILENO)
-		close(in_fd);
+		ft_close(&in_fd);
 	status = launch_recursive(root->right, env, fd[0]);
-	waitpid(pid[1], NULL, 0);
+	ft_close(&fd[0]);
 	return (status);
 }
 
