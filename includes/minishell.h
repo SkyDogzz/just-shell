@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 05:45:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 07:14:07 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <dirent.h>
+# include <limits.h>
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
