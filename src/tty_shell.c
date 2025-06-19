@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 10:25:24 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:27:31 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	main_process_tty(t_list *env)
 	char		*input;
 	int			status;
 	t_contex2	*context;
-	void	 	*test;
+	void		*test;
 
 	status = 0;
 	while (true)

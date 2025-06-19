@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 10:24:07 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:24:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef enum e_pipeside
 
 typedef struct s_context
 {
-	t_btree *root;
-	t_btree *context;
+	t_btree	*root;
+	t_btree	*context;
 	t_list	*env;
 }	t_contex2;
 
