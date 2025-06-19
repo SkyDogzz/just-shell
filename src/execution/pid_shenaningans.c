@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:33:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 12:35:39 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:57:29 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	*get_pid_array(void)
 {
 	static int	pids[MAX_PIDS_WAIT];
-	static int _init = 0;
+	static int	_init = 0;
 	int			i;
 
 	i = 0;
@@ -46,7 +46,7 @@ void	operate_on_pid_list(t_pid_op op, int pid)
 
 void	wait_all(int *status)
 {
-	int *pids;
+	int	*pids;
 	int	highest_pid;
 	int	state;
 	int	i;
@@ -65,7 +65,6 @@ void	wait_all(int *status)
 				*status = state;
 				highest_pid = pids[i];
 			}
-			ft_dprintf(STDERR_FILENO, "%d's exit status: %d\n", pids[i], WEXITSTATUS(*status));
 		}
 		pids[i++] = -1;
 	}

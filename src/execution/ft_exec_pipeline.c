@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:41:28 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:58:23 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
 		ft_free_context(context, true);
 		exit(status);
 	}
-	operate_on_pid_list(OP_INSERT, pid);
 	return (pid);
 }
 
@@ -70,6 +69,7 @@ static int	handle_pipe_node(t_contex2 *context, int in_fd)
 	mem = context->context;
 	context->context = mem->left;
 	pid = run_child(context, in_fd, fd[1], fd[0]);
+	operate_on_pid_list(OP_INSERT, pid);
 	ft_close(&fd[1]);
 	if (in_fd != STDIN_FILENO)
 		ft_close(&in_fd);
@@ -78,6 +78,7 @@ static int	handle_pipe_node(t_contex2 *context, int in_fd)
 	ft_close(&fd[0]);
 	wait_all(&status);
 	return (status);
+	(void)pid;
 }
 
 static int	launch_recursive(t_contex2 *context, int in_fd)
