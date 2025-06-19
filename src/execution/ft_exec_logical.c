@@ -6,42 +6,43 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 08:05:15 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:13:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_execution.h"
 
-static int	exec_logical_node(t_btree *node, t_list *env)
+static int exec_logical_node(t_contex2 *context)
 {
-	int			ret;
-	int			node_ret;
-	t_contex2	*context_left;
-	t_contex2	*context_right;
+    int     left_status;
+    int     right_status;
+    char   *op;
+    t_btree *mem = context->context;
 
-	context_left = ft_get_execution_context(node->left, env);
-	context_right = ft_get_execution_context(node->right, env);
-	node_ret = ft_exec(context_left);
-	free(context_left);
-	if (node_ret == 1)
-		return (ft_free_context(context_right, false), -1);
-	if (node_ret != 0
-		&& ft_strcmp(((t_leaf *)node->content)->cmd->args[0], "or") == 0)
-		ret = ft_exec(context_right);
-	else if (node_ret == 0 && ft_strcmp(((t_leaf *)node->content)->cmd->args[0],
-			"and") == 0)
-		ret = ft_exec(context_right);
-	else
-		return (free(context_right), -1);
-	return (free(context_right), ret);
+    context->context = mem->left;
+    left_status      = ft_exec(context);
+    op = ((t_leaf *)mem->content)->cmd->args[0];
+    if ((ft_strcmp(op, "or")  == 0 && left_status != 0) ||
+        (ft_strcmp(op, "and") == 0 && left_status == 0))
+    {
+        context->context = mem->right;
+        right_status = ft_exec(context);
+        context->context = mem;
+        return right_status;  
+    }
+    context->context = mem;    
+    return left_status; 
 }
 
-int	ft_exec_logical(t_contex2 *context, int *status)
+int ft_exec_logical(t_contex2 *context, int *status)
 {
-	if (!context || !context->root)
-		return (0);
-	if (((t_leaf *)context->root->content)->type == NODE_LOGICAL)
-		*status = exec_logical_node((t_btree *)context->root, context->env);
-	return (*status);
+    if (!context || !context->context)
+        return 0;
+
+    if (((t_leaf *)context->context->content)->type == NODE_LOGICAL)
+        *status = exec_logical_node(context);
+
+    return *status;
 }
+
