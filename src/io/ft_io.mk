@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 19:00:48 by yandry            #+#    #+#              #
-#    Updated: 2025/06/19 10:28:32 by tstephan         ###   ########.fr        #
+#    Updated: 2025/06/19 12:38:10 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ FT_READLINE_SRC		:= ft_readline.c \
 
 FT_IO_SRC			:= ft_tuyau.c \
 					   infile.c \
+					   infile_utils.c \
 					   outfile.c \
 					   v2.c \
 					   file_operations.c
