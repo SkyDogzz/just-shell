@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 08:23:49 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:26:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ static void	manage_fork(t_contex2 *context, int fd[5], int *status)
 void	ft_exec_simple(t_contex2 *context, int *status)
 {
 	int		fd[5];
+	t_leaf	*leaf;
 
-	if (!ft_cmd_exists(((t_leaf *)(context->context->content))->cmd, context->env))
+	leaf = context->context->content;
+	if (!ft_cmd_exists(leaf->cmd, context->env))
 	{
 		*status = 127 | CMD_NOT_FOUND_FLAG;
 		return ;
@@ -74,11 +76,10 @@ void	ft_exec_simple(t_contex2 *context, int *status)
 	manage_redir(context, fd, status);
 	if (*status)
 		return ;
-	if (ft_is_builtin(((t_leaf *)(context->context->content))->cmd->args[0]))
-		*status = ft_execute_builtin(((t_leaf *)(context->context->content))->cmd,
-				context->env);
+	if (ft_is_builtin(leaf->cmd->args[0]))
+		*status = ft_execute_builtin(leaf->cmd, context->env);
 	else
 		manage_fork(context, fd, status);
-	if (((t_leaf *)(context->context->content))->cmd->redir)
+	if (leaf->cmd->redir)
 		restore_fd(fd);
 }

@@ -35,8 +35,8 @@ typedef enum e_pid_op
 
 typedef struct s_context
 {
-	t_btree *root;
-	t_btree *context;
+	t_btree	*root;
+	t_btree	*context;
 	t_list	*env;
 }	t_contex2;
 
@@ -61,5 +61,6 @@ void		destop_turbo(int pipe_fds[2]);
 
 void		operate_on_pid_list(t_pid_op op, int pid);
 void		wait_all(int *status);
+t_contex2	*handle_input(char *input, t_list *env, int status);
 
 #endif

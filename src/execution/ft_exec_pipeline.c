@@ -44,25 +44,27 @@ static int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
 	return (pid);
 }
 
-static int	launch_recursive(t_contex2 *context, int in_fd)
+static int	handle_simple_node(t_contex2 *context, int in_fd)
 {
 	int		status;
-	t_leaf	*leaf;
 	pid_t	pid;
-	int		fd[2];
-	t_btree	*mem;
 
-	if (!context)
-		return (0);
-	leaf = context->context->content;
-	if (leaf->type != NODE_PIPE)
-	{
-		pid = run_child(context, in_fd, STDOUT_FILENO, -1);
-		if (in_fd != STDIN_FILENO)
-			ft_close(&in_fd);
-		waitpid(pid, &status, 0);
-		return (status);
-	}
+	pid = run_child(context, in_fd, STDOUT_FILENO, -1);
+	if (in_fd != STDIN_FILENO)
+		ft_close(&in_fd);
+	waitpid(pid, &status, 0);
+	return (status);
+}
+
+static int	launch_recursive(t_contex2 *context, int in_fd);
+
+static int	handle_pipe_node(t_contex2 *context, int in_fd)
+{
+	int		fd[2];
+	pid_t	pid;
+	t_btree	*mem;
+	int		status;
+
 	if (pipev2(fd) == -1)
 		return (127);
 	mem = context->context;
@@ -76,6 +78,18 @@ static int	launch_recursive(t_contex2 *context, int in_fd)
 	ft_close(&fd[0]);
 	wait_all(&status);
 	return (status);
+}
+
+static int	launch_recursive(t_contex2 *context, int in_fd)
+{
+	t_leaf	*leaf;
+
+	if (!context)
+		return (0);
+	leaf = context->context->content;
+	if (leaf->type != NODE_PIPE)
+		return (handle_simple_node(context, in_fd));
+	return (handle_pipe_node(context, in_fd));
 }
 
 int	ft_exec_pipeline(t_contex2 *context, int *status)
