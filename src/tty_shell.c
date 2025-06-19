@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/16 18:58:21 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 01:33:46 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int	main_process_tty(t_list *env)
 			free(input);
 			continue ;
 		}
+		free(input);
 		status = ft_exec(context);
 		ft_free_context(context, false);
 		if (status == 238)
