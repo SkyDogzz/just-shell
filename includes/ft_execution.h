@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 10:24:07 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:45:03 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,20 @@
 # define COMMAND_NOT_FOUND "ssh-xx: command not found ('%s')\n"
 # define COMMAND_FAILED "ssh-xx: failed to run command: %s\n"
 
+# define MAX_PIDS_WAIT 65535
+
+
 typedef enum e_pipeside
 {
 	PIPE_LEFT,
 	PIPE_RIGHT
 }		t_pipeside;
+
+typedef enum e_pid_op
+{
+	OP_INSERT,
+	OP_DELETE,
+}		t_pid_op;
 
 typedef struct s_context
 {
@@ -49,5 +58,8 @@ char		*ft_get_executable_path(const t_cmd *cmd, t_list *env);
 
 int			setup_pipe(int pipe_fds[2]);
 void		destop_turbo(int pipe_fds[2]);
+
+void		operate_on_pid_list(t_pid_op op, int pid);
+void		wait_all(int *status);
 
 #endif
