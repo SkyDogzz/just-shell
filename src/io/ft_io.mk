@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 19:00:48 by yandry            #+#    #+#              #
-#    Updated: 2025/05/16 14:01:57 by yandry           ###   ########.fr        #
+#    Updated: 2025/06/19 06:20:36 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ FT_READLINE_SRC		:= ft_readline.c \
 FT_IO_SRC			:= ft_tuyau.c \
 					   infile.c \
 					   outfile.c \
+					   v2.c \
 					   file_operations.c
 
 ifdef CUSTOM_RL

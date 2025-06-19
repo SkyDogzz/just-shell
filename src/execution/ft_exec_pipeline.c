@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 05:46:17 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/19 06:19:44 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "ft_execution.h"
 #include "ft_io.h"
 
-static int	run_child(t_btree *root, t_list *env, int in_fd, int out_fd)
+static int	run_child(t_btree *root, t_list *env,
+						int in_fd, int out_fd, int other_fd)
 {
 	pid_t		pid;
 	int			status;
@@ -27,13 +28,16 @@ static int	run_child(t_btree *root, t_list *env, int in_fd, int out_fd)
 	{
 		ft_set_sigaction_no_inter();
 		if (in_fd != STDIN_FILENO)
-			dup2(in_fd, STDIN_FILENO);
+			dup2v2(in_fd, STDIN_FILENO);
 		if (out_fd != STDOUT_FILENO)
-			dup2(out_fd, STDOUT_FILENO);
+			dup2v2(out_fd, STDOUT_FILENO);
 		if (in_fd != STDIN_FILENO)
 			ft_close(&in_fd);
 		if (out_fd != STDOUT_FILENO)
 			ft_close(&out_fd);
+		if (other_fd >= 0 && other_fd != STDIN_FILENO
+			&& other_fd != STDOUT_FILENO)
+			ft_close(&other_fd);
 		context = ft_get_execution_context(root, env);
 		status = ft_exec(context, false);
 		ft_free_context(context, false);
@@ -54,19 +58,15 @@ static int	launch_recursive(t_btree *root, t_list *env, int in_fd)
 	leaf = root->content;
 	if (leaf->type != NODE_PIPE)
 	{
-		pid = run_child(root, env, in_fd, STDOUT_FILENO);
+		pid = run_child(root, env, in_fd, STDOUT_FILENO, -1);
 		if (in_fd != STDIN_FILENO)
 			ft_close(&in_fd);
 		waitpid(pid, &status, 0);
 		return (status);
 	}
-	if (pipe(fd) == -1)
+	if (pipev2(fd) == -1)
 		return (127);
-	printf("fd = %d\n", fd[0]);
-	printf("fd = %d\n", fd[1]);
-	ioctl(fd[0], FIOCLEX);
-	ioctl(fd[1], FIOCLEX);
-	pid = run_child(root->left, env, in_fd, fd[1]);
+	pid = run_child(root->left, env, in_fd, fd[1], fd[0]);
 	waitpid(pid, NULL, 0);
 	ft_close(&fd[1]);
 	if (in_fd != STDIN_FILENO)
