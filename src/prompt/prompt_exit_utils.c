@@ -6,24 +6,29 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/16 16:59:32 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:26:35 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_signals.h"
-#include <stdlib.h>
 
 const char	*get_signal_name(int sig_no)
 {
-	int	i;
+	const t_signal	*sig = g_signals;
+	static char		rt_buffer[16];
 
-	i = 0;
-	while (g_signals[i].sig_no && g_signals[i].sig_name)
+	if (sig_no >= SIGRTMIN && sig_no <= SIGRTMAX)
 	{
-		if (g_signals[i].sig_no == sig_no)
-			return (g_signals[i].sig_name);
-		i++;
+		ft_snprintf(rt_buffer, sizeof(rt_buffer),
+			"SIGRT_%d", sig_no - SIGRTMIN);
+		return (rt_buffer);
+	}
+	while (sig->sig_name)
+	{
+		if (sig->sig_no == sig_no)
+			return (sig->sig_name);
+		sig++;
 	}
 	return ("N/A");
 }
