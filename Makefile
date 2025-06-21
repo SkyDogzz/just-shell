@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/06/19 12:48:21 by tstephan         ###   ########.fr        #
+#    Updated: 2025/06/21 14:29:47 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ UTILS_SRC		:= ft_set.c \
 				   fd.c \
 				   logger.c
 
-SIGNAL_SRC		:= signal.c
+SIGNAL_SRC		:= signal.c signal_utils.c
 
 BTREE_SRC 		:= ft_btree_clear.c \
 				   ft_btree_height.c \
