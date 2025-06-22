@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/22 15:59:13 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:34:20 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,28 @@ static char	*ft_get_valid_input(t_list *env, int status)
 	return (input);
 }
 
+static int	exit_code_extractor(int status)
+{
+	int	exit_code;
+
+	if (status & EXIT_SHELL)
+		exit_code = status & 0xFF;
+	else if (status & CMD_NOT_FOUND_FLAG)
+		exit_code = 127;
+	else if (status & (CANT_OPEN_INFILE | CANT_OPEN_OUTFILE))
+		exit_code = 1;
+	else
+	{
+		if (WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			exit_code = 128 + WTERMSIG(status);
+		else
+			exit_code = status & 0xFF;
+	}
+	return (exit_code);
+}
+
 static int	ft_handle_context(char *input, t_list *env, int status)
 {
 	t_contex2	*context;
@@ -51,7 +73,7 @@ static int	ft_handle_context(char *input, t_list *env, int status)
 		return (status);
 	new_status = ft_exec(context);
 	ft_free_context(context, false);
-	status_str = ft_itoa(new_status & 0xFF);
+	status_str = ft_itoa(exit_code_extractor(new_status));
 	if (status_str)
 	{
 		ft_update_env(&env, "?", status_str, false);

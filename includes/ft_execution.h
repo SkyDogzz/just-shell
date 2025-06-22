@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 12:57:44 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:24:13 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int			setup_pipe(int pipe_fds[2]);
 void		destop_turbo(int pipe_fds[2]);
 
 void		operate_on_pid_list(t_pid_op op, int pid);
-void		wait_all(int *status);
+void		wait_all(void);
 t_contex2	*handle_input(char *input, t_list *env, int status);
 
 #endif
