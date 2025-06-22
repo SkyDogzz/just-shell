@@ -6,13 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:48:34 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/22 15:42:07 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <signal.h>
 # include <stdio.h>
 
 # ifdef USE_CUSTOM_RL
@@ -40,6 +41,7 @@
 # define CMD_NOT_FOUND_FLAG 0x10000
 # define CANT_OPEN_INFILE 0x20000
 # define CANT_OPEN_OUTFILE 0x40000
+# define EXIT_SHELL 0x80000000
 
 # define NC		"\1\e[0m\2"
 # define BOLD	"\1\e[1m\2"
@@ -61,7 +63,9 @@
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
 
-extern int	g_exit;
+typedef volatile sig_atomic_t	t_sigatomic;
+
+extern t_sigatomic				g_exit;
 
 typedef enum e_joinfree
 {
