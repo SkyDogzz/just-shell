@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 12:11:46 by yandry            #+#    #+#              #
-#    Updated: 2025/06/16 19:36:11 by tstephan         ###   ########.fr        #
+#    Updated: 2025/06/19 12:01:08 by yandry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ FT_BUILTINS_SRC		:= cd.c \
 FT_UTILS_SRC		:= execution_utils.c
 
 FT_CORE_SRC			:= ft_execution_context.c \
-					   ft_cmd_exists.c
+					   ft_cmd_exists.c \
 
-FT_EXEC_SRC			:= ft_exec.c ft_exec_simple.c ft_exec_logical.c ft_exec_pipeline.c \
+FT_EXEC_SRC			:= ft_exec.c ft_exec_simple.c ft_exec_logical.c ft_exec_pipeline.c pid_shenaningans.c \
 					   $(addprefix core/, $(FT_CORE_SRC)) \
 					   $(addprefix builtins/, $(FT_BUILTINS_SRC)) \
 					   $(addprefix utils/, $(FT_UTILS_SRC))
