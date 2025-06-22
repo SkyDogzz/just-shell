@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 10:27:52 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/22 15:48:22 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_env.h"
 #include <stdlib.h>
 
-int	g_exit = 0;
+t_sigatomic	g_exit = 0;
 
 int	tty_shell(t_list *env);
 

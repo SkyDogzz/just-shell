@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:42:33 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/22 15:59:13 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,19 @@ static int	ft_handle_context(char *input, t_list *env, int status)
 {
 	t_contex2	*context;
 	int			new_status;
+	char		*status_str;
 
 	context = handle_input(input, env, status);
 	if (!context)
 		return (status);
 	new_status = ft_exec(context);
 	ft_free_context(context, false);
+	status_str = ft_itoa(new_status & 0xFF);
+	if (status_str)
+	{
+		ft_update_env(&env, "?", status_str, false);
+		free(status_str);
+	}
 	return (new_status);
 }
 
@@ -68,8 +75,8 @@ int	main_process_tty(t_list *env)
 			break ;
 		status = ft_handle_context(input, env, status);
 		free(input);
-		if (status == 238)
-			return (0);
+		if (status & EXIT_SHELL)
+			return (status & 0xFF);
 	}
 	return (status);
 }
