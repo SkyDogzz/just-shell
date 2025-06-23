@@ -6,7 +6,7 @@
 /*   By: skydogzz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 06:40:36 by skydogzz          #+#    #+#             */
-/*   Updated: 2025/06/19 01:32:23 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:52:19 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	store_history(char *input, t_list *env)
 		free(path);
 		return ;
 	}
-	write(fd, input, strlen(input));
+	write(fd, input, ft_strlen(input));
 	write(fd, "\n", 1);
 	free(path);
 	close(fd);
