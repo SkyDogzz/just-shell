@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:58:23 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:24:24 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	handle_pipe_node(t_contex2 *context, int in_fd)
 	context->context = mem->right;
 	status = launch_recursive(context, fd[0]);
 	ft_close(&fd[0]);
-	wait_all(&status);
+	wait_all();
 	return (status);
 	(void)pid;
 }

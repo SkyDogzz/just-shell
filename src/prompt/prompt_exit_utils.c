@@ -55,18 +55,18 @@ const char	*get_prompt_last_exit(int last_exit, bool include_desc)
 {
 	const char	*last_status;
 
-	if (WEXITSTATUS(last_exit) == 0 && !WIFSIGNALED(last_exit))
-		return (ft_strdup(GREEN"✓"NC));
-	else if (WIFEXITED(last_exit))
-		last_status = get_exited_status(last_exit);
-	else if (WIFSIGNALED(last_exit))
-		last_status = get_signaled_status(last_exit, include_desc);
-	else if (last_exit & CMD_NOT_FOUND_FLAG)
+	if (last_exit & CMD_NOT_FOUND_FLAG)
 		last_status = ft_strdup(RED"✗ - not found"NC);
 	else if (last_exit & CANT_OPEN_OUTFILE)
 		last_status = ft_strdup(RED"✗ - can't open outfile"NC);
 	else if (last_exit & CANT_OPEN_INFILE)
 		last_status = ft_strdup(RED"✗ - can't open infile"NC);
+	else if (WEXITSTATUS(last_exit) == 0 && !WIFSIGNALED(last_exit))
+		return (ft_strdup(GREEN"✓"NC));
+	else if (WIFEXITED(last_exit))
+		last_status = get_exited_status(last_exit);
+	else if (WIFSIGNALED(last_exit))
+		last_status = get_signaled_status(last_exit, include_desc);
 	else
 		last_status = ft_strdup("N/A");
 	return (last_status);
