@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 17:44:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:49:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,25 @@ static char	*check_tokens(t_list *tokens)
 	return (NULL);
 }
 
+static char	*check_subshell(t_list *tokens, char *unexpected)
+{
+	char	*prev;
+
+	if (unexpected)
+		return (unexpected);
+	prev = ((t_token *)(tokens->content))->content;
+	tokens = tokens->next;
+	while (tokens)
+	{
+		if (ft_strcmp(prev, ")") == 0
+			&& ft_strcmp(((t_token *)(tokens->content))->content, "(") == 0)
+			return (prev);
+		prev = ((t_token *)(tokens->content))->content;
+		tokens = tokens->next;
+	}
+	return (NULL);
+}
+
 t_list	*ft_lex(t_list *env, const char *input, int status)
 {
 	t_list	*tokens;
@@ -103,6 +122,7 @@ t_list	*ft_lex(t_list *env, const char *input, int status)
 		return (NULL);
 	tokens = ft_remove_spaces(tokens);
 	unexpected = check_tokens(tokens);
+	unexpected = check_subshell(tokens, unexpected);
 	if (unexpected)
 	{
 		printf("Syntax error near unexpected token \"%s\"\n", unexpected);

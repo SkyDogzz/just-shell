@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 12:42:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:21:10 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static t_contex2	*handle_input_backend(t_list *tokens, t_list *env,
 		free(context);
 		return (NULL);
 	}
+	context->context = context->root;
 	if (!context)
 	{
 		ft_btree_clear(&tree, ft_free_leaf);
