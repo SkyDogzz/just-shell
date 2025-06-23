@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:33:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 12:57:29 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/22 16:24:01 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,19 @@ void	operate_on_pid_list(t_pid_op op, int pid)
 		pids[current_id--] = -1;
 }
 
-void	wait_all(int *status)
+void	wait_all(void)
 {
 	int	*pids;
-	int	highest_pid;
 	int	state;
 	int	i;
 
 	pids = get_pid_array();
-	highest_pid = -1;
 	state = 0;
 	i = 0;
 	while (i < MAX_PIDS_WAIT)
 	{
 		if (pids[i] != -1)
-		{
 			waitpid(pids[i], &state, 0);
-			if (highest_pid < pids[i])
-			{
-				*status = state;
-				highest_pid = pids[i];
-			}
-		}
 		pids[i++] = -1;
 	}
 }
