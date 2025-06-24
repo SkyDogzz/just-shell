@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/23 15:49:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:19:57 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static char	*check_subshell(t_list *tokens, char *unexpected)
 
 	if (unexpected)
 		return (unexpected);
+	if (!tokens)
+		return (NULL);
 	prev = ((t_token *)(tokens->content))->content;
 	tokens = tokens->next;
 	while (tokens)
