@@ -6,11 +6,12 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:30:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/01 03:08:05 by skydogzz         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:51:44 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_wildcard.h"
+#include "minishell.h"
 
 static bool	create_token(t_list **tokens, struct dirent *file, char *base)
 {
@@ -81,8 +82,10 @@ bool	ft_expand_wildcard(t_list **tokens, t_token *dup)
 	char	*base;
 	bool	success;
 
-	if (dup->token_type != T_WORD || dup->content[ft_strlen(dup->content) - 1]
-		!= '*')
+	if (ft_strlen(dup->content) <= 0)
+		return (false);
+	if (!tokens || dup->token_type != T_WORD
+		|| dup->content[ft_strlen(dup->content) - 1] != '*')
 		return (false);
 	base = ft_strndup(dup->content, ft_strlen(dup->content) + 1);
 	base[ft_strlen(dup->content) - 1] = 0;

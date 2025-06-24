@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:14:58 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 19:22:15 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/24 16:51:11 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
+#include <stdio.h>
 
 t_list	*ft_init_env(const char **env)
 {
@@ -19,10 +20,9 @@ t_list	*ft_init_env(const char **env)
 	char		**splitted_env;
 	const char	*default_env[] = {
 		"PATH=/usr/local/bin:/usr/bin",
-		"SHLVL=1",
 		NULL};
 
-	if (!env)
+	if (!env || !env[0])
 		return (ft_init_env(default_env));
 	i = 0;
 	env_list = NULL;
