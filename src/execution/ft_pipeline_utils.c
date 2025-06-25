@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:27:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 20:40:16 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:44:10 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,15 @@ int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
 {
 	pid_t	pid;
 	int		status;
+	t_leaf	*leaf;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		ft_set_sigaction_no_inter();
 		duppp(in_fd, out_fd, other_fd);
-		if (((t_leaf *)context->context->content)->cmd->redir)
+		leaf = context->context->content;
+		if (leaf && leaf->type == NODE_WORD && leaf->cmd->redir)
 		{
 			if (manage_redir_child(context))
 			{
