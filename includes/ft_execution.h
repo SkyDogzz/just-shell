@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/22 16:24:13 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/25 19:08:23 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int			ft_exec_global(t_cmd *cmd, t_list *env);
 void		ft_exec_simple(t_contex2 *context, int *status);
 int			ft_exec_logical(t_contex2 *context, int *status);
 int			ft_exec_pipeline(t_contex2 *context, int *status);
+int			run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd);
+int			manage_redir_child(t_contex2 *context);
+int			launch_recursive(t_contex2 *context, int in_fd);
+int			handle_pipe_node(t_contex2 *context, int in_fd);
 
 bool		ft_is_builtin(const char *name);
 bool		ft_cmd_exists(t_cmd *cmd, t_list *env);

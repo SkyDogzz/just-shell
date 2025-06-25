@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:37:53 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:49:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	char		*buffer;
 	int			fd2;
 
-	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY | O_CLOEXEC);
+	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
 	if (!ft_check_fd(fd2, cmd))
 	{
 		unlink(filename);
