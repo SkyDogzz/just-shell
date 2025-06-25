@@ -6,12 +6,20 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:21:13 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:21:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:29:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_io.h"
-#include "minishell.h"
+
+int	dupv2(int fd)
+{
+	int	ret;
+
+	ret = dup(fd);
+	ioctl(ret, FIOCLEX);
+	return (ret);
+}
 
 int	dup2v2(int fd, int fd2)
 {
