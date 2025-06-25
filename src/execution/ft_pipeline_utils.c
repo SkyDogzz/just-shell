@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:27:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 20:30:22 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:33:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
 				exit(127);
 			}
 		}
-		status = ft_exec(context);
+		status = ft_exec(context, false);
 		ft_free_context(context, true);
 		exit(status);
 	}

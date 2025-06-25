@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 17:03:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:34:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	ft_handle_context(char *input, t_list *env, int status)
 	if (!context)
 		return (status);
 	ft_print_tree(context->root, 0, 0);
-	new_status = ft_exec(context);
+	new_status = ft_exec(context, true);
 	ft_free_context(context, false);
 	status_str = ft_itoa(exit_code_extractor(new_status));
 	if (status_str)

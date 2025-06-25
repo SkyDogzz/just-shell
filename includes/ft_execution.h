@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/25 19:08:23 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:35:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct s_context
 t_contex2	*ft_get_execution_context(t_btree *tree, t_list *env);
 void		ft_free_context(t_contex2 *context, bool clear_env);
 
-int			ft_exec(t_contex2 *context);
+int			ft_exec(t_contex2 *context, bool first);
 int			ft_exec_global(t_cmd *cmd, t_list *env);
 
-void		ft_exec_simple(t_contex2 *context, int *status);
+void		ft_exec_simple(t_contex2 *context, int *status, bool first);
 int			ft_exec_logical(t_contex2 *context, int *status);
 int			ft_exec_pipeline(t_contex2 *context, int *status);
 int			run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd);

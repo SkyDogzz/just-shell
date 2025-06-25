@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 19:04:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:36:38 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	manage_fork(t_contex2 *context, int fd[5], int *status)
 		waitpid(pid, status, 0);
 }
 
-void	ft_exec_simple(t_contex2 *context, int *status)
+void	ft_exec_simple(t_contex2 *context, int *status, bool first)
 {
 	int		fd[5];
 	t_leaf	*leaf;
@@ -75,9 +75,10 @@ void	ft_exec_simple(t_contex2 *context, int *status)
 	init_fds(fd);
 	if (*status)
 		return ;
+	if (ft_is_builtin(leaf->cmd->args[0]) || first)
+		manage_redir(context, fd, status);
 	if (ft_is_builtin(leaf->cmd->args[0]))
 	{
-		manage_redir(context, fd, status);
 		*status = ft_execute_builtin(leaf->cmd, context->env);
 	}
 	else
