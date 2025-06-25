@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:27:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 20:33:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:40:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ int	manage_redir_child(t_contex2 *context)
 	return (0);
 }
 
+static void	duppp(int in_fd, int out_fd, int other_fd)
+{
+	if (in_fd != STDIN_FILENO)
+		dup2v2(in_fd, STDIN_FILENO);
+	if (out_fd != STDOUT_FILENO)
+		dup2v2(out_fd, STDOUT_FILENO);
+	if (other_fd >= 0)
+		ft_close(&other_fd);
+	if (in_fd != STDIN_FILENO)
+		ft_close(&in_fd);
+	if (out_fd != STDOUT_FILENO)
+		ft_close(&out_fd);
+}
+
 int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
 {
 	pid_t	pid;
@@ -76,16 +90,7 @@ int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
 	if (pid == 0)
 	{
 		ft_set_sigaction_no_inter();
-		if (in_fd != STDIN_FILENO)
-			dup2v2(in_fd, STDIN_FILENO);
-		if (out_fd != STDOUT_FILENO)
-			dup2v2(out_fd, STDOUT_FILENO);
-		if (other_fd >= 0)
-			ft_close(&other_fd);
-		if (in_fd != STDIN_FILENO)
-			ft_close(&in_fd);
-		if (out_fd != STDOUT_FILENO)
-			ft_close(&out_fd);
+		duppp(in_fd, out_fd, other_fd);
 		if (((t_leaf *)context->context->content)->cmd->redir)
 		{
 			if (manage_redir_child(context))
