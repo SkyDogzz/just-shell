@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:26:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:04:46 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_execution.h"
 #include "ft_io.h"
 
-static int	manage_redir(t_contex2 *context, int fd[5], int *status)
+int	manage_redir(t_contex2 *context, int fd[5], int *status)
 {
 	if (((t_leaf *)(context->context->content))->cmd->redir)
 	{
@@ -73,11 +73,13 @@ void	ft_exec_simple(t_contex2 *context, int *status)
 		return ;
 	}
 	init_fds(fd);
-	manage_redir(context, fd, status);
 	if (*status)
 		return ;
 	if (ft_is_builtin(leaf->cmd->args[0]))
+	{
+		manage_redir(context, fd, status);
 		*status = ft_execute_builtin(leaf->cmd, context->env);
+	}
 	else
 		manage_fork(context, fd, status);
 	if (leaf->cmd->redir)

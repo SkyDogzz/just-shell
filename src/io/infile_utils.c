@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:36:42 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 12:36:57 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:49:51 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	open_tmp_write(char **filename)
 	int	fd;
 
 	*filename = get_tmp_fd();
-	fd = open(*filename, O_CREAT | O_WRONLY | O_CLOEXEC, 0644);
+	fd = open(*filename, O_CREAT | O_WRONLY, 0644);
 	if (fd < 0)
 	{
 		free(*filename);
@@ -41,7 +41,7 @@ static bool	replace_stdin_with_tmp(char *filename)
 {
 	int	fd;
 
-	fd = open(filename, O_RDONLY | O_CLOEXEC);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (false);
 	dup2(fd, STDIN_FILENO);
