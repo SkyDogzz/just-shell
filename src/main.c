@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:28 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/24 16:29:58 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/26 00:49:09 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char *argv[], char *argp[])
 	int		final_ret;
 	int		(*shell_mode)(t_list *env);
 
+	ft_set_sigaction();
 	env = ft_init_env((const char **)argp);
 	shell_mode = tty_shell;
 	final_ret = shell_mode(env);
