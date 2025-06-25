@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/24 16:52:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/25 12:10:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*ft_get_valid_input(t_list *env, int status)
 		return (NULL);
 	input = ft_handle_multiline_quote(input);
 	if (!input)
-		return (NULL);
+		input = ft_strdup("");
 	return (input);
 }
 
@@ -90,6 +90,7 @@ int	main_process_tty(t_list *env)
 	status = 0;
 	while (true)
 	{
+		handle_sigint();
 		if (!ft_heap_sanity_check())
 			return (status);
 		input = ft_get_valid_input(env, status);
