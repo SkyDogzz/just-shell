@@ -6,42 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:26:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/22 16:24:24 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/25 19:08:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_execution.h"
 #include "ft_io.h"
-
-static int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
-{
-	pid_t		pid;
-	int			status;
-
-	pid = fork();
-	if (pid == -1)
-		return (127);
-	if (pid == 0)
-	{
-		ft_set_sigaction_no_inter();
-		if (in_fd != STDIN_FILENO)
-			dup2v2(in_fd, STDIN_FILENO);
-		if (out_fd != STDOUT_FILENO)
-			dup2v2(out_fd, STDOUT_FILENO);
-		if (in_fd != STDIN_FILENO)
-			ft_close(&in_fd);
-		if (out_fd != STDOUT_FILENO)
-			ft_close(&out_fd);
-		if (other_fd >= 0 && other_fd != STDIN_FILENO
-			&& other_fd != STDOUT_FILENO)
-			ft_close(&other_fd);
-		status = ft_exec(context);
-		ft_free_context(context, true);
-		exit(status);
-	}
-	return (pid);
-}
 
 static int	handle_simple_node(t_contex2 *context, int in_fd)
 {
@@ -55,9 +26,7 @@ static int	handle_simple_node(t_contex2 *context, int in_fd)
 	return (status);
 }
 
-static int	launch_recursive(t_contex2 *context, int in_fd);
-
-static int	handle_pipe_node(t_contex2 *context, int in_fd)
+int	handle_pipe_node(t_contex2 *context, int in_fd)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -81,7 +50,7 @@ static int	handle_pipe_node(t_contex2 *context, int in_fd)
 	(void)pid;
 }
 
-static int	launch_recursive(t_contex2 *context, int in_fd)
+int	launch_recursive(t_contex2 *context, int in_fd)
 {
 	t_leaf	*leaf;
 
