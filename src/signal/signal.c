@@ -6,7 +6,7 @@
 /*   By: tstephan <tstephan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:00:01 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 04:20:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:24:12 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ft_set_sigaction_inter(void)
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, ft_signal_handler);
 }
-
 
 void	ft_set_sigaction(void)
 {
