@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 01:57:40 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 02:11:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 07:32:36 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	io_to_pipe(t_redir *redir)
 		newfd = get_fd(redir);
 	if (newfd < 0)
 	{
-		dprintf(STDERR_FILENO, "%s\n", redir->file);
+		ft_dprintf(STDERR_FILENO, "%s\n", redir->file);
 		return (perror("dup"), 127);
 	}
 	dup_fd(redir, newfd);
