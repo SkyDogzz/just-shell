@@ -43,7 +43,7 @@ int	ft_exec_global(t_cmd *cmd, t_list *env)
 	return (0);
 }
 
-int	ft_exec(t_contex2 *context, bool first)
+int	ft_exec(t_context *context, bool first)
 {
 	t_btree	*ctx;
 	int		status;

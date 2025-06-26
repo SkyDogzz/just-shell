@@ -26,7 +26,7 @@ static int	here_to_stdin(const char *text)
 	return (0);
 }
 
-int	manage_redir_child(t_contex2 *context)
+int	manage_redir_child(t_context *context)
 {
 	t_leaf	*leaf;
 	t_list	*r;
@@ -60,7 +60,7 @@ static void	duppp(int in_fd, int out_fd, int other_fd)
 		ft_close(&out_fd);
 }
 
-int	run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd)
+int	run_child(t_context *context, int in_fd, int out_fd, int other_fd)
 {
 	pid_t	pid;
 	int		status;

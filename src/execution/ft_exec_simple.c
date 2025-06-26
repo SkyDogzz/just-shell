@@ -14,7 +14,7 @@
 #include "ft_execution.h"
 #include "ft_io.h"
 
-void	manage_redir(t_contex2 *context, int fd[5], int *status)
+void	manage_redir(t_context *context, int fd[5], int *status)
 {
 	if (((t_leaf *)(context->context->content))->cmd->redir)
 	{
@@ -41,7 +41,7 @@ static void	close_fds(int *fd, int number)
 		ft_close(&fd[number]);
 }
 
-static void	manage_fork(t_contex2 *context, int fd[5], int *status)
+static void	manage_fork(t_context *context, int fd[5], int *status)
 {
 	pid_t	pid;
 
@@ -59,7 +59,7 @@ static void	manage_fork(t_contex2 *context, int fd[5], int *status)
 		waitpid(pid, status, 0);
 }
 
-void	ft_exec_simple(t_contex2 *context, int *status, bool first)
+void	ft_exec_simple(t_context *context, int *status, bool first)
 {
 	int		fd[5];
 	t_leaf	*leaf;

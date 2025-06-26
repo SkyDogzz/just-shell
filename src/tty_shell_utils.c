@@ -73,7 +73,7 @@ static int	exit_code_extractor(int status)
 
 static int	ft_handle_context(char *input, t_list *env, int status)
 {
-	t_contex2	*context;
+	t_context	*context;
 	int			new_status;
 	char		*status_str;
 
