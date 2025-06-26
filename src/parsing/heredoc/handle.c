@@ -6,14 +6,14 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 17:53:17 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 06:31:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_list	*ft_replace_heredoc(t_list *env, t_list *lst, char *content,
-		int status)
+		int *status)
 {
 	t_list	*act;
 	t_token	*act_t;
@@ -40,7 +40,7 @@ static t_list	*ft_replace_heredoc(t_list *env, t_list *lst, char *content,
 }
 
 static int	ft_handle_heredoc(t_list *env, t_list *act, t_list **lst,
-		int status)
+		int *status)
 {
 	t_token	*next_t;
 	char	*delimiter;
@@ -65,7 +65,7 @@ static int	ft_handle_heredoc(t_list *env, t_list *act, t_list **lst,
 	return (0);
 }
 
-int	ft_handle_heredocs(t_list *env, t_list **lst, int status)
+int	ft_handle_heredocs(t_list *env, t_list **lst, int *status)
 {
 	t_list	*act;
 	t_token	*act_t;
