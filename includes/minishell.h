@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/22 15:42:07 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/26 04:20:46 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
 void	ft_set_sigaction_no_inter(void);
+void	ft_set_sigaction_inter(void);
 bool	handle_sigint(void);
 
 char	*ft_strndup(const char *s, size_t n);

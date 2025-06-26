@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 04:11:27 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:19:30 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	manage_fork(t_contex2 *context, int fd[5], int *status)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_set_sigaction_inter();
 		close_fds(fd, 5);
 		*status = ft_exec_global(((t_leaf *)(context->context->content))->cmd,
 				context->env);
