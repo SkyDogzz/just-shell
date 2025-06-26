@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 04:19:30 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:24:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ void	ft_exec_simple(t_contex2 *context, int *status, bool first)
 			return ;
 	}
 	if (ft_is_builtin(leaf->cmd->args[0]))
-	{
 		*status = ft_execute_builtin(leaf->cmd, context->env);
-	}
 	else
 		manage_fork(context, fd, status);
 	if (leaf->cmd->redir)
