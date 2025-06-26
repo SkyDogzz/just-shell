@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 03:20:41 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 19:05:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:32:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,6 @@ static bool	open_append(t_redir *redir, int fd[5])
 	return (true);
 }
 
-static bool	ft_ft(int fd[5], t_cmd *cmd, t_list *mem)
-{
-	if (!cmd->redir || !cmd->redir->content)
-		return (true);
-	if (fd[3] == 0 || fd[3] == -1 || fd[4] == 0 || fd[4] == -1)
-	{
-		ft_dprintf(fd[1], "ssh-xx: %s ('%s')\n",
-			strerror(errno), ((t_redir *)cmd->redir->content)->file);
-		restore_fd(fd);
-		cmd->redir = mem;
-		return (false);
-	}
-	return (true);
-}
-
 bool	open_outfile(t_cmd *cmd, int fd[5])
 {
 	t_redir	*redir;
@@ -107,14 +92,13 @@ bool	open_outfile(t_cmd *cmd, int fd[5])
 		if (!open_trunc(redir, fd) || !open_append(redir, fd))
 		{
 			cmd->redir = mem;
+			ft_dprintf(STDERR_FILENO, CANT_OPEN_OUTFILE_PROMPT, redir->file);
 			return (false);
 		}
 		cmd->redir = cmd->redir->next;
 	}
 	dup2(fd[3], STDOUT_FILENO);
 	dup2(fd[4], STDERR_FILENO);
-	if (!ft_ft(fd, cmd, mem))
-		return (false);
 	cmd->redir = mem;
 	return (true);
 }

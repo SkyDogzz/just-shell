@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 01:57:40 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 07:32:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:35:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,22 @@ int	io_to_pipe(t_redir *redir)
 	int	newfd;
 
 	if (redir->type == REDIR_INPUT)
-		newfd = open(redir->file, O_RDONLY);
-	else
-		newfd = get_fd(redir);
-	if (newfd < 0)
 	{
-		ft_dprintf(STDERR_FILENO, "%s\n", redir->file);
-		return (perror("dup"), 127);
+		newfd = open(redir->file, O_RDONLY);
+		if (newfd < 0)
+		{
+			ft_dprintf(STDERR_FILENO, CANT_OPEN_INFILE_PROMPT, redir->file);
+			return (127);
+		}
+	}
+	else
+	{
+		newfd = get_fd(redir);
+		if (newfd < 0)
+		{
+			ft_dprintf(STDERR_FILENO, CANT_OPEN_OUTFILE_PROMPT, redir->file);
+			return (127);
+		}
 	}
 	dup_fd(redir, newfd);
 	close(newfd);
