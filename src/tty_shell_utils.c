@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 07:06:38 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:50:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*ft_get_valid_input(t_list *env, int *status)
 	char	*input;
 
 	input = ft_readline(PROMPT_MAIN, env, *status);
-	*status = 0;
 	if (!input)
 		return (NULL);
 	if (ft_strcmp(input, "") == 0)
@@ -107,8 +106,8 @@ int	main_process_tty(t_list *env)
 		input = ft_get_valid_input(env, &status);
 		if (!input)
 			break ;
-		if (!status)
-			status = ft_handle_context(input, env, status);
+		/*if (!status)*/
+		status = ft_handle_context(input, env, status);
 		free(input);
 		if (status & EXIT_SHELL)
 			return (status & 0xFF);
