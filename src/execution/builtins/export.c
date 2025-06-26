@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:38:37 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/29 16:38:28 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 03:15:44 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,33 @@ static int	handle_no_args(t_list *env)
 	return (0);
 }
 
+static void	free_split(char **split)
+{
+	int		pos;
+
+	pos = 0;
+	while (split[pos])
+	{
+		free(split[pos]);
+		pos++;
+	}
+	free(split);
+}
+
 static void	handle_redefine(char *args, t_list *env)
 {
 	char	**split;
 	char	*new;
 
 	split = ft_split(args, '=');
-	new = ft_strchr(args, '=');
-	if (!split || !new)
+	if (!split)
 		return ;
+	new = ft_strchr(args, '=');
+	if (!new)
+	{
+		free_split(split);
+		return ;
+	}
 	ft_update_env(&env, split[0], new + 1, true);
 	return (ft_free_array((void ***)&split));
 }
