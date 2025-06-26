@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 06:38:00 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:04:33 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@
 
 # include "../libft/includes/libft.h"
 # include "ft_env.h"
+
+# define COMMAND_NOT_FOUND "ssh-xx: command not found '%s'\n"
+# define COMMAND_FAILED "ssh-xx: failed to run command: '%s'\n"
+# define SYNTAX_ERROR_PROMPT "ssh-xx: syntax error near unexpected token '%s'\n"
+# define CANT_OPEN_INFILE_PROMPT "ssh-xx: can't open infile: '%s'\n"
+# define CANT_OPEN_OUTFILE_PROMPT "ssh-xx: can't open outfile: '%s'\n"
 
 # define CMD_NOT_FOUND_FLAG 0x10000
 # define CANT_OPEN_INFILE 0x20000
