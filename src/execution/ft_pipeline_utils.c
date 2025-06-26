@@ -6,51 +6,24 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:27:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 00:47:23 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 02:13:04 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_execution.h"
 #include "ft_io.h"
 
-static int	get_fd(t_redir *redir)
+static int	here_to_stdin(const char *text)
 {
-	int	flags;
-	int	newfd;
+	int	pfds[2];
 
-	flags = 0;
-	if (redir->type == REDIR_TRUNC_STDOUT)
-		flags = O_CREAT | O_WRONLY | O_TRUNC;
-	else if (redir->type == REDIR_APPEND_STDOUT)
-		flags = O_CREAT | O_WRONLY | O_APPEND;
-	else if (redir->type == REDIR_TRUNC_STDERR)
-		flags = O_CREAT | O_WRONLY | O_TRUNC;
-	else if (redir->type == REDIR_APPEND_STDERR)
-		flags = O_CREAT | O_WRONLY | O_APPEND;
-	else if (redir->type == REDIR_TRUNC_STDALL)
-		flags = O_CREAT | O_WRONLY | O_TRUNC;
-	else if (redir->type == REDIR_APPEND_STDALL)
-		flags = O_CREAT | O_WRONLY | O_APPEND;
-	newfd = open(redir->file, flags, 0644);
-	return (newfd);
-}
-
-static void	dup_fd(t_redir *redir, int newfd)
-{
-	if (redir->type == REDIR_INPUT)
-		dup2v2(newfd, STDIN_FILENO);
-	else if (redir->type == REDIR_TRUNC_STDOUT
-		|| redir->type == REDIR_APPEND_STDOUT)
-		dup2v2(newfd, STDOUT_FILENO);
-	else if (redir->type == REDIR_TRUNC_STDERR
-		|| redir->type == REDIR_APPEND_STDERR)
-		dup2v2(newfd, STDERR_FILENO);
-	else if (redir->type == REDIR_TRUNC_STDALL
-		|| redir->type == REDIR_APPEND_STDALL)
-	{
-		dup2v2(newfd, STDOUT_FILENO);
-		dup2v2(newfd, STDERR_FILENO);
-	}
+	if (pipev2(pfds) == -1)
+		return (127);
+	write(pfds[1], text, ft_strlen(text));
+	close(pfds[1]);
+	dup2v2(pfds[0], STDIN_FILENO);
+	close(pfds[0]);
+	return (0);
 }
 
 int	manage_redir_child(t_contex2 *context)
@@ -58,21 +31,16 @@ int	manage_redir_child(t_contex2 *context)
 	t_leaf	*leaf;
 	t_list	*r;
 	t_redir	*redir;
-	int		newfd;
 
 	leaf = context->context->content;
 	r = leaf->cmd->redir;
 	while (r)
 	{
 		redir = r->content;
-		if (redir->type == REDIR_INPUT || redir->type == REDIR_HEREDOC)
-			newfd = open(redir->file, O_RDONLY);
-		else
-			newfd = get_fd(redir);
-		if (newfd < 0)
+		if (redir->type == REDIR_HEREDOC && here_to_stdin(redir->file))
 			return (127);
-		dup_fd(redir, newfd);
-		close(newfd);
+		else if (redir->type != REDIR_HEREDOC && io_to_pipe(redir))
+			return (dprintf(STDERR_FILENO, "here\n"), 127);
 		r = r->next;
 	}
 	return (0);
