@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 00:47:30 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:11:27 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 #include "ft_execution.h"
 #include "ft_io.h"
 
-int	manage_redir(t_contex2 *context, int fd[5], int *status)
+void	manage_redir(t_contex2 *context, int fd[5], int *status)
 {
 	if (((t_leaf *)(context->context->content))->cmd->redir)
 	{
 		store_fd(fd);
 		if (!open_outfile(((t_leaf *)(context->context->content))->cmd, fd))
 		{
-			ft_dprintf(STDERR_FILENO, "failed to open outfile\n");
 			restore_fd(fd);
 			*status = 127 | CANT_OPEN_OUTFILE;
-			return (127);
+			return ;
 		}
 		if (!ft_infile_exec(((t_leaf *)(context->context)->content)->cmd))
 		{
-			ft_dprintf(STDERR_FILENO, "failed to open infile\n");
 			restore_fd(fd);
 			*status = 127 | CANT_OPEN_INFILE;
-			return (127);
+			return ;
 		}
 	}
-	return (0);
+	*status = 0;
 }
 
 static void	close_fds(int *fd, int number)
@@ -75,7 +73,11 @@ void	ft_exec_simple(t_contex2 *context, int *status, bool first)
 	if (*status)
 		return ;
 	if (ft_is_builtin(leaf->cmd->args[0]) || first)
+	{
 		manage_redir(context, fd, status);
+		if (*status)
+			return ;
+	}
 	if (ft_is_builtin(leaf->cmd->args[0]))
 	{
 		*status = ft_execute_builtin(leaf->cmd, context->env);

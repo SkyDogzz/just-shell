@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:09:09 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 16:49:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:14:13 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,14 @@ static void	ft_redir_heredoc(t_cmd *cmd, int fd)
 	ft_putstr_fd("\n", fd);
 }
 
-static bool	ft_check_fd(int fd, t_cmd *cmd)
+static bool	ft_check_fd(int fd)
 {
 	struct stat	sb;
 
 	if (fd < 0)
-	{
-		ft_dprintf(STDERR_FILENO, "ssh-xx: %s ('%s')\n",
-			strerror(errno), ((t_redir *)cmd->redir->content)->file);
 		return (false);
-	}
 	if (fstat(fd, &sb) != 0 || S_ISDIR(sb.st_mode))
-	{
-		ft_putstr_fd("ssh-xx: ('", 1);
-		ft_putstr_fd(((t_redir *)cmd->redir->content)->file, 1);
-		ft_putendl_fd("') is a directory", 1);
 		return (false);
-	}
 	return (true);
 }
 
@@ -45,10 +36,11 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 	int			fd2;
 
 	fd2 = open(((t_redir *)cmd->redir->content)->file, O_RDONLY);
-	if (!ft_check_fd(fd2, cmd))
+	if (!ft_check_fd(fd2))
 	{
 		unlink(filename);
-		close(fd);
+		ft_close(&fd);
+		ft_close(&fd2);
 		return (false);
 	}
 	buffer = ft_get_next_line(fd2);
@@ -58,7 +50,8 @@ static bool	ft_redir_input(t_cmd *cmd, int fd, char *filename)
 		free(buffer);
 		buffer = ft_get_next_line(fd2);
 	}
-	close(fd2);
+	ft_close(&fd);
+	ft_close(&fd2);
 	return (true);
 }
 

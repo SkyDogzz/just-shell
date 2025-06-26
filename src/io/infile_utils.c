@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:36:42 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/25 16:49:51 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 04:03:30 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	replace_stdin_with_tmp(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (false);
-	dup2(fd, STDIN_FILENO);
+	dup2v2(fd, STDIN_FILENO);
 	ft_close(&fd);
 	return (true);
 }
