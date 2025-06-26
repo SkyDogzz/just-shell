@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/25 20:35:20 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 01:57:36 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int			run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd);
 int			manage_redir_child(t_contex2 *context);
 int			launch_recursive(t_contex2 *context, int in_fd);
 int			handle_pipe_node(t_contex2 *context, int in_fd);
+int			io_to_pipe(t_redir *redir);
 
 bool		ft_is_builtin(const char *name);
 bool		ft_cmd_exists(t_cmd *cmd, t_list *env);
