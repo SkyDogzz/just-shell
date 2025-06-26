@@ -37,21 +37,21 @@ typedef struct s_context
 	t_btree	*root;
 	t_btree	*context;
 	t_list	*env;
-}	t_contex2;
+}	t_context;
 
-t_contex2	*ft_get_execution_context(t_btree *tree, t_list *env);
-void		ft_free_context(t_contex2 *context, bool clear_env);
+t_context	*ft_get_execution_context(t_btree *tree, t_list *env);
+void		ft_free_context(t_context *context, bool clear_env);
 
-int			ft_exec(t_contex2 *context, bool first);
+int			ft_exec(t_context *context, bool first);
 int			ft_exec_global(t_cmd *cmd, t_list *env);
 
-void		ft_exec_simple(t_contex2 *context, int *status, bool first);
-int			ft_exec_logical(t_contex2 *context, int *status);
-int			ft_exec_pipeline(t_contex2 *context, int *status);
-int			run_child(t_contex2 *context, int in_fd, int out_fd, int other_fd);
-int			manage_redir_child(t_contex2 *context);
-int			launch_recursive(t_contex2 *context, int in_fd);
-int			handle_pipe_node(t_contex2 *context, int in_fd);
+void		ft_exec_simple(t_context *context, int *status, bool first);
+int			ft_exec_logical(t_context *context, int *status);
+int			ft_exec_pipeline(t_context *context, int *status);
+int			run_child(t_context *context, int in_fd, int out_fd, int other_fd);
+int			manage_redir_child(t_context *context);
+int			launch_recursive(t_context *context, int in_fd);
+int			handle_pipe_node(t_context *context, int in_fd);
 int			io_to_pipe(t_redir *redir);
 
 bool		ft_is_builtin(const char *name);
@@ -65,6 +65,6 @@ void		destop_turbo(int pipe_fds[2]);
 
 void		operate_on_pid_list(t_pid_op op, int pid);
 void		wait_all(void);
-t_contex2	*handle_input(char *input, t_list *env, int *status);
+t_context	*handle_input(char *input, t_list *env, int *status);
 
 #endif

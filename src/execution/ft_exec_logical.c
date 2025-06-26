@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "ft_execution.h"
 
-static int	exec_logical_node(t_contex2 *context)
+static int	exec_logical_node(t_context *context)
 {
 	int		left_status;
 	int		right_status;
@@ -37,7 +37,7 @@ static int	exec_logical_node(t_contex2 *context)
 	return (left_status);
 }
 
-int	ft_exec_logical(t_contex2 *context, int *status)
+int	ft_exec_logical(t_context *context, int *status)
 {
 	if (!context || !context->context)
 		return (0);

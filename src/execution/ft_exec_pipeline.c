@@ -14,7 +14,7 @@
 #include "ft_execution.h"
 #include "ft_io.h"
 
-static int	handle_simple_node(t_contex2 *context, int in_fd)
+static int	handle_simple_node(t_context *context, int in_fd)
 {
 	int		status;
 	pid_t	pid;
@@ -26,7 +26,7 @@ static int	handle_simple_node(t_contex2 *context, int in_fd)
 	return (status);
 }
 
-int	handle_pipe_node(t_contex2 *context, int in_fd)
+int	handle_pipe_node(t_context *context, int in_fd)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -50,7 +50,7 @@ int	handle_pipe_node(t_contex2 *context, int in_fd)
 	(void)pid;
 }
 
-int	launch_recursive(t_contex2 *context, int in_fd)
+int	launch_recursive(t_context *context, int in_fd)
 {
 	t_leaf	*leaf;
 
@@ -62,7 +62,7 @@ int	launch_recursive(t_contex2 *context, int in_fd)
 	return (handle_pipe_node(context, in_fd));
 }
 
-int	ft_exec_pipeline(t_contex2 *context, int *status)
+int	ft_exec_pipeline(t_context *context, int *status)
 {
 	if (!context || !context->context)
 		return (0);
