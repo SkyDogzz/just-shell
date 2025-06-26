@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 01:03:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 03:23:41 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	ft_handle_context(char *input, t_list *env, int status)
 	context = handle_input(input, env, status);
 	if (!context)
 		return (status);
-	ft_print_tree(context->root, 0, 0);
 	ft_set_sigaction_no_inter();
 	new_status = ft_exec(context, true);
 	ft_set_sigaction();
