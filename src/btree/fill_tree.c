@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/29 18:11:10 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/26 10:36:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ static void	ft_choice(t_list *tokens, const t_token *token, t_btree **root )
 	{
 		if (ft_strcmp(token->content, "||") == 0)
 			leaf = ft_create_leaf(NODE_LOGICAL, ft_split("or", 0));
-		else
+		else if (ft_strcmp(token->content, "&&") == 0)
 			leaf = ft_create_leaf(NODE_LOGICAL, ft_split("and", 0));
+		else
+			leaf = ft_create_leaf(NODE_LOGICAL, ft_split("yes", 0));
 		ft_btree_insert_in(root, ft_btree_new(leaf), cmp);
 		leaf->cmd->redir = NULL;
 	}
