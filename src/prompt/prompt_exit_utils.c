@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:56:13 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/21 14:51:50 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/26 06:37:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ const char	*get_prompt_last_exit(int last_exit, bool include_desc)
 		last_status = ft_strdup(RED"✗ - can't open outfile"NC);
 	else if (last_exit & CANT_OPEN_INFILE)
 		last_status = ft_strdup(RED"✗ - can't open infile"NC);
+	else if (last_exit & SYNTAX_ERROR)
+		last_status = ft_strdup(RED"✗ - syntax error"NC);
 	else if (WEXITSTATUS(last_exit) == 0 && !WIFSIGNALED(last_exit))
 		return (ft_strdup(GREEN"✓"NC));
 	else if (WIFEXITED(last_exit))

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/16 18:51:25 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 06:29:58 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static bool	ft_find_expand(t_expand *expand, const t_token *token)
 	return (false);
 }
 
-static t_token	*particular_expand(t_token *token, t_expand *expand, int status)
+static t_token	*particular_expand(t_token *token, t_expand *expand,
+		int *status)
 {
 	int	exit;
 
@@ -49,15 +50,15 @@ static t_token	*particular_expand(t_token *token, t_expand *expand, int status)
 		expand->envvarrr = ft_itoa(get_shell_pid());
 	else if (ft_strcmp(expand->envvar, "?") == 0)
 	{
-		if (WIFEXITED(status))
-			exit = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			exit = WTERMSIG(status);
-		else if (status & CMD_NOT_FOUND_FLAG)
+		if (WIFEXITED(*status))
+			exit = WEXITSTATUS(*status);
+		else if (WIFSIGNALED(*status))
+			exit = WTERMSIG(*status);
+		else if (*status & CMD_NOT_FOUND_FLAG)
 			exit = 127;
-		else if (status & CANT_OPEN_INFILE)
+		else if (*status & CANT_OPEN_INFILE)
 			exit = 1;
-		else if (status & CANT_OPEN_OUTFILE)
+		else if (*status & CANT_OPEN_OUTFILE)
 			exit = 1;
 		else
 			exit = 0;
@@ -89,7 +90,7 @@ void	ft_expand_tilde(t_list *env, t_token *token)
 	ft_expand_tilde(env, token);
 }
 
-t_token	*ft_expand(t_list *env, t_token *token, int status)
+t_token	*ft_expand(t_list *env, t_token *token, int *status)
 {
 	t_expand	expand;
 

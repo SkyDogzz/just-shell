@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 03:23:41 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 07:06:38 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,25 @@ static bool	ft_heap_sanity_check(void)
 	return (true);
 }
 
-static char	*ft_get_valid_input(t_list *env, int status)
+static char	*ft_get_valid_input(t_list *env, int *status)
 {
 	char	*input;
 
-	input = ft_readline(PROMPT_MAIN, env, status);
+	input = ft_readline(PROMPT_MAIN, env, *status);
+	*status = 0;
 	if (!input)
 		return (NULL);
+	if (ft_strcmp(input, "") == 0)
+	{
+		*status = SIGINT;
+		return (input);
+	}
 	input = ft_handle_multiline_quote(input);
 	if (!input)
+	{
+		*status = SIGINT;
 		input = ft_strdup("");
+	}
 	return (input);
 }
 
@@ -68,7 +77,7 @@ static int	ft_handle_context(char *input, t_list *env, int status)
 	int			new_status;
 	char		*status_str;
 
-	context = handle_input(input, env, status);
+	context = handle_input(input, env, &status);
 	if (!context)
 		return (status);
 	ft_set_sigaction_no_inter();
@@ -95,10 +104,11 @@ int	main_process_tty(t_list *env)
 		handle_sigint();
 		if (!ft_heap_sanity_check())
 			return (status);
-		input = ft_get_valid_input(env, status);
+		input = ft_get_valid_input(env, &status);
 		if (!input)
 			break ;
-		status = ft_handle_context(input, env, status);
+		if (!status)
+			status = ft_handle_context(input, env, status);
 		free(input);
 		if (status & EXIT_SHELL)
 			return (status & 0xFF);
