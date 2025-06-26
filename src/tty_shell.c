@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 07:04:28 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:14:01 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_context	*handle_input(char *input, t_list *env, int *status)
 	input = NULL;
 	if (!ft_findsubshell(env, &tokens, status))
 	{
-		ft_putendl_fd("Syntax error near unexpected token ')'", STDERR_FILENO);
+		ft_dprintf(STDERR_FILENO, SYNTAX_ERROR_PROMPT, ")");
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 06:24:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:58:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define FT_EXECUTION_H
 
 # include "minishell.h"
-
-# define COMMAND_NOT_FOUND "ssh-xx: command not found ('%s')\n"
-# define COMMAND_FAILED "ssh-xx: failed to run command: %s\n"
 
 # define MAX_PIDS_WAIT 65535
 
