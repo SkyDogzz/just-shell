@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:27:45 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 04:19:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 07:33:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	manage_redir_child(t_contex2 *context)
 		if (redir->type == REDIR_HEREDOC && here_to_stdin(redir->file))
 			return (127);
 		else if (redir->type != REDIR_HEREDOC && io_to_pipe(redir))
-			return (dprintf(STDERR_FILENO, "here\n"), 127);
+			return (127);
 		r = r->next;
 	}
 	return (0);
