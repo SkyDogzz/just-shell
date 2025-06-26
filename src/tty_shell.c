@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 00:48:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 07:04:28 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	is_comment(char *input)
 }
 
 static t_contex2	*handle_input_backend(t_list *tokens, t_list *env,
-		int status)
+		int *status)
 {
 	t_contex2	*context;
 	t_btree		*tree;
@@ -46,7 +46,7 @@ static t_contex2	*handle_input_backend(t_list *tokens, t_list *env,
 	return (context);
 }
 
-t_contex2	*handle_input(char *input, t_list *env, int status)
+t_contex2	*handle_input(char *input, t_list *env, int *status)
 {
 	t_list		*tokens;
 	t_contex2	*context;

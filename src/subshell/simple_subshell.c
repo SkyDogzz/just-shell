@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 05:16:59 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/19 08:06:22 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 06:26:02 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_execution.h"
 
 static bool	handle_subshell_utils(t_btree **root, t_list *env, t_list *tokens,
-		int status)
+		int *status)
 {
 	t_btree		*mem ;
 	t_contex2	*context;
@@ -50,7 +50,7 @@ static bool	verif(t_leaf *leaf)
 }
 
 bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env,
-		int status)
+		int *status)
 {
 	t_leaf	*leaf;
 
