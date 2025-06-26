@@ -6,13 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 03:25:32 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/26 06:46:05 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	handle_heredoc_error(t_list *env, t_list **tokens, int status)
+static bool	handle_heredoc_error(t_list *env, t_list **tokens, int *status)
 {
 	int	error;
 
@@ -21,13 +21,16 @@ static bool	handle_heredoc_error(t_list *env, t_list **tokens, int status)
 	{
 		if (error == HEREDOC_PARSE_ERROR)
 		{
-			ft_dprintf(STDERR_FILENO, "Syntax error near unexpected token\n");
+			ft_dprintf(STDERR_FILENO, "Syntax error near unexpected token \
+\"<<\"\n");
 			ft_lstclear(tokens, ft_lstclear_t_token);
+			*status = 2 | SYNTAX_ERROR;
 			return (true);
 		}
 		if (error == HEREDOC_SIGINT)
 		{
 			ft_lstclear(tokens, ft_lstclear_t_token);
+			*status = SIGINT;
 			return (true);
 		}
 	}
@@ -56,32 +59,29 @@ static t_list	*ft_remove_spaces(t_list *tokens)
 	return (tokens);
 }
 
-static char	*check_tokens(t_list *tokens)
+static char	*check_tokens(t_list *tokens, int *status)
 {
-	t_token	*token;
-	int		prev;
+	t_token	*tok;
 
 	if (!tokens)
 		return (NULL);
-	token = ft_lstlast(tokens)->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0)
-		return (token->content);
-	token = (t_token *)tokens->content;
-	if (token->token_type == T_OPERATOR && ft_strcmp(token->content, ";") != 0
-		&& ft_strcmp(token->content, "<"))
-		return (token->content);
-	prev = 0;
-	while (tokens)
+	*status = 2 | SYNTAX_ERROR;
+	tok = (t_token *)ft_lstlast(tokens)->content;
+	if (tok->token_type == T_OPERATOR && ft_strcmp(tok->content, ";") != 0)
+		return (tok->content);
+	tok = (t_token *)tokens->content;
+	if (tok->token_type == T_OPERATOR && ft_strcmp(tok->content, ";") != 0
+		&& ft_strcmp(tok->content, "<") != 0)
+		return (tok->content);
+	while (tokens->next)
 	{
-		token = (t_token *)tokens->content;
-		if (prev == 1 && token->token_type == T_OPERATOR)
-			return (token->content);
-		if (token->token_type == T_OPERATOR)
-			prev = 1;
-		else
-			prev = 0;
+		tok = (t_token *)tokens->content;
+		if (tok->token_type == T_OPERATOR
+			&& ((t_token *)tokens->next->content)->token_type == T_OPERATOR)
+			return (tok->content);
 		tokens = tokens->next;
 	}
+	*status = 0;
 	return (NULL);
 }
 
@@ -106,7 +106,7 @@ static char	*check_subshell(t_list *tokens, char *unexpected)
 	return (NULL);
 }
 
-t_list	*ft_lex(t_list *env, const char *input, int status)
+t_list	*ft_lex(t_list *env, const char *input, int *status)
 {
 	t_list	*tokens;
 	t_list	*pre_tokens;
@@ -123,7 +123,7 @@ t_list	*ft_lex(t_list *env, const char *input, int status)
 	if (handle_heredoc_error(env, &tokens, status))
 		return (NULL);
 	tokens = ft_remove_spaces(tokens);
-	unexpected = check_tokens(tokens);
+	unexpected = check_tokens(tokens, status);
 	unexpected = check_subshell(tokens, unexpected);
 	if (unexpected)
 	{
