@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 15:11:03 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:42:51 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static bool	is_numeric(const char *str)
 	while (*str)
 	{
 		is_valid = (*str >= '0' && *str <= '9');
+		if (!is_valid)
+			break ;
 		str++;
 	}
 	return (is_valid);
