@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/24 16:19:57 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/26 03:25:32 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	handle_heredoc_error(t_list *env, t_list **tokens, int status)
 	{
 		if (error == HEREDOC_PARSE_ERROR)
 		{
-			printf("Syntax error near unexpected token\n");
+			ft_dprintf(STDERR_FILENO, "Syntax error near unexpected token\n");
 			ft_lstclear(tokens, ft_lstclear_t_token);
 			return (true);
 		}
@@ -127,7 +127,8 @@ t_list	*ft_lex(t_list *env, const char *input, int status)
 	unexpected = check_subshell(tokens, unexpected);
 	if (unexpected)
 	{
-		printf("Syntax error near unexpected token \"%s\"\n", unexpected);
+		ft_dprintf(STDERR_FILENO, "Syntax error near unexpected token \"%s\"\n",
+			unexpected);
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (NULL);
 	}
