@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:38:37 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 03:15:44 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/27 02:51:45 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,10 @@ static int	handle_no_args(t_list *env)
 	{
 		env_node = (t_env *)env->content;
 		if (env_node)
-			ft_printf("export %s=%s\n", env_node->name, env_node->value);
+			ft_printf("export %s=\"%s\"\n", env_node->name, env_node->value);
 		env = env->next;
 	}
 	return (0);
-}
-
-static void	free_split(char **split)
-{
-	int		pos;
-
-	pos = 0;
-	while (split[pos])
-	{
-		free(split[pos]);
-		pos++;
-	}
-	free(split);
 }
 
 static void	handle_redefine(char *args, t_list *env)
@@ -58,10 +45,16 @@ static void	handle_redefine(char *args, t_list *env)
 	split = ft_split(args, '=');
 	if (!split)
 		return ;
+	if (!ft_isalpha(split[0][0]) && split[0][0] != '_')
+	{
+		ft_dprintf(STDERR_FILENO,
+			"ssh-xx: export: %s is not a valid identifier\n", split[0]);
+		return ;
+	}
 	new = ft_strchr(args, '=');
 	if (!new)
 	{
-		free_split(split);
+		ft_free_array((void ***)&split);
 		return ;
 	}
 	ft_update_env(&env, split[0], new + 1, true);
