@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/27 11:48:41 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/29 01:21:03 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,22 @@ static void	get_newpath(t_list *env, char *path, char **args)
 	t_env	*oldpwd;
 
 	*path = '\0';
-	home = ft_get_env(env, "HOME");
-	if (!home || !home->value)
-		return ;
-	oldpwd = ft_get_env(env, "OLDPWD");
-	if (!oldpwd || !oldpwd->value)
-		return ;
 	if (!args || !args[0])
 		return ;
 	if (!args[1])
+	{
+		home = ft_get_env(env, "HOME");
+		if (!home || !home->value)
+			return ;
 		ft_strlcpy(path, home->value, PATH_MAX);
+	}
 	else if (ft_strncmp(args[1], "-", 1) == 0)
+	{
+		oldpwd = ft_get_env(env, "OLDPWD");
+		if (!oldpwd || !oldpwd->value)
+			return ;
 		ft_strlcpy(path, oldpwd->value, PATH_MAX);
+	}
 	else
 		ft_strlcpy(path, args[1], PATH_MAX);
 }
@@ -57,6 +61,6 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 		return (1);
 	}
 	ft_update_env(&env, "OLDPWD", curr_dir, true);
-	ft_update_env(&env, "PWD", getcwd(curr_dir, sizeof curr_dir), true);
+	ft_update_env(&env, "PWD", path, true);
 	return (0);
 }

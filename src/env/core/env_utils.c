@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 18:03:39 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/25 17:46:00 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:13:25 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ void	*copy_env_to_str(const void *env)
 	char	*str;
 
 	str = ft_strjoin(((t_env *)env)->name, "=");
-	env_str = ft_strjoin(str, ((t_env *)env)->value);
+	if (!str)
+		return (NULL);
+	if (!((t_env *)env)->value)
+		env_str = ft_strjoin(str, "");
+	else
+		env_str = ft_strjoin(str, ((t_env *)env)->value);
 	free(str);
 	return (env_str);
 }
