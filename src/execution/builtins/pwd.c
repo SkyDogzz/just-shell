@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:28:03 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/22 17:35:11 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:25:18 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	ft_pwd(const t_cmd *cmd, t_list *env)
 	(void)env;
 	if (!getcwd(cwd, sizeof cwd))
 		*cwd = 0;
+	if (!*cwd)
+	{
+		ft_dprintf(STDERR_FILENO, "the void *dun dun dun*\n");
+		return (1 << 8);
+	}
 	ft_printf("%s\n", cwd);
 	return (0);
 }
