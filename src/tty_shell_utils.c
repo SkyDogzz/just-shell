@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 19:50:29 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/28 18:11:01 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	main_process_tty(t_list *env)
 		input = ft_get_valid_input(env, &status);
 		if (!input)
 			break ;
-		/*if (!status)*/
 		status = ft_handle_context(input, env, status);
 		free(input);
 		if (status & EXIT_SHELL)
