@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:38:37 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/27 02:51:45 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:13:48 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ static void	handle_redefine(char *args, t_list *env)
 	return (ft_free_array((void ***)&split));
 }
 
-int	ft_export(const t_cmd *cmd, t_list *env)
+int	ft_export(const t_cmd *cmd, t_list **env)
 {
 	t_list	*exported;
 	size_t	i;
 
 	i = 1;
-	exported = ft_lstcpy_if(env, is_env_exported, fake_delete);
+	exported = ft_lstcpy_if(*env, is_env_exported, fake_delete);
 	if (!cmd->args[i])
 		handle_no_args(exported);
 	while (cmd->args[i])
-		handle_redefine(cmd->args[i++], env);
+		handle_redefine(cmd->args[i++], *env);
 	ft_lstclear(&exported, fake_delete);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:05:51 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/29 01:21:03 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:12:32 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	get_newpath(t_list *env, char *path, char **args)
 		ft_strlcpy(path, args[1], PATH_MAX);
 }
 
-int	ft_cd(const t_cmd *cmd, t_list *env)
+int	ft_cd(const t_cmd *cmd, t_list **env)
 {
 	char	curr_dir[PATH_MAX];
 	char	path[PATH_MAX];
@@ -53,14 +53,14 @@ int	ft_cd(const t_cmd *cmd, t_list *env)
 	if (!getcwd(curr_dir, sizeof curr_dir))
 		*curr_dir = '\0';
 	ft_memset(&path, '\0', PATH_MAX);
-	get_newpath(env, &path[0], cmd->args);
+	get_newpath(*env, &path[0], cmd->args);
 	if (chdir(path))
 	{
 		ft_dprintf(STDERR_FILENO,
 			"cd: '%s' is not a directory\n", cmd->args[1]);
 		return (1);
 	}
-	ft_update_env(&env, "OLDPWD", curr_dir, true);
-	ft_update_env(&env, "PWD", path, true);
+	ft_update_env(env, "OLDPWD", curr_dir, true);
+	ft_update_env(env, "PWD", path, true);
 	return (0);
 }

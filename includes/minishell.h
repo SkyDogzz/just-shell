@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 15:04:33 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:40:53 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ bool	is_operator(const t_token *token, const char *op);
 
 bool	ft_infile_exec(t_cmd *cmd);
 
-int		main_process_tty(t_list *env);
+int		main_process_tty(t_list **env);
 char	*get_tmp_fd(void);
 
 int		get_shell_pid(void);

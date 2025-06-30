@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 05:16:59 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 15:14:46 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:24:02 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	handle_subshell_utils(t_btree **root, t_list *env, t_list *tokens,
 		ft_lstclear(&tokens, ft_lstclear_t_token);
 		return (false);
 	}
-	context = ft_get_execution_context(ft_parse(tokens), env);
+	context = ft_get_execution_context(ft_parse(tokens), &env);
 	mem = *root;
 	*root = context->root;
 	free(context);
