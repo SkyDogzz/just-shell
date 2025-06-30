@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:35:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 14:18:02 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:14:31 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 typedef struct s_builtin
 {
 	const char	*name;
-	int			(*func)(const t_cmd*, t_list *env);
+	int			(*func)(const t_cmd*, t_list **env);
 }	t_builtin;
 
-int	ft_echo(const t_cmd *cmd, t_list *env);
-int	ft_cd(const t_cmd *cmd, t_list *env);
-int	ft_pwd(const t_cmd *cmd, t_list *env);
-int	ft_export(const t_cmd *cmd, t_list *env);
-int	ft_unset(const t_cmd *cmd, t_list *env);
-int	ft_env(const t_cmd *cmd, t_list *env);
-int	ft_exit(const t_cmd *cmd, t_list *env);
+int	ft_echo(const t_cmd *cmd, t_list **env);
+int	ft_cd(const t_cmd *cmd, t_list **env);
+int	ft_pwd(const t_cmd *cmd, t_list **env);
+int	ft_export(const t_cmd *cmd, t_list **env);
+int	ft_unset(const t_cmd *cmd, t_list **env);
+int	ft_env(const t_cmd *cmd, t_list **env);
+int	ft_exit(const t_cmd *cmd, t_list **env);
 
 static const t_builtin	g_builtins[] = {
 {.name = "echo", .func = ft_echo},

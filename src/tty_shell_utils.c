@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/28 18:11:01 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:41:35 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	exit_code_extractor(int status)
 	return (exit_code);
 }
 
-static int	ft_handle_context(char *input, t_list *env, int status)
+static int	ft_handle_context(char *input, t_list **env, int status)
 {
 	t_context	*context;
 	int			new_status;
@@ -81,18 +81,19 @@ static int	ft_handle_context(char *input, t_list *env, int status)
 		return (status);
 	ft_set_sigaction_no_inter();
 	new_status = ft_exec(context, true);
+	*env = context->env;
 	ft_set_sigaction();
 	ft_free_context(context, false);
 	status_str = ft_itoa(exit_code_extractor(new_status));
 	if (status_str)
 	{
-		ft_update_env(&env, "?", status_str, false);
+		ft_update_env(env, "?", status_str, false);
 		free(status_str);
 	}
 	return (new_status);
 }
 
-int	main_process_tty(t_list *env)
+int	main_process_tty(t_list **env)
 {
 	char		*input;
 	int			status;
@@ -103,7 +104,7 @@ int	main_process_tty(t_list *env)
 		handle_sigint();
 		if (!ft_heap_sanity_check())
 			return (status);
-		input = ft_get_valid_input(env, &status);
+		input = ft_get_valid_input(*env, &status);
 		if (!input)
 			break ;
 		status = ft_handle_context(input, env, status);

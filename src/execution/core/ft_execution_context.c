@@ -6,14 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:23:32 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/24 16:43:31 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:24:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 #include "ft_execution.h"
 
-t_context	*ft_get_execution_context(t_btree *tree, t_list *env)
+t_context	*ft_get_execution_context(t_btree *tree, t_list **env)
 {
 	t_context	*context;
 
@@ -24,7 +24,7 @@ t_context	*ft_get_execution_context(t_btree *tree, t_list *env)
 		return (NULL);
 	context->root = tree;
 	context->context = tree;
-	context->env = env;
+	context->env = *env;
 	return (context);
 }
 
