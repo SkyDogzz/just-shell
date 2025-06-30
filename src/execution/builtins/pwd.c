@@ -6,14 +6,14 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:28:03 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/28 18:25:18 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:13:59 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtins.h"
 #include <linux/limits.h>
 
-int	ft_pwd(const t_cmd *cmd, t_list *env)
+int	ft_pwd(const t_cmd *cmd, t_list **env)
 {
 	char	cwd[PATH_MAX];
 

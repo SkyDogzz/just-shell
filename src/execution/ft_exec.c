@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/25 20:35:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:16:39 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_exec_global(t_cmd *cmd, t_list *env)
 	if (!ft_cmd_exists(cmd, env))
 		return (127);
 	if (ft_is_builtin(cmd->args[0]))
-		return (ft_execute_builtin(cmd, env));
+		return (ft_execute_builtin(cmd, &env));
 	path = ft_get_executable_path(cmd, env);
 	if (!path)
 		return (ft_freeplusplus(path, NULL));

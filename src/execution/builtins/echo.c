@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:50:50 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/21 18:54:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:12:39 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static void	skip_flags(int *index, bool *newline, char **argh)
 	}
 }
 
-int	ft_echo(const t_cmd *cmd, t_list *env)
+int	ft_echo(const t_cmd *cmd, t_list **env)
 {
 	bool	has_newline;
 	int		i;
 
-	(void)env;
+	(void)*env;
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (0);
 	has_newline = true;
