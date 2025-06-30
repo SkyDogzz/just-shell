@@ -6,13 +6,13 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:31:11 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/23 13:46:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:42:03 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtins.h"
 
-int	ft_unset(const t_cmd *cmd, t_list *env)
+int	ft_unset(const t_cmd *cmd, t_list **env)
 {
 	int	i;
 
@@ -23,6 +23,6 @@ int	ft_unset(const t_cmd *cmd, t_list *env)
 	}
 	i = 1;
 	while (cmd->args[i])
-		ft_delete_env(&env, cmd->args[i++]);
+		ft_delete_env(env, cmd->args[i++]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:19:17 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/30 17:59:21 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:16:55 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static const t_builtin	*get_builtin(const char *name)
 	return (NULL);
 }
 
-int	ft_execute_builtin(const t_cmd *cmd, t_list *env)
+int	ft_execute_builtin(const t_cmd *cmd, t_list **env)
 {
 	const t_builtin	*builtin;
 	int				ret;

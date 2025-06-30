@@ -6,12 +6,11 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:14:58 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/24 16:51:11 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:43:14 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
-#include <stdio.h>
 
 t_list	*ft_init_env(const char **env)
 {

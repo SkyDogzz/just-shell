@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:53:09 by yandry            #+#    #+#             */
-/*   Updated: 2025/04/26 18:41:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:15:01 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void	fake_delete(void *env_node)
 	(void)env_node;
 }
 
-int	ft_env(const t_cmd *cmd, t_list *env)
+int	ft_env(const t_cmd *cmd, t_list **env)
 {
 	t_list	*exported;
 	t_list	*exported_begin;
 	t_env	*env_node;
 
 	(void)cmd;
-	exported = ft_lstcpy_if(env, is_env_exported, fake_delete);
+	exported = ft_lstcpy_if(*env, is_env_exported, fake_delete);
 	exported_begin = exported;
 	while (exported)
 	{

@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:14:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 16:42:51 by yandry           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:13:30 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ static int	handle_exit_arg(const char *exit_code_str, long *exit_code)
 	return (*exit_code | EXIT_SHELL);
 }
 
-int	ft_exit(const t_cmd *cmd, t_list *env)
+int	ft_exit(const t_cmd *cmd, t_list **env)
 {
 	long	exit_code;
 	t_env	*last_status;
 
-	(void)env;
+	(void)*env;
 	if (cmd->args[1])
 		return (handle_exit_arg(cmd->args[1], &exit_code));
 	else
 	{
-		last_status = ft_get_env(env, "?");
+		last_status = ft_get_env(*env, "?");
 		if (last_status && last_status->value)
 			exit_code = ft_atoi(last_status->value) & 0xFF;
 		else

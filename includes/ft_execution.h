@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:45:57 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/26 14:58:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:26:10 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_context
 	t_list	*env;
 }	t_context;
 
-t_context	*ft_get_execution_context(t_btree *tree, t_list *env);
+t_context	*ft_get_execution_context(t_btree *tree, t_list **env);
 void		ft_free_context(t_context *context, bool clear_env);
 
 int			ft_exec(t_context *context, bool first);
@@ -53,7 +53,7 @@ int			io_to_pipe(t_redir *redir);
 
 bool		ft_is_builtin(const char *name);
 bool		ft_cmd_exists(t_cmd *cmd, t_list *env);
-int			ft_execute_builtin(const t_cmd *cmd, t_list *env);
+int			ft_execute_builtin(const t_cmd *cmd, t_list **env);
 
 char		*ft_get_executable_path(const t_cmd *cmd, t_list *env);
 
@@ -62,6 +62,6 @@ void		destop_turbo(int pipe_fds[2]);
 
 void		operate_on_pid_list(t_pid_op op, int pid);
 void		wait_all(void);
-t_context	*handle_input(char *input, t_list *env, int *status);
+t_context	*handle_input(char *input, t_list **env, int *status);
 
 #endif
