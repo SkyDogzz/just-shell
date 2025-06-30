@@ -9,6 +9,8 @@ Pourquoi faire minishell quand on peut faire 42sh (spoiler: parce qu'on peut pas
 # define QUOTE "\'\""
 # define OPERATOR_S "<>;|&{}!" 
 # define OPERATOR_M "<<-,&&,||,;;,<<,>>,<&,>&,<>,>|"
+# define OP_DIGRAPH "&&,||,;;,<<,>>,<&,>&,<>,>|"
+# define OP_TRIGRAPH "<<-,<<<"
 # define RESERVED "if,then,else,elif,fi,done,do,case,esac,while,until,for,in,!!"
 # define SUBSTITUTE "$((,$(,)),)"
 ```
