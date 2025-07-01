@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/30 16:41:35 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:19:20 by skydogzz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static char	*ft_get_valid_input(t_list *env, int *status)
 		return (NULL);
 	if (ft_strcmp(input, "") == 0)
 	{
-		*status = SIGINT;
+		if (handle_sigint())
+			*status = SIGINT;
 		return (input);
 	}
 	input = ft_handle_multiline_quote(input);
