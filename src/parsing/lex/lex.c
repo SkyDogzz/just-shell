@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/28 18:15:35 by yandry           ###   ########.fr       */
+/*   Updated: 2025/07/02 18:29:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static char	*check_tokens(t_list *tokens, int *status)
 	{
 		tok = (t_token *)tokens->content;
 		if (tok->token_type == T_OPERATOR
-			&& ((t_token *)tokens->next->content)->token_type == T_OPERATOR)
+			&& ((t_token *)tokens->next->content)->token_type == T_OPERATOR
+			&& !check_conseq_ope(tokens, "|", "<"))
 			return (tok->content);
 		tokens = tokens->next;
 	}
