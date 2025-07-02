@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:36:42 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/02 17:02:09 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:00:05 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_infile_exec(t_cmd *cmd)
 	if (!handle_redirections(cmd, fd, filename))
 	{
 		free(filename);
-		return (2);
+		return (0);
 	}
 	ft_close(&fd);
 	if (!replace_stdin_with_tmp(filename))

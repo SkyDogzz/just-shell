@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 04:33:23 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/19 06:10:28 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:36:48 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ bool	ft_cmd_exists(t_cmd *cmd, t_list *env)
 
 	if (!cmd)
 		return (false);
+	if (!cmd->args[0])
+		return (true);
 	ret = (cmd_is_alias(cmd) || cmd_is_builtin(cmd)
 			|| cmd_exists_in_path(cmd, env));
 	if (!ret)
