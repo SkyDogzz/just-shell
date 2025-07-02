@@ -16,6 +16,7 @@ FT_PARSING_MODULE_NAME	:= ft_parsing
 FT_PARSING_SUBDIR		:= parsing/
 
 FT_LEXING_SRC			:= lex.c \
+						   check_tokens_utils.c \
 						   lst_helper.c \
 						   space.c \
 						   clear.c \
