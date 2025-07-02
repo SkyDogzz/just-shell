@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:19:55 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/02 17:03:10 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:00:24 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ void	manage_redir(t_context *context, int fd[5], int *status)
 	if (((t_leaf *)(context->context->content))->cmd->redir)
 	{
 		store_fd(fd);
-		if (!open_outfile(((t_leaf *)(context->context->content))->cmd, fd))
-		{
-			restore_fd(fd);
-			*status = 127 | CANT_OPEN_OUTFILE;
-			return ;
-		}
 		state = ft_infile_exec(((t_leaf *)(context->context)->content)->cmd);
 		if (state == 0)
 		{
@@ -36,6 +30,12 @@ void	manage_redir(t_context *context, int fd[5], int *status)
 		}
 		else if (state == 1)
 			dup2v2(fd[0], STDIN_FILENO);
+		if (!open_outfile(((t_leaf *)(context->context->content))->cmd, fd))
+		{
+			restore_fd(fd);
+			*status = 127 | CANT_OPEN_OUTFILE;
+			return ;
+		}
 	}
 	*status = 0;
 }
