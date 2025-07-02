@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:15:59 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/30 15:16:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:44:02 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_exec_global(t_cmd *cmd, t_list *env)
 	char	*path;
 	void	**env_arr;
 
+	if (!cmd->args[0])
+		return (0);
 	if (!ft_cmd_exists(cmd, env))
 		return (127);
 	if (ft_is_builtin(cmd->args[0]))
