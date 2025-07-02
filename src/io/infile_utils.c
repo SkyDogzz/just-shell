@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:36:42 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 04:03:30 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:02:09 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,45 @@ static bool	replace_stdin_with_tmp(char *filename)
 	return (true);
 }
 
-bool	ft_infile_exec(t_cmd *cmd)
+static bool	redir_in(t_list *redirs)
+{
+	t_redir	*redir;
+
+	while (redirs)
+	{
+		redir = redirs->content;
+		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_INPUT)
+			return (true);
+		redirs = redirs->next;
+	}
+	return (false);
+}
+
+int	ft_infile_exec(t_cmd *cmd)
 {
 	int		fd;
 	char	*filename;
 	t_list	*redir;
 
 	redir = cmd->redir;
-	if (!cmd->redir)
-		return (true);
+	if (!cmd->redir || !redir_in(redir))
+		return (1);
 	fd = open_tmp_write(&filename);
 	if (fd < 0)
-		return (false);
+		return (0);
 	if (!handle_redirections(cmd, fd, filename))
 	{
 		free(filename);
-		return (false);
+		return (2);
 	}
 	ft_close(&fd);
 	if (!replace_stdin_with_tmp(filename))
 	{
 		free(filename);
-		return (false);
+		return (0);
 	}
 	unlink(filename);
 	free(filename);
 	cmd->redir = redir;
-	return (true);
+	return (2);
 }
