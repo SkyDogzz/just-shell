@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:53:14 by yandry            #+#    #+#             */
-/*   Updated: 2025/05/09 13:18:20 by yandry           ###   ########.fr       */
+/*   Updated: 2025/07/02 16:09:47 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static char	*find_exec_relative(char *file, t_list *env)
 	rel_path = ft_strjoin(pwd->value, &file[1]);
 	if (rel_path && access(rel_path, F_OK | X_OK) == 0)
 		return (rel_path);
+	if (rel_path)
+		free(rel_path);
 	return (NULL);
 }
 
