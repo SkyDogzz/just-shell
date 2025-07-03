@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 06:29:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:33:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ t_token	*ft_expand(t_list *env, t_token *token, int *status)
 	free(expand.envvar);
 	free(expand.envvarrr);
 	ft_expand(env, token, status);
-	token->token_type = T_POSTEXPANSION;
+	if (token->token_type != T_EXPANSION)
+		token->token_type = T_POSTEXPANSION;
 	return (token);
 }
