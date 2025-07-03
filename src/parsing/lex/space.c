@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:08:18 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/18 16:15:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:02:40 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_list	*ft_pretrim(t_list *lst)
 	if (!act)
 		return (NULL);
 	while (act && act->content && ft_strlen(act->content) == 1
-		&& ft_isspace(((char *)act->content)[0]))
+		&& (ft_isspace(((char *)act->content)[0])
+		|| ((char *)act->content)[0] == ';'))
 	{
 		mem = act;
 		act = act->next;
@@ -48,7 +49,8 @@ t_list	*ft_posttrim(t_list *lst)
 	while (lst->next && lst->next->next)
 		lst = lst->next;
 	if (lst->next && ft_strlen(lst->next->content) == 1
-		&& ft_isspace(((char *)lst->next->content)[0]))
+		&& (ft_isspace(((char *)lst->next->content)[0])
+		|| ((char *)lst->next->content)[0] == ';'))
 	{
 		ft_lstdelone(lst->next, del);
 		lst->next = NULL;
@@ -68,8 +70,10 @@ t_list	*ft_remove_multispace(t_list *lst)
 	while (act && act->next && act->next->next)
 	{
 		if (ft_strlen(act->content) == 1 && ft_strlen(act->next->content) == 1
-			&& ft_isspace(((char *)act->content)[0])
-			&& ft_isspace(((char *)act->next->content)[0]))
+			&& ((ft_isspace(((char *)act->content)[0])
+				&& ft_isspace(((char *)act->next->content)[0]))
+				|| (((char *)act->content)[0] == ';'
+				&& (((char *)act->next->content)[0] == ';'))))
 		{
 			mem = act->next->next;
 			ft_lstdelone(act->next, del);
