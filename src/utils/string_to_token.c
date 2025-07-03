@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 06:28:10 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:42:11 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,8 @@ static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act,
 	}
 	if (dup->token_type == T_POSTEXPANSION && ft_strchr(dup->content, ' '))
 		ft_post_expand(dup, tokens);
-	else if (ft_strcmp(dup->content, "") != 0)
-		ft_lstadd_back(tokens, ft_lstnew(dup));
 	else
-	{
-		free(dup->content);
-		free(dup);
-	}
+		ft_lstadd_back(tokens, ft_lstnew(dup));
 }
 
 t_list	*ft_string_to_token(t_list *env, t_list *tokens, t_list *pre_tokens,
