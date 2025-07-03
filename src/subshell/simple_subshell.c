@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 05:16:59 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/30 16:24:02 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:47:25 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,10 @@ bool	handle_subshell_simple(t_btree **root, t_list *tokens, t_list *env,
 		if (!handle_subshell_utils(root, env, tokens, status))
 			return (false);
 	if ((*root)->left)
-	{
-		leaf = (*root)->left->content;
-		if (verif(leaf))
-			if (!handle_subshell_utils(&(*root)->left, env, tokens, status))
-				return (false);
-	}
+		if (!handle_subshell_simple(&(*root)->left, tokens, env, status))
+			return (false);
 	if ((*root)->right)
-	{
-		leaf = (*root)->right->content;
-		if (verif(leaf))
-			if (!handle_subshell_utils(&(*root)->right, env, tokens, status))
-				return (false);
-	}
+		if (!handle_subshell_simple(&(*root)->right, tokens, env, status))
+			return (false);
 	return (true);
 }
