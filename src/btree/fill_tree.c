@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:05:44 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 10:36:24 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:41:06 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ static int	cmp(void *c1, void *c2)
 	if (leaf1->type == NODE_LOGICAL)
 		return (0);
 	return (1);
+}
+
+static char	*ft_strdup_if(const char *s)
+{
+	if (ft_strlen(s) == 0)
+		return (NULL);
+	return (ft_strdup(s));
 }
 
 static char	**args_from_lst(t_list *tokens)
@@ -49,7 +56,7 @@ static char	**args_from_lst(t_list *tokens)
 			tokens = tokens->next->next;
 			continue ;
 		}
-		content[pos++] = ft_strdup(token->content);
+		content[pos++] = ft_strdup_if(token->content);
 		tokens = tokens->next;
 	}
 	content[pos] = 0;
