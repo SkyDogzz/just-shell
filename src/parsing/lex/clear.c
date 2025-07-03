@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:46:58 by tstephan          #+#    #+#             */
-/*   Updated: 2025/03/26 16:29:44 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:28:43 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_token	*ft_remove_quote(t_token *token)
 {
 	char	*mem;
 
-	if (token->token_type != T_QUOTE && token->token_type != T_EXPANSION)
+	if (token->token_type != T_QUOTE && token->token_type != T_EXPANSION
+		&& token->token_type != T_POSTEXPANSION)
 		return (token);
 	mem = token->content;
 	if (token->token_type == T_QUOTE)
@@ -24,7 +25,8 @@ t_token	*ft_remove_quote(t_token *token)
 	else
 		token->content = ft_strtrim(mem, "\"");
 	free(mem);
-	token->token_type = T_WORD;
+	if (token->token_type != T_POSTEXPANSION)
+		token->token_type = T_WORD;
 	return (token);
 }
 
