@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:30:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/04 17:42:59 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:29:37 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_exec_alias(char *input, t_rc *rc)
 	while (aliases)
 	{
 		alias = aliases->content;
-		if (ft_strnstr(input, alias->name, ft_strlen(input)))
+		if (ft_strncmp(input, alias->name, ft_strlen(alias->name)) == 0)
 		{
 			mem = input;
 			input = ft_strreplace(mem, alias->name, alias->value);
