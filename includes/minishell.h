@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/03 16:57:32 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:37:00 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@
 
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
+
+# define RC_FILE "/home/tstephan/.sshxxrc"
 
 typedef volatile sig_atomic_t	t_sigatomic;
 
@@ -193,6 +195,23 @@ typedef struct s_expand
 	int		offset;
 }			t_expand;
 
+typedef struct s_alias
+{
+	char	*name;
+	char	*value;
+}	t_alias;
+
+typedef struct s_rc
+{
+	t_list	*alias;
+}	t_rc;
+
+t_rc	*parse_rc(void);
+void	clear_rc(t_rc *rc);
+t_list	*parse_alias(t_list *alias, char *line);
+void	del_alias(void *content);
+char	*ft_exec_alias(char *input, t_rc *rc);
+
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_set_sigaction(void);
@@ -272,7 +291,7 @@ bool	is_operator(const t_token *token, const char *op);
 
 int		ft_infile_exec(t_cmd *cmd);
 
-int		main_process_tty(t_list **env);
+int		main_process_tty(t_list **env, t_rc *rc);
 char	*get_tmp_fd(void);
 
 int		get_shell_pid(void);
