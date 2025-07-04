@@ -6,11 +6,29 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:30:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/04 17:37:19 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:42:59 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*is_alias(char *line)
+{
+	if (!line)
+		return (NULL);
+	while (ft_isspace(*line))
+		line++;
+	if (*line == '#')
+		return (NULL);
+	if (ft_strncmp(line, "alias", ft_strlen("alias")))
+		return (NULL);
+	line += 6;
+	while (ft_isspace(*line))
+		line++;
+	if (!ft_strchr(line, '='))
+		return (NULL);
+	return (line);
+}
 
 t_list	*parse_alias(t_list *alias, char *line)
 {
@@ -19,28 +37,20 @@ t_list	*parse_alias(t_list *alias, char *line)
 	char	*value;
 	char	**split;
 
+	line = is_alias(line);
 	if (!line)
 		return (alias);
-	while (ft_isspace(*line))
-		line++;
-	if (*line == '#')
-		return (alias);
-	if (ft_strncmp(line, "alias", ft_strlen("alias")))
-		return (alias);
-	line += 6;
-	while (ft_isspace(*line))
-		line++;
-	if (!ft_strchr(line, '='))
-		return (alias);
 	split = ft_split(line, '=');
-	if (!split)
+	if (!split || !split[0])
 		return (alias);
 	name = ft_strdup(split[0]);
-	value = ft_strdup(ft_strchr(line, '=') + 1);
 	ft_free_array((void ***)&split);
+	value = ft_strdup(ft_strchr(line, '=') + 1);
 	if (!name || !value)
 		return (alias);
 	new = malloc(sizeof(t_alias));
+	if (!new)
+		return (alias);
 	new->name = name;
 	new->value = value;
 	ft_lstadd_back(&alias, ft_lstnew(new));
