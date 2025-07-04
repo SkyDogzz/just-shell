@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:14:58 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/30 16:43:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:55:28 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_list	*ft_init_env(const char **env)
 	while (env[i])
 	{
 		splitted_env = ft_split(env[i], '=');
-		ft_new_env(&env_list, splitted_env[0], splitted_env[1], true);
+		ft_new_env(&env_list, splitted_env[0],
+			ft_strchr(env[i], '=') + 1, true);
 		ft_free_array((void ***)&splitted_env);
 		i++;
 	}
