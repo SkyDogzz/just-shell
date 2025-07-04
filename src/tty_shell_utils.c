@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/04 17:36:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:43:04 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static bool	ft_heap_sanity_check(void)
 static char	*ft_get_valid_input(t_list *env, int *status)
 {
 	char	*input;
+	char	*mem;
 
 	input = ft_readline(PROMPT_MAIN, env, *status);
 	if (!input)
@@ -47,6 +48,9 @@ static char	*ft_get_valid_input(t_list *env, int *status)
 		*status = SIGINT;
 		input = ft_strdup("");
 	}
+	mem = input;
+	input = ft_strtrim(mem, " \t\n\r\v");
+	free(mem);
 	return (input);
 }
 
