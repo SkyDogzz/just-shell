@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/30 16:40:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:14:45 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ t_context	*handle_input(char *input, t_list **env, int *status)
 
 	if (ft_strlen(input) == 0 || is_comment(input))
 		return (NULL);
-	store_history(input, *env);
 	tokens = ft_lex(*env, input, status);
 	if (!tokens)
 		return (NULL);
-	input = NULL;
 	if (!ft_findsubshell(*env, &tokens, status))
 	{
 		ft_dprintf(STDERR_FILENO, SYNTAX_ERROR_PROMPT, ")");
@@ -70,10 +68,13 @@ t_context	*handle_input(char *input, t_list **env, int *status)
 
 int	tty_shell(t_list **env)
 {
-	int	ret;
+	int		ret;
+	t_rc	*rc;
 
+	rc = parse_rc();
 	retreive_history(*env);
-	ret = main_process_tty(env);
+	ret = main_process_tty(env, rc);
+	clear_rc(rc);
 	rl_clear_history();
 	return (ret);
 }
