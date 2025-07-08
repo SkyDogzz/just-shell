@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:46:49 by yandry            #+#    #+#             */
-/*   Updated: 2025/07/04 17:14:45 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:58:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,9 @@ t_context	*handle_input(char *input, t_list **env, int *status)
 int	tty_shell(t_list **env)
 {
 	int		ret;
-	t_rc	*rc;
 
-	rc = parse_rc();
 	retreive_history(*env);
-	ret = main_process_tty(env, rc);
-	clear_rc(rc);
+	ret = main_process_tty(env);
 	rl_clear_history();
 	return (ret);
 }
