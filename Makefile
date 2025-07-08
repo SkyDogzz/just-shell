@@ -6,7 +6,7 @@
 #    By: yandry <yandry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 14:48:17 by yandry            #+#    #+#              #
-#    Updated: 2025/07/04 17:31:46 by tstephan         ###   ########.fr        #
+#    Updated: 2025/07/08 18:58:57 by tstephan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,9 +103,6 @@ PROMPT_SRC		:= shell.c \
 
 HISTORY_SRC		:= history.c
 
-RC_SRC			:= rc.c \
-				   alias.c
-
 SRC := main.c \
 	   tty_shell.c \
 	   tty_shell_utils.c \
@@ -115,7 +112,6 @@ SRC := main.c \
 	   $(addprefix subshell/, $(SUBSHELL_SRC)) \
 	   $(addprefix prompt/, $(PROMPT_SRC)) \
 	   $(addprefix history/, $(HISTORY_SRC)) \
-	   $(addprefix rc/, $(RC_SRC)) \
 
 SRCS := $(addprefix $(SRC_PATH), $(SRC))
 OBJ := $(SRC:.c=.o)
