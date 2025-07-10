@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/03 17:01:55 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:26:32 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ static bool	handle_heredoc_error(t_list *env, t_list **tokens, int *status)
 			ft_dprintf(STDERR_FILENO, SYNTAX_ERROR_PROMPT, "<<");
 			ft_lstclear(tokens, ft_lstclear_t_token);
 			*status = 2 | SYNTAX_ERROR;
-			return (true);
 		}
-		if (error == HEREDOC_SIGINT)
+		else if (error == HEREDOC_SIGINT)
 		{
 			ft_lstclear(tokens, ft_lstclear_t_token);
 			*status = SIGINT;
-			return (true);
 		}
+		else if (error == HEREDOC_EOF)
+			ft_lstclear(tokens, ft_lstclear_t_token);
+		return (true);
 	}
 	return (false);
 }
