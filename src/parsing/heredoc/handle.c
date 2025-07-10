@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/06/26 06:31:42 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:35:15 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ static int	ft_handle_heredoc(t_list *env, t_list *act, t_list **lst,
 	if (next_t->token_type != T_WORD)
 		return (HEREDOC_PARSE_ERROR);
 	delimiter = next_t->content;
-	content = ft_read_heredoc(delimiter);
+	content = ft_strdup("");
+	if (!ft_read_heredoc(delimiter, &content))
+		return (HEREDOC_EOF);
 	if (!content)
 		return (HEREDOC_SIGINT);
 	*lst = ft_replace_heredoc(env, *lst, content, status);
-	return (0);
+	return (HEREDOC_SUCCESS);
 }
 
 int	ft_handle_heredocs(t_list *env, t_list **lst, int *status)

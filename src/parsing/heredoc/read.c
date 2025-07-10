@@ -6,17 +6,11 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:05:21 by tstephan          #+#    #+#             */
-/*   Updated: 2025/05/27 16:30:38 by yandry           ###   ########.fr       */
+/*   Updated: 2025/07/10 19:35:20 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	*ft_quit_heredoc(char *content)
-{
-	free(content);
-	return (NULL);
-}
 
 static char	*fuse_content(char *content, char *input)
 {
@@ -38,25 +32,30 @@ static char	*fuse_content(char *content, char *input)
 	return (content);
 }
 
-char	*ft_read_heredoc(const char *delimiter)
+bool	ft_read_heredoc(const char *delimiter, char **content)
 {
-	char	*content;
 	char	*input;
 
-	content = ft_strdup("");
 	while (true)
 	{
 		if (handle_sigint())
-			return (ft_quit_heredoc(content));
+		{
+			free(*content);
+			*content = NULL;
+			return (true);
+		}
 		input = ft_readline(PROMPT_HEREDOC, NULL, 0);
 		if (!input)
-			return (ft_quit_heredoc(content));
+		{
+			free(*content);
+			return (false);
+		}
 		if (ft_strcmp(input, delimiter) == 0)
 		{
 			free(input);
 			break ;
 		}
-		content = fuse_content(content, input);
+		*content = fuse_content(*content, input);
 	}
-	return (content);
+	return (true);
 }

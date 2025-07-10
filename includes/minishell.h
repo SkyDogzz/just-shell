@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/08 18:59:14 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:32:59 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@
 /*# define SUBSTITUTE "$((,$(,)),),`"*/
 # define SUBSTITUTE "$(,(,),`"
 
+# define HEREDOC_SUCCESS 0
 # define HEREDOC_PARSE_ERROR 1
 # define HEREDOC_SIGINT 2
+# define HEREDOC_EOF 3
 
 # define RC_FILE "/home/tstephan/.sshxxrc"
 
@@ -220,7 +222,7 @@ void	ft_lstclear_pipes(void *content);
 void	ft_lstprint_pipes(t_list *lst, const char *s);
 
 int		ft_handle_heredocs(t_list *env, t_list **lst, int *status);
-char	*ft_read_heredoc(const char *delimiter);
+bool	ft_read_heredoc(const char *delimiter, char **content);
 
 t_list	*ft_lex(t_list *env, const char *cmd_line, int *status);
 t_list	*ft_doom_split(const char *input);
