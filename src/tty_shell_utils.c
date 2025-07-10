@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/08 18:58:37 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:57:58 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int	ft_handle_context(char *input, t_list **env, int status)
 	char		*status_str;
 
 	context = handle_input(input, env, &status);
+	free(input);
 	if (!context)
 		return (status);
 	ft_set_sigaction_no_inter();
@@ -115,7 +116,6 @@ int	main_process_tty(t_list **env)
 			break ;
 		store_history(input, *env);
 		status = ft_handle_context(input, env, status);
-		free(input);
 		if (status & EXIT_SHELL)
 			return (status & 0xFF);
 	}
