@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:38:37 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/30 15:13:48 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:36:35 by yandry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ static void	handle_redefine(char *args, t_list *env)
 	split = ft_split(args, '=');
 	if (!split)
 		return ;
-	if (!ft_isalpha(split[0][0]) && split[0][0] != '_')
+	if (split[0] && !ft_isalpha(args[0]) && args[0] != '_')
 	{
+		ft_free_array((void ***)&split);
 		ft_dprintf(STDERR_FILENO,
-			"ssh-xx: export: %s is not a valid identifier\n", split[0]);
+			"ssh-xx: export: %s is not a valid identifier\n", args);
 		return ;
 	}
 	new = ft_strchr(args, '=');
