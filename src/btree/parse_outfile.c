@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:13:37 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/29 15:13:47 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:12:29 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	find_type(t_token *act, t_token *next, t_list **tokens,
 	if (ft_is_outfile(act))
 	{
 		redir = (t_redir *)malloc(sizeof(t_redir));
+		if (!redir)
+			return ;
 		redir->file = ft_strdup(next->content);
 		if (is_operator(act, ">"))
 			redir->type = REDIR_TRUNC_STDOUT;

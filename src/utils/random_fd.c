@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:02:23 by tstephan          #+#    #+#             */
-/*   Updated: 2025/04/23 03:47:00 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:14:05 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char	*bytes_to_nbr(char *bytes)
 
 	i = 0;
 	name = (char *)ft_calloc(128, sizeof(char));
+	if (!name)
+		return (NULL);
 	while (i < 127)
 	{
 		name[i] = (bytes[i] % 5 + 5) + '0';

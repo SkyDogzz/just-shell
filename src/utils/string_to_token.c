@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/03 16:42:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:10:39 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void	ft_post_expand(t_token *dup, t_list **tokens)
 	while (token)
 	{
 		dup = malloc(sizeof(t_token));
+		if (!dup)
+			return ;
 		dup->content = ft_strdup(token->content);
 		dup->token_type = ft_gettype(dup->content);
 		ft_lstadd_back(tokens, ft_lstnew(dup));

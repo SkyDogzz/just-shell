@@ -55,7 +55,7 @@ rm out.txt
 |;| ls
 
 # parenthèses non fermées
-((((
+(((())))
 echo "après (((("
 
 # mix bizarre
