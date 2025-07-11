@@ -6,27 +6,13 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:41:29 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/10 18:57:58 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:44:55 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_execution.h"
 #include "ft_history.h"
-
-static bool	ft_heap_sanity_check(void)
-{
-	void	*test;
-
-	test = malloc(INT_MAX >> 8);
-	if (!test)
-	{
-		ft_dprintf(STDERR_FILENO, "the heap failed ahh run away\n");
-		return (false);
-	}
-	free(test);
-	return (true);
-}
 
 static char	*ft_get_valid_input(t_list *env, int *status)
 {
@@ -109,8 +95,6 @@ int	main_process_tty(t_list **env)
 	while (true)
 	{
 		handle_sigint();
-		if (!ft_heap_sanity_check())
-			return (status);
 		input = ft_get_valid_input(*env, &status);
 		if (!input)
 			break ;

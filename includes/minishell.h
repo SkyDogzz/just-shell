@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:05:54 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/10 19:32:59 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:09:14 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ t_list	*ft_doom_split(const char *input);
 t_list	*ft_remove_whitespace(t_list *lst);
 t_token	*ft_remove_quote(t_token *token);
 t_token	*ft_expand(t_list *env, t_token *token, int *status);
+void	ft_expand_tilde(t_list *env, t_token *token);
 t_list	*ft_fuse_word(t_list *lst);
 t_btree	*ft_parse(t_list *tokens);
 bool	check_conseq_ope(t_list *tokens, const char *s1, const char *s2);

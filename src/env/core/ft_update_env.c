@@ -6,11 +6,12 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 17:23:58 by yandry            #+#    #+#             */
-/*   Updated: 2025/06/30 16:12:06 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:31:31 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
+#include <stdio.h>
 
 void	ft_update_env(t_list **env, const char *name, const char *newval,
 				bool exported)

@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:02:11 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/11 15:10:39 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:08:42 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,22 @@ static void	ft_post_expand(t_token *dup, t_list **tokens)
 	}
 }
 
+void	ft_expand_tilde(t_list *env, t_token *token)
+{
+	char	*find;
+	char	*new;
+
+	if (!env || !token || !token->content)
+		return ;
+	find = ft_strchr(token->content, '~');
+	if (!find)
+		return ;
+	new = ft_strreplace(token->content, "~", ft_get_env(env, "HOME")->value);
+	free(token->content);
+	token->content = new;
+	ft_expand_tilde(env, token);
+}
+
 static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act,
 		int *status)
 {
@@ -64,6 +80,8 @@ static void	ft_expand_utils(t_list *env, t_list **tokens, t_list *act,
 	if (!dup)
 		return ;
 	dup->content = ft_strdup(act->content);
+	if (!dup->content)
+		return ;
 	dup->token_type = ft_gettype(dup->content);
 	dup = ft_expand(env, dup, status);
 	dup = ft_remove_quote(dup);
