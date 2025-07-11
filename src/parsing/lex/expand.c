@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:48:50 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/03 14:33:11 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:10:31 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,20 @@ static void	expand_exist(t_list *env, t_expand *expand)
 		expand->envvarrr = ft_strdup(expand->envvarr->value);
 }
 
-void	ft_expand_tilde(t_list *env, t_token *token)
+static bool	verif(t_token *token)
 {
-	char	*find;
-	char	*new;
-
-	find = ft_strchr(token->content, '~');
-	if (!find)
-		return ;
-	new = ft_strreplace(token->content, "~", ft_get_env(env, "HOME")->value);
-	free(token->content);
-	token->content = new;
-	ft_expand_tilde(env, token);
+	if (!token || !token->content || (token->token_type
+			!= T_EXPANSION && token->token_type != T_WORD
+			&& token->token_type != T_HEREDOC))
+		return (false);
+	return (true);
 }
 
 t_token	*ft_expand(t_list *env, t_token *token, int *status)
 {
 	t_expand	expand;
 
-	if (token->token_type != T_EXPANSION && token->token_type != T_WORD
-		&& token->token_type != T_HEREDOC)
+	if (!verif(token))
 		return (token);
 	ft_expand_tilde(env, token);
 	if (ft_find_expand(&expand, token))
