@@ -6,7 +6,7 @@
 /*   By: yandry <yandry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:38:37 by yandry            #+#    #+#             */
-/*   Updated: 2025/07/11 15:32:13 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:43:19 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	handle_redefine(char *args, t_list *env)
 	char	*new;
 
 	split = ft_split(args, '=');
-	printf("split %s\n", split[0]);
 	if (!split)
 		return ;
 	if (split[0] && !ft_isalpha(args[0]) && args[0] != '_')

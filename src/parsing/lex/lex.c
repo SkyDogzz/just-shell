@@ -6,7 +6,7 @@
 /*   By: tstephan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:22 by tstephan          #+#    #+#             */
-/*   Updated: 2025/07/11 15:59:36 by tstephan         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:47:16 by tstephan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ static t_list	*ft_remove_spaces(t_list *tokens)
 	while (act && act->next)
 	{
 		act_t = act->next->content;
-		if (act_t->token_type == T_BLANK)
+		if (act_t->token_type == T_BLANK
+			|| (act_t->token_type == T_WORD && ft_strlen(act_t->content) == 0))
 		{
 			mem = act->next;
 			act->next = act->next->next;
 			ft_lstclear_t_token(mem->content);
 			free(mem);
+			continue ;
 		}
 		act = act->next;
 	}
