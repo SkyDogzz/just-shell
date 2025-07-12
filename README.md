@@ -24,3 +24,6 @@ Pourquoi faire minishell quand on peut faire 42sh (spoiler: parce qu'on peut pas
 
 ### Ca normine ou pas?
 [![Norminette](https://github.com/SkyDogzz/just-shell/actions/workflows/norm.yml/badge.svg)](https://github.com/SkyDogzz/just-shell/actions/workflows/norm.yml)
+
+### C'est validé ou pas?
+[![vanta's and skydogzz's 42 minishell Score](https://badge.nimon.fr/api/v2/cm5b474a74894101l60mny0iik/project/4074837)](https://github.com/Nimon77/badge42)
